@@ -4,4 +4,4 @@ After cloning the project, everything should build within android studio. Tested
 
 # Further information
 
-For additional information regarding architecture, modules and dependencies, check the [design document](design_document.md) in /docs
+For additional information regarding architecture, modules and dependencies, check the [design document](docs/design_document.md)
