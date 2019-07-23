@@ -1,0 +1,19 @@
+package de.fklappan.app.workoutlog.data.workout
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+
+@Dao
+interface WorkoutDao{
+
+    @Query("SELECT * FROM workout")
+    fun getWorkoutList(): List<WorkoutDataModel>
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertWorkout(workoutDataModel: WorkoutDataModel)
+
+    @Query("SELECT * FROM workout WHERE workout_id = :workoutId")
+    fun getWorkoutById(workoutId: Int): WorkoutDataModel
+}

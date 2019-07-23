@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/navigation_graph" app:startDestination="@id/overviewFragment">
+
+    <fragment android:id="@+id/overviewFragment" android:name="de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutFragment"
+              android:label="OverviewFragment">
+        <action android:id="@+id/action_overviewFragment_to_addWorkoutFragment"
+                app:destination="@id/addWorkoutFragment"/>
+        <action android:id="@+id/action_overviewFragment_to_detailviewWorkoutFragment"
+                app:destination="@id/detailviewWorkoutFragment"/>
+        <action
+                android:id="@+id/action_overviewFragment"
+                app:destination="@id/overviewFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@+id/overviewFragment"
+                app:popUpToInclusive="true" />
+    </fragment>
+    <fragment  android:id="@+id/addWorkoutFragment"
+              android:name="de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutFragment"
+              android:label="AddWorkoutFragment"/>
+
+    <fragment  android:id="@+id/detailviewWorkoutFragment"
+              android:name="de.fklappan.app.workoutlog.ui.detailview.DetailviewWorkoutFragment"
+              android:label="DetailviewWorkoutFragment">
+        <action android:id="@+id/action_detailviewWorkoutFragment_to_addResultFragment"
+                app:destination="@id/addResultFragment"/>
+    </fragment >
+
+    <fragment  android:id="@+id/addResultFragment" android:name="de.fklappan.app.workoutlog.ui.addresult.AddResultFragment"
+              android:label="AddResultFragment"/>
+</navigation>
