@@ -4,10 +4,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tool="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin_small"
-        android:layout_marginEnd="@dimen/default_margin_small"
-        android:layout_marginTop="@dimen/default_margin_small"
+        android:layout_height="150dp"
+        android:layout_margin="@dimen/default_margin_small"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation"
         android:clickable="true"
@@ -16,8 +14,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/nav_header_vertical_spacing"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/default_margin"
     >
 
         <TextView
@@ -27,6 +25,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 tool:text="My hard workout"
+                style="@style/StandardText"
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

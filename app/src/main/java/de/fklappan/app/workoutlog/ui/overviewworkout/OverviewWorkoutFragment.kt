@@ -89,7 +89,7 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun stopLoading() {
-        progressBar.visibility = View.INVISIBLE
+        progressBar.visibility = View.GONE
     }
 
 
