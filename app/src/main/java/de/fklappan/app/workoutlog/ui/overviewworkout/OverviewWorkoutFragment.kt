@@ -66,7 +66,6 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun renderState(workoutState: OverviewWorkoutState) {
-        showLoading(workoutState.loading)
         if (workoutState.error != null) {
             showError(workoutState.error)
         } else {
@@ -74,38 +73,14 @@ class OverviewWorkoutFragment : BaseFragment() {
         }
     }
 
-    private fun showLoading(loading: Boolean) {
-        if (loading) {
-            startLoading()
-        } else {
-            stopLoading()
-        }
-    }
-
-    private fun startLoading() {
-        recyclerViewWorkouts.visibility = View.INVISIBLE
-        textViewError.visibility = View.INVISIBLE
-        progressBar.visibility = View.VISIBLE
-    }
-
-    private fun stopLoading() {
-        progressBar.visibility = View.GONE
-    }
-
-
     private fun showResult(resultList: MutableList<WorkoutGuiModel>) {
         Log.d(LOG_TAG, "Results loaded: " + resultList.size)
-        textViewError.visibility = View.GONE
         recyclerViewWorkouts.visibility = View.VISIBLE
         overviewWorkoutAdapter.items = resultList
-//        feedAdapter.set(resultList)
     }
 
     private fun showError(error: Throwable) {
         Log.d(LOG_TAG, "Error occured", error)
-        textViewError.visibility = View.VISIBLE
-        textViewError.text = error.message
         recyclerViewWorkouts.visibility = View.GONE
-
     }
 }
