@@ -21,14 +21,16 @@ import kotlinx.android.synthetic.main.detailview_workout.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import javax.inject.Inject
 
+// TODO 29.07.2019 Flo Add possible argument keys as const val EXTRA_blabla
+// TODO 29.07.2019 Flo remove the state stuff and refactor viewmodel
+// TODO 29.07.2019 Flo use ctrl + OLI
+
 class DetailviewWorkoutFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelDetail: DetailviewWorkoutViewModel
     private lateinit var workoutResultAdapter: WorkoutResultAdapter
-
-    var workoutId: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.detailview_workout, container, false)
@@ -102,7 +104,6 @@ class DetailviewWorkoutFragment : BaseFragment() {
     private fun showResult(result: WorkoutDetailsGuiModel) {
         Log.d(LOG_TAG, "Workout details loaded: " + result.workout.text)
         Log.d(LOG_TAG, "Results loaded: " + result.resultList.size)
-        workoutId = result.workout.workoutId
         showWorkoutDetails(result.workout)
 
         val items = ArrayList<WorkoutResultGuiModel>()
