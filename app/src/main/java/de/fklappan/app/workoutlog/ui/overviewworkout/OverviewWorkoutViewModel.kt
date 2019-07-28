@@ -17,13 +17,12 @@ import kotlin.collections.ArrayList
 
 class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) : RxViewModel() {
 
-    // TODO 28.07.2019 Flo Get rid of the combined state and expose single properties instead. So we can move more logic from the view to the model
-    // exposing the whole state for initial data fetching
-    private val _state = MutableLiveData<OverviewWorkoutState>()
-    val workoutState: LiveData<OverviewWorkoutState>
-        get() = _state
+    // exposing the whole list for initial data fetching or hard reload
+    private val _workoutList = MutableLiveData<MutableList<WorkoutGuiModel>>()
+    val workoutList: LiveData<MutableList<WorkoutGuiModel>>
+        get() = _workoutList
 
-    // exposing only portions of the available data to be able to update it independently
+    // exposing single workouts to be able to update it independently
     private val _updateStream = MutableLiveData<WorkoutGuiModel>()
     val updateStream: LiveData<WorkoutGuiModel>
         get() = _updateStream
@@ -35,7 +34,6 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
         addDisposable(GetWorkoutsUseCase(repository).execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe{ _state.value = OverviewWorkoutState(Collections.emptyList(), null, true)}
             .subscribe(
                 this::handleSuccess,
                 this::handleError
@@ -61,11 +59,11 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
         for (domainWorkout in workoutList) {
             guiModelList.add(modelMapper.mapDomainToGui(domainWorkout))
         }
-        _state.value = OverviewWorkoutState(guiModelList, null, false)
+        _workoutList.value = guiModelList
     }
 
     private fun handleError(error: Throwable) {
-        _state.value = OverviewWorkoutState(Collections.emptyList(), error, false)
+        Log.e(LOG_TAG, "Error while loading workouts", error)
     }
 
     private fun handleSuccessFavoriteUseCase(workoutDomainModel: WorkoutDomainModel) {

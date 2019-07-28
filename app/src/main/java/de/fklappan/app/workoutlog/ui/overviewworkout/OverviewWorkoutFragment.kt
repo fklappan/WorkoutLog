@@ -16,8 +16,6 @@ import de.fklappan.app.workoutlog.common.ViewModelFactory
 import kotlinx.android.synthetic.main.overview.*
 import javax.inject.Inject
 
-// TODO 28.07.2019 Flo Error is no longer available -> remove helper methods
-
 class OverviewWorkoutFragment : BaseFragment() {
 
     @Inject
@@ -48,18 +46,19 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_overview)
-        overviewWorkoutAdapter = OverviewWorkoutAdapter(
-            clickListener = { clickedWorkout ->
-                Log.d(LOG_TAG, "clicked workout id" + clickedWorkout.workoutId)
-                val bundle = bundleOf("workoutId" to clickedWorkout.workoutId)
-                Navigation.findNavController(view!!)
-                    .navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
-        }, favoriteListener = { clickedWorkoutId ->
-                Log.d(LOG_TAG, "clicked workout $clickedWorkoutId to toggle favorite")
-                viewModelOverviewWorkout.favoriteClicked(clickedWorkoutId)
-            })
-
+        overviewWorkoutAdapter = OverviewWorkoutAdapter(this::workoutClicked, this::favoriteClicked)
         recyclerViewWorkouts.adapter = overviewWorkoutAdapter
+    }
+
+    private fun workoutClicked(workoutGuiModel: WorkoutGuiModel) {
+        Log.d(LOG_TAG, "clicked workout id" + workoutGuiModel.workoutId)
+        val bundle = bundleOf("workoutId" to workoutGuiModel.workoutId)
+        Navigation.findNavController(view!!).navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
+    }
+
+    private fun favoriteClicked(workoutId: Int) {
+        Log.d(LOG_TAG, "clicked workout $workoutId to toggle favorite")
+        viewModelOverviewWorkout.favoriteClicked(workoutId)
     }
 
     private fun initViewModels() {
@@ -68,7 +67,7 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelOverviewWorkout.workoutState.observe(this, Observer { state -> renderState(state) })
+        viewModelOverviewWorkout.workoutList.observe(this, Observer { workoutList -> showWorkoutList(workoutList) })
         viewModelOverviewWorkout.updateStream.observe(this, Observer { workout -> updateWorkout(workout)})
     }
 
@@ -77,25 +76,12 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun updateWorkout(workoutGuiModel: WorkoutGuiModel) {
+        Log.d(LOG_TAG, "Updating workout ${workoutGuiModel.workoutId}")
         overviewWorkoutAdapter.update(workoutGuiModel)
     }
 
-    private fun renderState(workoutState: OverviewWorkoutState) {
-        if (workoutState.error != null) {
-            showError(workoutState.error)
-        } else {
-            showResult(workoutState.workoutList)
-        }
-    }
-
-    private fun showResult(resultList: MutableList<WorkoutGuiModel>) {
+    private fun showWorkoutList(resultList: MutableList<WorkoutGuiModel>) {
         Log.d(LOG_TAG, "Results loaded: " + resultList.size)
-        recyclerViewWorkouts.visibility = View.VISIBLE
         overviewWorkoutAdapter.items = resultList
-    }
-
-    private fun showError(error: Throwable) {
-        Log.d(LOG_TAG, "Error occured", error)
-        recyclerViewWorkouts.visibility = View.GONE
     }
 }
