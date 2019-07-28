@@ -10,4 +10,5 @@
     <dimen name="card_corner_radius">3dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="spacing_default">8dp</dimen>
+    <dimen name="card_min_height">100dp</dimen>
 </resources>

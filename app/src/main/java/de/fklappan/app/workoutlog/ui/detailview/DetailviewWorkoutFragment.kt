@@ -13,9 +13,8 @@ import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import kotlinx.android.synthetic.main.card_workout_detail.*
 import kotlinx.android.synthetic.main.detailview_workout.*
-import kotlinx.android.synthetic.main.detailview_workout.progressBar
-import kotlinx.android.synthetic.main.detailview_workout.textViewError
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import javax.inject.Inject
 
@@ -49,7 +48,6 @@ class DetailviewWorkoutFragment : BaseFragment() {
             Log.d(LOG_TAG, "clicked result id" + clickedResult.workout)
         }
         recyclerViewResults.adapter = workoutResultAdapter
-        textViewWorkoutDetails.movementMethod = ScrollingMovementMethod()
     }
 
     private fun initFab() {
@@ -90,12 +88,11 @@ class DetailviewWorkoutFragment : BaseFragment() {
         Log.d(LOG_TAG, "Workout details loaded: " + result.workout.text)
         Log.d(LOG_TAG, "Results loaded: " + result.resultList.size)
         workoutId = result.workout.workoutId
-        textViewError.visibility = View.GONE
+
         textViewWorkoutDetails.text = result.workout.text
 
         val items = ArrayList<WorkoutResultGuiModel>()
         items.addAll(result.resultList)
-        progressBar.visibility = View.INVISIBLE
 
         recyclerViewResults.visibility = View.VISIBLE
         workoutResultAdapter.items = items
