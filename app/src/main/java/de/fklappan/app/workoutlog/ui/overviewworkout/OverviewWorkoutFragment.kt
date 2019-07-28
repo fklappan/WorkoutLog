@@ -16,6 +16,8 @@ import de.fklappan.app.workoutlog.common.ViewModelFactory
 import kotlinx.android.synthetic.main.overview.*
 import javax.inject.Inject
 
+// TODO 28.07.2019 Flo Error is no longer available -> remove helper methods
+
 class OverviewWorkoutFragment : BaseFragment() {
 
     @Inject
@@ -46,12 +48,17 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_overview)
-        overviewWorkoutAdapter = OverviewWorkoutAdapter { clickedWorkout ->
-            Log.d(LOG_TAG, "clicked workout id" + clickedWorkout.workoutId)
-            val bundle = bundleOf("workoutId" to clickedWorkout.workoutId)
-            Navigation.findNavController(view!!)
-                .navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
-        }
+        overviewWorkoutAdapter = OverviewWorkoutAdapter(
+            clickListener = { clickedWorkout ->
+                Log.d(LOG_TAG, "clicked workout id" + clickedWorkout.workoutId)
+                val bundle = bundleOf("workoutId" to clickedWorkout.workoutId)
+                Navigation.findNavController(view!!)
+                    .navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
+        }, favoriteListener = { clickedWorkoutId ->
+                Log.d(LOG_TAG, "clicked workout $clickedWorkoutId to toggle favorite")
+                viewModelOverviewWorkout.favoriteClicked(clickedWorkoutId)
+            })
+
         recyclerViewWorkouts.adapter = overviewWorkoutAdapter
     }
 
@@ -62,10 +69,15 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun observeViewModels() {
         viewModelOverviewWorkout.workoutState.observe(this, Observer { state -> renderState(state) })
+        viewModelOverviewWorkout.updateStream.observe(this, Observer { workout -> updateWorkout(workout)})
     }
 
     private fun fetchData() {
         viewModelOverviewWorkout.loadWorkouts()
+    }
+
+    private fun updateWorkout(workoutGuiModel: WorkoutGuiModel) {
+        overviewWorkoutAdapter.update(workoutGuiModel)
     }
 
     private fun renderState(workoutState: OverviewWorkoutState) {

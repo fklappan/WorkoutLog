@@ -48,4 +48,8 @@ class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao, val resultDao: Result
         resultDao.insertResult(dataModel)
     }
 
+    override fun updateWorkout(workoutDomainModel: WorkoutDomainModel) {
+        val dataModel = modelMapper.mapDomainToData(workoutDomainModel)
+        workoutDao.updateWorkout(dataModel)
+    }
 }

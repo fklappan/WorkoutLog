@@ -14,4 +14,6 @@ public interface WorkoutLogRepository {
 
     fun addResult(workoutId: Int, result: WorkoutResultDomainModel)
 
+    fun updateWorkout(workoutDomainModel: WorkoutDomainModel)
+
 }

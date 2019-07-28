@@ -1,5 +1,6 @@
 package de.fklappan.app.workoutlog.ui.detailview
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
@@ -13,6 +14,8 @@ import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutViewModel
+import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import kotlinx.android.synthetic.main.card_workout_detail.*
 import kotlinx.android.synthetic.main.detailview_workout.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
@@ -47,7 +50,9 @@ class DetailviewWorkoutFragment : BaseFragment() {
         workoutResultAdapter = WorkoutResultAdapter { clickedResult ->
             Log.d(LOG_TAG, "clicked result id" + clickedResult.workout)
         }
+
         recyclerViewResults.adapter = workoutResultAdapter
+        imageButtonFavorite.setOnClickListener{ viewModelDetail.favoriteClicked() }
     }
 
     private fun initFab() {
@@ -63,6 +68,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
 
     private fun observeViewModels() {
         viewModelDetail.state.observe(this, Observer { state -> renderState(state) } )
+        viewModelDetail.updateStream.observe(this, Observer { workout -> showWorkoutDetails(workout)})
     }
 
     private fun fetchData() {
@@ -84,12 +90,20 @@ class DetailviewWorkoutFragment : BaseFragment() {
 //        }
     }
 
+    private fun showWorkoutDetails(workoutGuiModel: WorkoutGuiModel) {
+        textViewWorkoutDetails.text = workoutGuiModel.text
+        if (workoutGuiModel.favorite) {
+            imageButtonFavorite.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
+        } else {
+            imageButtonFavorite.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
+        }
+    }
+
     private fun showResult(result: WorkoutDetailsGuiModel) {
         Log.d(LOG_TAG, "Workout details loaded: " + result.workout.text)
         Log.d(LOG_TAG, "Results loaded: " + result.resultList.size)
         workoutId = result.workout.workoutId
-
-        textViewWorkoutDetails.text = result.workout.text
+        showWorkoutDetails(result.workout)
 
         val items = ArrayList<WorkoutResultGuiModel>()
         items.addAll(result.resultList)
