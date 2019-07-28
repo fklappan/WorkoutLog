@@ -9,20 +9,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
-import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
+import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.ui.detailview.WorkoutResultGuiModel
 import kotlinx.android.synthetic.main.addworkout.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
-import kotlinx.android.synthetic.main.overview.textViewError
 import java.util.*
 import javax.inject.Inject
 
 class AddResultFragment : BaseFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelAddResult: AddResultViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,7 +42,15 @@ class AddResultFragment : BaseFragment() {
     private fun initFab() {
         floatingActionButton.setOnClickListener { view ->
             // TODO 09.07.2019 Flo fill additional data
-            val guiModel = WorkoutResultGuiModel(0, editTextContent.text.toString(), Date(), arguments!!.getInt("workoutId"), false, "", "")
+            val guiModel = WorkoutResultGuiModel(
+                0,
+                editTextContent.text.toString(),
+                Date(),
+                arguments!!.getInt("workoutId"),
+                false,
+                "",
+                ""
+            )
             viewModelAddResult.saveResult(guiModel)
         }
     }
@@ -55,7 +63,7 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelAddResult.state.observe(this, Observer { state -> renderState(state) } )
+        viewModelAddResult.state.observe(this, Observer { state -> renderState(state) })
     }
 
     private fun renderState(state: AddResultState) {

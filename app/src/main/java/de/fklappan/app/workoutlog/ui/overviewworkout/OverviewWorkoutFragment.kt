@@ -9,16 +9,17 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
+import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
 import kotlinx.android.synthetic.main.overview.*
 import javax.inject.Inject
 
 class OverviewWorkoutFragment : BaseFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelOverviewWorkout: OverviewWorkoutViewModel
     private lateinit var overviewWorkoutAdapter: OverviewWorkoutAdapter
 
@@ -48,17 +49,19 @@ class OverviewWorkoutFragment : BaseFragment() {
         overviewWorkoutAdapter = OverviewWorkoutAdapter { clickedWorkout ->
             Log.d(LOG_TAG, "clicked workout id" + clickedWorkout.workoutId)
             val bundle = bundleOf("workoutId" to clickedWorkout.workoutId)
-            Navigation.findNavController(view!!).navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
+            Navigation.findNavController(view!!)
+                .navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
         }
         recyclerViewWorkouts.adapter = overviewWorkoutAdapter
     }
 
     private fun initViewModels() {
-        viewModelOverviewWorkout = ViewModelProviders.of(this, viewModelFactory).get(OverviewWorkoutViewModel::class.java)
+        viewModelOverviewWorkout =
+            ViewModelProviders.of(this, viewModelFactory).get(OverviewWorkoutViewModel::class.java)
     }
 
     private fun observeViewModels() {
-        viewModelOverviewWorkout.workoutState.observe(this, Observer { state -> renderState(state) } )
+        viewModelOverviewWorkout.workoutState.observe(this, Observer { state -> renderState(state) })
     }
 
     private fun fetchData() {

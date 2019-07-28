@@ -9,19 +9,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
-import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
+import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import kotlinx.android.synthetic.main.addworkout.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
-import kotlinx.android.synthetic.main.overview.textViewError
 import javax.inject.Inject
 
 class AddWorkoutFragment : BaseFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelAddWorkout: AddWorkoutViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,7 +53,7 @@ class AddWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelAddWorkout.state.observe(this, Observer { state -> renderState(state) } )
+        viewModelAddWorkout.state.observe(this, Observer { state -> renderState(state) })
     }
 
     private fun renderState(state: AddWorkoutState) {
