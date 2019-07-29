@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.list_item_workout.view.*
 
 class OverviewWorkoutAdapter(
     private val clickListener: (WorkoutGuiModel) -> Unit,
-    private val favoriteListener: (Int) -> Unit)
-    : RecyclerView.Adapter<OverviewWorkoutAdapter.ViewHolder>() {
+    private val favoriteListener: (Int) -> Unit
+) : RecyclerView.Adapter<OverviewWorkoutAdapter.ViewHolder>() {
 
     var items: MutableList<WorkoutGuiModel> = ArrayList()
         set(value) {
@@ -51,14 +51,28 @@ class OverviewWorkoutAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(workoutGuiModel: WorkoutGuiModel, clickListener: (WorkoutGuiModel) -> Unit, favoriteListener: (Int) -> Unit) {
+        fun bindItem(
+            workoutGuiModel: WorkoutGuiModel,
+            clickListener: (WorkoutGuiModel) -> Unit,
+            favoriteListener: (Int) -> Unit
+        ) {
             itemView.textViewContent.text = workoutGuiModel.text
             itemView.setOnClickListener { clickListener.invoke(workoutGuiModel) }
-            itemView.imageButtonFavorite.setOnClickListener { clickedButton(it as ImageButton, workoutGuiModel, favoriteListener) }
+            itemView.imageButtonFavorite.setOnClickListener {
+                clickedButton(
+                    it as ImageButton,
+                    workoutGuiModel,
+                    favoriteListener
+                )
+            }
             setFavoriteButtonState(itemView.imageButtonFavorite, workoutGuiModel.favorite)
         }
 
-        private fun clickedButton(view: ImageButton, workoutGuiModel: WorkoutGuiModel, favoriteListener: (Int) -> Unit) {
+        private fun clickedButton(
+            view: ImageButton,
+            workoutGuiModel: WorkoutGuiModel,
+            favoriteListener: (Int) -> Unit
+        ) {
             Log.d(LOG_TAG, "Clicked favorite button")
             setFavoriteButtonState(view, !view.isSelected)
             favoriteListener.invoke(workoutGuiModel.workoutId)

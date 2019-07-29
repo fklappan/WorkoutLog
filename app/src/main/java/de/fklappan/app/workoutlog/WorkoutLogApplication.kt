@@ -17,5 +17,5 @@ class WorkoutLogApplication : Application() {
             .build()
     }
 
-    public fun getApplicationComponent() : ApplicationComponent = applicationComponent
+    public fun getApplicationComponent(): ApplicationComponent = applicationComponent
 }

@@ -13,16 +13,16 @@ import javax.inject.Singleton
 class ApplicationModule(private var application: Application) {
 
     @Provides
-    fun provideApplication() : Application = application
+    fun provideApplication(): Application = application
 
     @Provides
-    fun provideApplicationContext() : Context = application.applicationContext
+    fun provideApplicationContext(): Context = application.applicationContext
 
     @Provides
     @Singleton
-    fun provideLogger(androidLoggerImpl: AndroidLoggerImpl) : Logger = androidLoggerImpl
+    fun provideLogger(androidLoggerImpl: AndroidLoggerImpl): Logger = androidLoggerImpl
 
     @Provides
-    fun provideDatabase(context: Context) : AppDatabase = AppDatabase.getInstance(context)
+    fun provideDatabase(context: Context): AppDatabase = AppDatabase.getInstance(context)
 
 }

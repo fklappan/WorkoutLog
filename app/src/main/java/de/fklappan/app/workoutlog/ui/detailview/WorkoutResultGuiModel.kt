@@ -9,4 +9,5 @@ data class WorkoutResultGuiModel(
     var workout: Int,
     var pr: Boolean,
     var note: String,
-    var feeling: String)
+    var feeling: String
+)

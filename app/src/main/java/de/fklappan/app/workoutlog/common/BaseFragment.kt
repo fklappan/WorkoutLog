@@ -2,7 +2,6 @@ package de.fklappan.app.workoutlog.common
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import dagger.Component
 import de.fklappan.app.workoutlog.WorkoutLogApplication
 import de.fklappan.app.workoutlog.di.ControllerComponent
 import de.fklappan.app.workoutlog.di.ControllerModule
@@ -25,7 +24,7 @@ open class BaseFragment : Fragment() {
         }
     }
 
-    fun getInjector() : ControllerComponent = controllerComponent
+    fun getInjector(): ControllerComponent = controllerComponent
 
-    fun getAppBarHeader() : AppBarHeader = appBarHeader
+    fun getAppBarHeader(): AppBarHeader = appBarHeader
 }

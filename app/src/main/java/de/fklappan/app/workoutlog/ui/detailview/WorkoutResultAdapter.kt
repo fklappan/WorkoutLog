@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.toPrettyString
-import kotlinx.android.synthetic.main.list_item_workout.view.*
 import kotlinx.android.synthetic.main.list_item_workout.view.textViewContent
 import kotlinx.android.synthetic.main.list_item_workout_result.view.*
 
-class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) -> Unit) : RecyclerView.Adapter<WorkoutResultAdapter.ViewHolder>() {
+class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) -> Unit) :
+    RecyclerView.Adapter<WorkoutResultAdapter.ViewHolder>() {
 
     var items: MutableList<WorkoutResultGuiModel> = ArrayList()
         set(value) {

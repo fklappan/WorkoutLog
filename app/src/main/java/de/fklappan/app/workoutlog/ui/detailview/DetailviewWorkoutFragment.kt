@@ -2,7 +2,6 @@ package de.fklappan.app.workoutlog.ui.detailview
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +9,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
+import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
-import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import kotlinx.android.synthetic.main.card_workout_detail.*
 import kotlinx.android.synthetic.main.detailview_workout.*
@@ -54,13 +52,14 @@ class DetailviewWorkoutFragment : BaseFragment() {
         }
 
         recyclerViewResults.adapter = workoutResultAdapter
-        imageButtonFavorite.setOnClickListener{ viewModelDetail.favoriteClicked() }
+        imageButtonFavorite.setOnClickListener { viewModelDetail.favoriteClicked() }
     }
 
     private fun initFab() {
         floatingActionButton.setOnClickListener { view ->
             // TODO 05.07.2019 Flo maybe simply passing arguments is not the correct thing to do. But it should be ok for now
-            Navigation.findNavController(view!!).navigate(R.id.action_detailviewWorkoutFragment_to_addResultFragment, arguments)
+            Navigation.findNavController(view!!)
+                .navigate(R.id.action_detailviewWorkoutFragment_to_addResultFragment, arguments)
         }
     }
 
@@ -69,8 +68,8 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelDetail.workoutDetailStream.observe(this, Observer { workoutDetails -> showResult(workoutDetails) } )
-        viewModelDetail.updateWorkoutStream.observe(this, Observer { workout -> showWorkoutDetails(workout)})
+        viewModelDetail.workoutDetailStream.observe(this, Observer { workoutDetails -> showResult(workoutDetails) })
+        viewModelDetail.updateWorkoutStream.observe(this, Observer { workout -> showWorkoutDetails(workout) })
 //        viewModelDetail.errorStream.observe(this, Observer { error -> showError(error)})
     }
 

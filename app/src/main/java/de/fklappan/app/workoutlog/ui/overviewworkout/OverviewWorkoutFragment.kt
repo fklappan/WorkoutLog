@@ -68,7 +68,7 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun observeViewModels() {
         viewModelOverviewWorkout.workoutList.observe(this, Observer { workoutList -> showWorkoutList(workoutList) })
-        viewModelOverviewWorkout.updateStream.observe(this, Observer { workout -> updateWorkout(workout)})
+        viewModelOverviewWorkout.updateStream.observe(this, Observer { workout -> updateWorkout(workout) })
     }
 
     private fun fetchData() {

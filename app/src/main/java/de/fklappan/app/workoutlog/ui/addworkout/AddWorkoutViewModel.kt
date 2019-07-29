@@ -10,8 +10,8 @@ import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class AddWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) : RxViewModel() {
-
+class AddWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
+    RxViewModel() {
 
 
     private val _errorState = MutableLiveData<Throwable>()
@@ -25,13 +25,15 @@ class AddWorkoutViewModel(private val repository: WorkoutLogRepository, private 
         get() = _saveState
 
     fun saveWorkout(guiModel: WorkoutGuiModel) {
-        addDisposable(AddWorkoutUseCase(repository).execute(modelMapper.mapGuiToDomain(guiModel))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::handleSuccess,
-                this::handleError
-            ))
+        addDisposable(
+            AddWorkoutUseCase(repository).execute(modelMapper.mapGuiToDomain(guiModel))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    this::handleSuccess,
+                    this::handleError
+                )
+        )
     }
 
     private fun handleSuccess() {

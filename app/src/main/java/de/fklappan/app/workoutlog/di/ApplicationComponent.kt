@@ -5,5 +5,5 @@ import dagger.Component
 @Component(modules = arrayOf(ApplicationModule::class))
 interface ApplicationComponent {
 
-    fun newControllerComponent(module: ControllerModule) : ControllerComponent
+    fun newControllerComponent(module: ControllerModule): ControllerComponent
 }

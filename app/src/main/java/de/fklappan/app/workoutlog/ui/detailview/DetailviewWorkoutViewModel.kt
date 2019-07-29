@@ -13,7 +13,10 @@ import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class DetailviewWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) : RxViewModel() {
+class DetailviewWorkoutViewModel(
+    private val repository: WorkoutLogRepository,
+    private val modelMapper: GuiModelMapper
+) : RxViewModel() {
 
     private lateinit var currentWorkoutDetails: WorkoutDetailsGuiModel
 
@@ -33,13 +36,15 @@ class DetailviewWorkoutViewModel(private val repository: WorkoutLogRepository, p
         get() = _updateWorkoutStream
 
     fun loadWorkout(workoutId: Int) {
-        addDisposable(GetWorkoutDetailsUseCase(repository).execute(workoutId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::workoutDetailsLoaded,
-                this::handleError
-            ))
+        addDisposable(
+            GetWorkoutDetailsUseCase(repository).execute(workoutId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    this::workoutDetailsLoaded,
+                    this::handleError
+                )
+        )
     }
 
     fun favoriteClicked() {
@@ -50,7 +55,8 @@ class DetailviewWorkoutViewModel(private val repository: WorkoutLogRepository, p
                 .subscribe(
                     this::workoutUpdated,
                     this::handleError
-                ))
+                )
+        )
     }
 
     private fun workoutDetailsLoaded(workoutDetails: WorkoutDetailsDomainModel) {

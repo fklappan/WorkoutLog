@@ -1,20 +1,18 @@
 package de.fklappan.app.workoutlog
 
 import android.os.Bundle
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.view.Menu
 import android.view.MenuItem
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.Menu
+import androidx.core.view.GravityCompat
 import androidx.core.view.get
-import androidx.navigation.NavDestination
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import com.google.android.material.navigation.NavigationView
 import de.fklappan.app.workoutlog.common.AppBarHeader
-import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AppBarHeader {
@@ -69,8 +67,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_workout -> {
                 // setPopUpTo the root of the given navigation graph takes care of clearing the back stack
                 if (Navigation.findNavController(findViewById(R.id.navHostFragment)).currentDestination?.id != R.id.overviewFragment) {
-                    Navigation.findNavController(findViewById(R.id.navHostFragment)).navigate(R.id.overviewFragment, null,
-                        NavOptions.Builder().setPopUpTo(R.id.navigation_graph, true).build())
+                    Navigation.findNavController(findViewById(R.id.navHostFragment)).navigate(
+                        R.id.overviewFragment, null,
+                        NavOptions.Builder().setPopUpTo(R.id.navigation_graph, true).build()
+                    )
                 }
             }
             R.id.nav_result -> {
