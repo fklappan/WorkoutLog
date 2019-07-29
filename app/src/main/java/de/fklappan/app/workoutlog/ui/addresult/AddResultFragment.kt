@@ -63,15 +63,8 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelAddResult.state.observe(this, Observer { state -> renderState(state) })
-    }
-
-    private fun renderState(state: AddResultState) {
-        if (state.error != null) {
-            showError(state.error)
-        } else {
-            showResult(state.saved)
-        }
+        viewModelAddResult.saveState.observe(this, Observer { saved -> showResult(saved) })
+        viewModelAddResult.errorState.observe(this, Observer { error -> showError(error) })
     }
 
     private fun showResult(saved: Boolean) {

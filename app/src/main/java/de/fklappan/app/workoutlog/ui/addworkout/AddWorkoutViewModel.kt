@@ -12,10 +12,17 @@ import io.reactivex.schedulers.Schedulers
 
 class AddWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) : RxViewModel() {
 
-    private val _state = MutableLiveData<AddWorkoutState>()
+
+
+    private val _errorState = MutableLiveData<Throwable>()
     // expose read only workoutState
-    val state: LiveData<AddWorkoutState>
-        get() = _state
+    val errorState: LiveData<Throwable>
+        get() = _errorState
+
+    private val _saveState = MutableLiveData<Boolean>()
+    // expose read only workoutState
+    val saveState: LiveData<Boolean>
+        get() = _saveState
 
     fun saveWorkout(guiModel: WorkoutGuiModel) {
         addDisposable(AddWorkoutUseCase(repository).execute(modelMapper.mapGuiToDomain(guiModel))
@@ -28,11 +35,11 @@ class AddWorkoutViewModel(private val repository: WorkoutLogRepository, private 
     }
 
     private fun handleSuccess() {
-        _state.value = AddWorkoutState(null, true)
+        _saveState.value = true
     }
 
     private fun handleError(error: Throwable) {
-        _state.value = AddWorkoutState(error, false)
+        _errorState.value = error
     }
 
 }

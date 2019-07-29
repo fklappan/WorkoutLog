@@ -69,27 +69,13 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelDetail.state.observe(this, Observer { state -> renderState(state) } )
-        viewModelDetail.updateStream.observe(this, Observer { workout -> showWorkoutDetails(workout)})
+        viewModelDetail.workoutDetailStream.observe(this, Observer { workoutDetails -> showResult(workoutDetails) } )
+        viewModelDetail.updateWorkoutStream.observe(this, Observer { workout -> showWorkoutDetails(workout)})
+//        viewModelDetail.errorStream.observe(this, Observer { error -> showError(error)})
     }
 
     private fun fetchData() {
         viewModelDetail.loadWorkout(arguments!!.getInt("workoutId"))
-    }
-
-    private fun renderState(state: DetailviewWorkoutState) {
-        if (state.error != null) {
-
-        }
-        if (state.workout != null){
-            showResult(state.workout)
-        }
-//        showLoading(workoutState.loading)
-//        if (workoutState.error != null) {
-//            showError(workoutState.error)
-//        } else {
-//            showResult(workoutState.workoutList)
-//        }
     }
 
     private fun showWorkoutDetails(workoutGuiModel: WorkoutGuiModel) {

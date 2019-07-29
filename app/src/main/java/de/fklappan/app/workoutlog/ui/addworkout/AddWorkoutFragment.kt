@@ -53,15 +53,8 @@ class AddWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelAddWorkout.state.observe(this, Observer { state -> renderState(state) })
-    }
-
-    private fun renderState(state: AddWorkoutState) {
-        if (state.error != null) {
-            showError(state.error)
-        } else {
-            showResult(state.saved)
-        }
+        viewModelAddWorkout.saveState.observe(this, Observer { saved -> showResult(saved) })
+        viewModelAddWorkout.errorState.observe(this, Observer { error -> showError(error) })
     }
 
     private fun showResult(saved: Boolean) {
