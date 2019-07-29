@@ -56,6 +56,7 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun initFragment() {
+        getAppBarHeader().setHeaderText(R.string.caption_add_result)
     }
 
     private fun initViewModels() {

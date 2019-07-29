@@ -46,6 +46,7 @@ class AddWorkoutFragment : BaseFragment() {
     }
 
     private fun initFragment() {
+        getAppBarHeader().setHeaderText(R.string.caption_add_workout)
     }
 
     private fun initViewModels() {

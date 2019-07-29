@@ -17,6 +17,8 @@
     <string name="message_added_workout_result">Added workout result</string>
     <string name="caption_workout_overview">Workout overview</string>
     <string name="caption_workout_results">Workout results</string>
+    <string name="caption_add_workout">Add workout</string>
+    <string name="caption_add_result">Add workout result</string>
     <string name="date">Date</string>
     <string name="workout_details">Workout details</string>
 </resources>
