@@ -1,29 +1,34 @@
 package de.fklappan.app.workoutlog.ui.addresult
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
-import de.fklappan.app.workoutlog.common.BaseFragment
-import de.fklappan.app.workoutlog.common.LOG_TAG
-import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.common.*
 import de.fklappan.app.workoutlog.ui.detailview.WorkoutResultGuiModel
-import kotlinx.android.synthetic.main.addworkout.*
+import kotlinx.android.synthetic.main.addresult.*
+import kotlinx.android.synthetic.main.addworkout.editTextContent
+import kotlinx.android.synthetic.main.addworkout.textViewError
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.*
 import javax.inject.Inject
+
+const val EXTRA_DATE = "EXTRA_DATE"
 
 class AddResultFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelAddResult: AddResultViewModel
+    private var currentdate = Date()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.addresult, container, false)
@@ -33,30 +38,39 @@ class AddResultFragment : BaseFragment() {
         getInjector().inject(this)
         super.onViewCreated(view, savedInstanceState)
 
+        restoreState(savedInstanceState)
+
         initFragment()
         initFab()
         initViewModels()
         observeViewModels()
     }
 
-    private fun initFab() {
-        floatingActionButton.setOnClickListener { view ->
-            // TODO 09.07.2019 Flo fill additional data
-            val guiModel = WorkoutResultGuiModel(
-                0,
-                editTextContent.text.toString(),
-                Date(),
-                arguments!!.getInt("workoutId"),
-                false,
-                "",
-                ""
-            )
-            viewModelAddResult.saveResult(guiModel)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong(EXTRA_DATE, currentdate.time)
+    }
+
+    override fun restoreState(savedInstanceState: Bundle?) {
+        // note, dont access gui elements because they are not initialised yet
+        if (savedInstanceState != null) {
+            currentdate.time = savedInstanceState.getLong(EXTRA_DATE, Date().time)
         }
+    }
+
+    private fun initFab() {
+        floatingActionButton.setOnClickListener(this::onClickFab)
     }
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_add_result)
+
+        // set listeners
+        linearLayoutDate.setOnClickListener(this::onClickDate)
+        imagebuttonPr.setOnClickListener(this::onClickPr)
+
+        // load initial data
+        textViewDate.text = currentdate.toPrettyString()
     }
 
     private fun initViewModels() {
@@ -81,4 +95,37 @@ class AddResultFragment : BaseFragment() {
         textViewError.text = error.message
     }
 
+    private fun onClickDate(view: View) {
+        val bottomSheetFragment = BottomSheetFragment(this::chooseDate)
+        bottomSheetFragment.show(fragmentManager, "bottomSheet")
+    }
+
+    private fun chooseDate(view: DatePicker, year: Int, month: Int, day: Int) {
+        Log.d(LOG_TAG, "Date chosen: $year/$month/$day")
+        currentdate = Date(year, month, day)
+        textViewDate.text = currentdate.toPrettyString()
+    }
+
+    private fun onClickPr(view: View) {
+        if (imagebuttonPr.isSelected) {
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
+        }
+        else {
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
+        }
+        imagebuttonPr.isSelected = !imagebuttonPr.isSelected
+    }
+
+    private fun onClickFab(view: View) {
+        val guiModel = WorkoutResultGuiModel(
+            0,
+            editTextContent.text.toString(),
+            currentdate,
+            arguments!!.getInt("workoutId"),
+            imagebuttonPr.isSelected,
+            editTextNote.text.toString(),
+            editTextFeeling.text.toString()
+        )
+        viewModelAddResult.saveResult(guiModel)
+    }
 }

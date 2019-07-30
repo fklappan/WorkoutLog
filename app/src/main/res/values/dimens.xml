@@ -11,4 +11,5 @@
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="spacing_default">8dp</dimen>
     <dimen name="card_min_height">100dp</dimen>
+    <dimen name="imagebutton_size">32dp</dimen>
 </resources>

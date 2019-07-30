@@ -21,4 +21,8 @@
     <string name="caption_add_result">Add workout result</string>
     <string name="date">Date</string>
     <string name="workout_details">Workout details</string>
+    <string name="hint_score_time">Score or time</string>
+    <string name="hint_notes">Notes for workout (optional)</string>
+    <string name="hint_feeling">Feelings regarding the workout (optional)</string>
+    <string name="abbreviation_pr">PR</string>
 </resources>

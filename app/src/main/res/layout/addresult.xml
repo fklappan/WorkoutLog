@@ -5,8 +5,193 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
         >
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    >
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+        >
+
+        <LinearLayout
+                android:id="@+id/linearLayoutDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+        >
+
+            <ImageView
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
+                    android:layout_margin="@dimen/default_margin"
+                    android:src="@drawable/calendar"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+
+            />
+
+            <TextView
+                    android:id="@+id/textViewDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="30.07.2019"
+                    android:layout_gravity="center"
+                    style="@style/ImportantText"
+                    android:layout_weight="1"
+            />
+
+            <TextView
+                    android:id="@+id/textViewPr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/abbreviation_pr"
+                    android:layout_gravity="center"
+                    style="@style/StandardText"
+            />
+
+            <ImageButton
+                    android:id="@+id/imagebuttonPr"
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
+                    android:src="@drawable/star"
+                    android:tint="@color/gray"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_margin="@dimen/default_margin"
+
+
+            />
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutDate"
+        />
+
+
+        <LinearLayout
+                android:id="@+id/linearLayoutScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider1"
+        >
+
+            <ImageView
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
+                    android:layout_margin="@dimen/default_margin"
+                    android:src="@drawable/workout"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+            />
+
+            <EditText
+                    android:id="@+id/editTextContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="10"
+                    android:layout_gravity="center"
+                    style="@style/StandardText"
+                    android:hint="@string/hint_score_time"
+            />
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutScore"
+        />
+
+        <LinearLayout
+                android:id="@+id/linearLayoutNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider2"
+        >
+
+            <ImageView
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
+                    android:layout_margin="@dimen/default_margin"
+                    android:src="@drawable/info"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+            />
+
+            <EditText
+                    android:id="@+id/editTextNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="3"
+                    android:hint="@string/hint_notes"
+                    android:layout_gravity="center"
+                    style="@style/StandardText"
+            />
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lightGray"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutNote"
+        />
+
+
+        <LinearLayout
+                android:id="@+id/linearLayoutFeeling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider3"
+        >
+
+            <ImageView
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
+                    android:layout_margin="@dimen/default_margin"
+                    android:src="@drawable/personalrecord"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+            />
+
+            <EditText
+                    android:id="@+id/editTextFeeling"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_feeling"
+                    android:layout_gravity="center"
+                    style="@style/StandardText"
+            />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <TextView
             android:id="@+id/textViewError"
@@ -15,33 +200,11 @@
             android:scrollbars="vertical"
             android:visibility="gone"
             tools:text="Loading"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-    <EditText
-            android:id="@+id/editTextContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_default"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Lorem ispum dolores i scheiß mi o"
-            android:minLines="10"
-            android:gravity="top"
     />
-
-    <!--<androidx.recyclerview.widget.RecyclerView-->
-    <!--android:id="@+id/recyclerViewWorkouts"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--app:layout_constraintRight_toRightOf="parent"-->
-    <!--app:layout_constraintTop_toTopOf="parent"-->
-    <!--app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-    <!--/>-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
