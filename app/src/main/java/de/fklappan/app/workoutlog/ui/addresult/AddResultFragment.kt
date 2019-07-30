@@ -102,7 +102,7 @@ class AddResultFragment : BaseFragment() {
 
     private fun chooseDate(view: DatePicker, year: Int, month: Int, day: Int) {
         Log.d(LOG_TAG, "Date chosen: $year/$month/$day")
-        currentdate = Date(year, month, day)
+        currentdate = Date(year-1900, month, day)
         textViewDate.text = currentdate.toPrettyString()
     }
 
