@@ -1,12 +1,21 @@
 package de.fklappan.app.workoutlog.ui.addresult
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator.REVERSE
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AnticipateInterpolator
+import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.BounceInterpolator
 import android.widget.DatePicker
+import androidx.core.animation.addListener
+import androidx.core.animation.doOnEnd
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -111,9 +120,33 @@ class AddResultFragment : BaseFragment() {
             imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
         }
         else {
+            playPrButtonAnimation()
             imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
         }
         imagebuttonPr.isSelected = !imagebuttonPr.isSelected
+    }
+
+    private fun playPrButtonAnimation() {
+        // double scale the button for 200 ms and return back to normal size
+        val animScaleX = ObjectAnimator.ofFloat(imagebuttonPr, "scaleX", 1.0f, 2.3f)
+        with(animScaleX) {
+            repeatCount = 1
+            repeatMode = REVERSE
+            duration = 200
+
+        }
+
+        val animScaleY = ObjectAnimator.ofFloat(imagebuttonPr, "scaleY", 1.0f, 2.3f)
+        with(animScaleY) {
+            repeatCount = 1
+            repeatMode = REVERSE
+            duration = 200
+
+        }
+
+        val growAnimator = AnimatorSet()
+        growAnimator.play(animScaleX).with(animScaleY)
+        growAnimator.start()
     }
 
     private fun onClickFab(view: View) {
