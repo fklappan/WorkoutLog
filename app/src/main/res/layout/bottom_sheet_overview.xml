@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomSheet"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_small"
+        android:padding="@dimen/default_margin"
+        tools:context=".MainActivity"
+        android:background="@drawable/bottom_sheet_shape"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+>
+
+    <TextView
+            android:id="@+id/textViewFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Filter settings"
+            style="@style/ImportantText"
+    />
+
+    <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupTags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+
+            app:layout_constraintTop_toBottomOf="@id/textViewFilter"
+            app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorite"
+                app:chipBackgroundColor="@color/chip_state_list_background"
+                style="@style/ChipStyle"
+                android:clickable="true"
+                android:focusable="true"
+                android:tag="0"
+        />
+
+        <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Never finished"
+                app:chipBackgroundColor="@color/gray"
+                style="@style/ChipStyle"
+                android:clickable="true"
+                android:focusable="true"
+                android:tag="1"
+        />
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,13 @@ import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutsUseCase
 import de.fklappan.app.workoutlog.domain.usecases.ToggleFavoriteWorkoutUseCase
+import io.reactivex.Flowable.fromIterable
+import io.reactivex.Observable
+import io.reactivex.Observable.fromIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+const val CHIP_TAG_FAVORITES = 0
+const val CHIP_TAG_NEVER_FINISHED = 1
 
 class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
     RxViewModel() {
@@ -49,6 +54,29 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
                 .subscribe(
                     this::handleSuccessFavoriteUseCase,
                     this::handleErrorFavoriteUseCase
+                )
+        )
+    }
+
+    fun filterWorkouts(filterList: ArrayList<Int>) {
+        addDisposable(
+            GetWorkoutsUseCase(repository).execute()
+                .subscribeOn(Schedulers.io())
+                .flatMapObservable{Observable.fromIterable(it)}
+                .filter{workout -> workout.favorite}
+                .toList()
+                .observeOn(AndroidSchedulers.mainThread())
+
+                .subscribe(
+                    {
+                        val guiModelList = ArrayList<WorkoutGuiModel>()
+                        for (domainWorkout in it) {
+                            guiModelList.add(modelMapper.mapDomainToGui(domainWorkout))
+                        }
+                        _workoutList.value = guiModelList
+                    }
+                    ,
+                    this::handleError
                 )
         )
     }

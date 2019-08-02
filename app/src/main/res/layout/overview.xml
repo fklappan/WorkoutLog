@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/motionLayout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutDescription="@xml/collapsing_toolbar"
-        tools:showPaths="true"
-        tools:context=".MainActivity"
-        android:background="@color/lightGray"
-        >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:contentDescription="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:fitsSystemWindows="true"
-        android:scaleType="center"
-        android:src="@drawable/barbell_lift_victor_freitas_unsplash"
-        android:background="@color/colorPrimary"
-    />
+>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewWorkouts"
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/motionLayout"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutDescription="@xml/collapsing_toolbar"
+            tools:showPaths="true"
+            tools:context=".MainActivity"
+            android:background="@color/lightGray"
+            >
+
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_workout"
+            android:layout_height="200dp"
+            android:contentDescription="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:fitsSystemWindows="true"
+            android:scaleType="center"
+            android:src="@drawable/barbell_lift_victor_freitas_unsplash"
+            android:background="@color/colorPrimary"
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewWorkouts"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageView"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_workout"
+        />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                app:srcCompat="@drawable/add"
+                android:tint="#FFFFFF"/>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <!-- Adding bottom sheet after main content -->
+    <include layout="@layout/bottom_sheet_overview"
     />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/add"
-            android:tint="#FFFFFF"/>
-
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
