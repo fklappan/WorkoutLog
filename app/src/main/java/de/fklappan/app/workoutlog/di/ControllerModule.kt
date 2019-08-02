@@ -18,7 +18,6 @@ class ControllerModule(private val context: Context) {
     @Provides
     fun provideRepository(appDatabase: AppDatabase): WorkoutLogRepository {
         return WorkoutLogRepositoryImpl(appDatabase.workoutDao(), appDatabase.resultDao())
-//        return WorkoutLogRepositoryImpl(appDatabase.workoutDao(), appDatabase.resultDao())
     }
 
     @Provides

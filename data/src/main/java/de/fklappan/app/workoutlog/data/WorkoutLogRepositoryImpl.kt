@@ -2,12 +2,12 @@ package de.fklappan.app.workoutlog.data
 
 import de.fklappan.app.workoutlog.data.result.ResultDao
 import de.fklappan.app.workoutlog.data.workout.WorkoutDao
+import de.fklappan.app.workoutlog.domain.TagDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
 import io.reactivex.Single
 
-//class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao) : WorkoutLogRepository {
 class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao, val resultDao: ResultDao) : WorkoutLogRepository {
 
     private val modelMapper = ModelMapper()
@@ -51,5 +51,9 @@ class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao, val resultDao: Result
     override fun updateWorkout(workoutDomainModel: WorkoutDomainModel) {
         val dataModel = modelMapper.mapDomainToData(workoutDomainModel)
         workoutDao.updateWorkout(dataModel)
+    }
+
+    override fun getTags(): List<TagDomainModel> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
