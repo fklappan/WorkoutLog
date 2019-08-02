@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/collapsing_toolbar_details"
+        tools:showPaths="true"
+        tools:context=".MainActivity"
+        android:background="@color/lightGray"
+>
+
+    <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:contentDescription="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:fitsSystemWindows="true"
+            android:scaleType="center"
+            android:src="@drawable/statistics_stephen_dawson_unsplash"
+            android:background="@color/colorPrimary"
+            app:layout_constraintHorizontal_bias="0.0"/>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardWeek"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_small"
+            android:minHeight="@dimen/card_min_height"
+            android:minWidth="@dimen/card_min_height"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:layout_constraintHorizontal_weight="1"
+    >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/default_margin"
+        >
+
+            <ImageView
+                    android:id="@+id/imageViewIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/workout"
+                    android:tint="@color/materialcyan"
+            />
+
+            <TextView
+                    android:id="@+id/textViewCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageViewIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="@dimen/default_margin_small"
+                    tools:text="5"
+                    style="@style/ImportantText"
+            />
+
+            <TextView
+                    android:id="@+id/textViewWorkoutDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin_small"
+                    app:layout_constraintTop_toBottomOf="@id/textViewCaption"
+                    app:layout_constraintStart_toEndOf="@id/imageViewIcon"
+                    android:layout_margin="@dimen/default_margin_small"
+
+                    tools:text="this week"
+                    style="@style/StandardText"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardMonth"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_small"
+            android:minHeight="@dimen/card_min_height"
+            android:minWidth="@dimen/card_min_height"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintLeft_toRightOf="@id/cardWeek"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+    >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/default_margin"
+        >
+
+            <ImageView
+                    android:id="@+id/imageViewIconMonth"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/workout"
+                    android:tint="@color/colorAccentOld"
+            />
+
+            <TextView
+                    android:id="@+id/textViewCaptionMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageViewIconMonth"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="@dimen/default_margin_small"
+                    tools:text="22"
+                    style="@style/ImportantText"
+            />
+
+            <TextView
+                    android:id="@+id/textViewWorkoutDetailsMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin_small"
+                    app:layout_constraintTop_toBottomOf="@id/textViewCaptionMonth"
+                    app:layout_constraintStart_toEndOf="@id/imageViewIconMonth"
+                    android:layout_margin="@dimen/default_margin_small"
+                    tools:text="this month"
+                    style="@style/StandardText"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+            <!--android:id="@+id/floatingActionButton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:layout_margin="@dimen/fab_margin"-->
+            <!--app:srcCompat="@drawable/add"-->
+            <!--android:tint="#FFFFFF"/>-->
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
