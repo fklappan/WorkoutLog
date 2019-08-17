@@ -10,6 +10,8 @@ import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+// TODO rename, as this is a save workout viewmodel ?
+
 class AddWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
     RxViewModel() {
 
