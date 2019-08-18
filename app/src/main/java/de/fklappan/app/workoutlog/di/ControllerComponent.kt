@@ -3,7 +3,7 @@ package de.fklappan.app.workoutlog.di
 import dagger.Subcomponent
 import de.fklappan.app.workoutlog.ui.addresult.AddResultFragment
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutFragment
-import de.fklappan.app.workoutlog.ui.addworkout.EditWorkoutFragment
+import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutFragment
 import de.fklappan.app.workoutlog.ui.detailview.DetailviewWorkoutFragment
 import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutFragment
 

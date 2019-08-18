@@ -1,4 +1,4 @@
-package de.fklappan.app.workoutlog.ui.addworkout
+package de.fklappan.app.workoutlog.ui.editworkout
 
 import android.os.Bundle
 import android.util.Log
@@ -13,23 +13,17 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
-import de.fklappan.app.workoutlog.ui.detailview.DetailviewWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
-import kotlinx.android.synthetic.main.addworkout.*
+import kotlinx.android.synthetic.main.addworkout.editTextContent
+import kotlinx.android.synthetic.main.addworkout.textViewError
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import javax.inject.Inject
-
-// TODO load workout from viewmodel
-// TODO save changed workout to viewmodel
-// TODO maybe reverse dependency and make EditWorkoutFragment the base class
-
 
 class EditWorkoutFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var viewModelAddWorkout: AddWorkoutViewModel
-    private lateinit var viewModelLoadWorkout: DetailviewWorkoutViewModel
+    private lateinit var viewModel: EditWorkoutViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.addworkout, container, false)
@@ -43,36 +37,37 @@ class EditWorkoutFragment : BaseFragment() {
         initFab()
         initViewModels()
         observeViewModels()
+        fetchData()
     }
 
     private fun initFab() {
         floatingActionButton.setOnClickListener {
-            val guiModel = WorkoutGuiModel(0, editTextContent.text.toString(), favorite = false)
-            viewModelAddWorkout.saveWorkout(guiModel)
+            viewModel.saveWorkout(editTextContent.text.toString())
         }
     }
 
     private fun initFragment() {
-        getAppBarHeader().setHeaderText(R.string.caption_add_workout)
+        getAppBarHeader().setHeaderText(R.string.caption_edit_workout)
     }
 
     private fun initViewModels() {
-        viewModelAddWorkout = ViewModelProviders.of(this, viewModelFactory).get(AddWorkoutViewModel::class.java)
-        viewModelLoadWorkout = ViewModelProviders.of(this, viewModelFactory).get(DetailviewWorkoutViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(EditWorkoutViewModel::class.java)
     }
 
     private fun observeViewModels() {
-        viewModelAddWorkout.saveState.observe(this, Observer { saved -> showResult(saved) })
-        viewModelAddWorkout.errorState.observe(this, Observer { error -> showError(error) })
-        viewModelLoadWorkout.errorStream.observe(this, Observer { error -> showError(error) })
-        viewModelLoadWorkout.workoutDetailStream
+        viewModel.saveState.observe(this, Observer { saved -> showResult(saved) })
+        viewModel.errorState.observe(this, Observer { error -> showError(error) })
+        viewModel.workoutStream.observe(this, Observer { workout -> showWorkout(workout)})
+    }
 
+    private fun showWorkout(workout: WorkoutGuiModel) {
+        editTextContent.setText(workout.text)
     }
 
     private fun showResult(saved: Boolean) {
         Log.d(LOG_TAG, "saved workout: $saved")
         textViewError.visibility = View.GONE
-        Snackbar.make(view!!, getString(R.string.message_added_workout), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(view!!, getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(view!!).navigateUp()
     }
 
@@ -80,6 +75,10 @@ class EditWorkoutFragment : BaseFragment() {
         Log.d(LOG_TAG, "Error occured", error)
         textViewError.visibility = View.VISIBLE
         textViewError.text = error.message
+    }
+
+    private fun fetchData() {
+        viewModel.loadWorkout(arguments!!.getInt("workoutId"))
     }
 
 

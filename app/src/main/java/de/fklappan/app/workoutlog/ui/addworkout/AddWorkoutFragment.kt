@@ -61,7 +61,7 @@ class AddWorkoutFragment : BaseFragment() {
     private fun showResult(saved: Boolean) {
         Log.d(LOG_TAG, "saved workout: $saved")
         textViewError.visibility = View.GONE
-        Snackbar.make(view!!, getString(R.string.message_added_workout), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(view!!, getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(view!!).navigateUp()
     }
 
