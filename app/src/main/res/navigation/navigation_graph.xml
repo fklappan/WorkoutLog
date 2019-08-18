@@ -25,8 +25,13 @@
               android:label="DetailviewWorkoutFragment">
         <action android:id="@+id/action_detailviewWorkoutFragment_to_addResultFragment"
                 app:destination="@id/addResultFragment"/>
+        <action android:id="@+id/action_detailviewWorkoutFragment_to_editWorkoutFragment"
+                app:destination="@id/editWorkoutFragment"/>
     </fragment >
 
     <fragment  android:id="@+id/addResultFragment" android:name="de.fklappan.app.workoutlog.ui.addresult.AddResultFragment"
               android:label="AddResultFragment"/>
+    <fragment android:id="@+id/editWorkoutFragment"
+              android:name="de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutFragment"
+              android:label="EditWorkoutFragment"/>
 </navigation>

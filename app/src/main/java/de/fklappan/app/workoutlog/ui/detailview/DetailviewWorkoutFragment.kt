@@ -3,9 +3,7 @@ package de.fklappan.app.workoutlog.ui.detailview
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -45,6 +43,19 @@ class DetailviewWorkoutFragment : BaseFragment() {
         fetchData()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.edit, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item!!.itemId == R.id.action_edit) {
+            editWorkout()
+//            viewModelDetail.editWorkoutClicked()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_results)
         workoutResultAdapter = WorkoutResultAdapter { clickedResult ->
@@ -53,6 +64,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
 
         recyclerViewResults.adapter = workoutResultAdapter
         imageButtonFavorite.setOnClickListener { viewModelDetail.favoriteClicked() }
+        setHasOptionsMenu(true)
     }
 
     private fun initFab() {
@@ -84,6 +96,11 @@ class DetailviewWorkoutFragment : BaseFragment() {
         } else {
             imageButtonFavorite.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
         }
+    }
+
+    private fun editWorkout() {
+        Navigation.findNavController(view!!)
+            .navigate(R.id.action_detailviewWorkoutFragment_to_editWorkoutFragment, arguments)
     }
 
     private fun showResult(result: WorkoutDetailsGuiModel) {

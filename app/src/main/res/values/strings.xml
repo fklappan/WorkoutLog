@@ -13,7 +13,7 @@
     <string name="menu_prs">Personal records</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-    <string name="message_added_workout">Added workout</string>
+    <string name="message_saved_workout">Saved workout</string>
     <string name="message_added_workout_result">Added workout result</string>
     <string name="caption_workout_overview">Workout overview</string>
     <string name="caption_workout_results">Workout results</string>
@@ -25,4 +25,7 @@
     <string name="hint_notes">Notes for workout (optional)</string>
     <string name="hint_feeling">Feelings regarding the workout (optional)</string>
     <string name="abbreviation_pr">PR</string>
+    <string name="menu_edit">Edit</string>
+    <string name="caption_edit_workout">Edit workout</string>
+
 </resources>

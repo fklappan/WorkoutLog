@@ -6,6 +6,7 @@ import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.ui.addresult.AddResultViewModel
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.detailview.DetailviewWorkoutViewModel
+import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutViewModel
 
 class ViewModelFactory(private val repository: WorkoutLogRepository, private val guiModelMapper: GuiModelMapper) :
@@ -23,6 +24,9 @@ class ViewModelFactory(private val repository: WorkoutLogRepository, private val
         }
         if (modelClass.isAssignableFrom(AddResultViewModel::class.java)) {
             return AddResultViewModel(repository, guiModelMapper) as T
+        }
+        if (modelClass.isAssignableFrom(EditWorkoutViewModel::class.java)) {
+            return EditWorkoutViewModel(repository, guiModelMapper) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
