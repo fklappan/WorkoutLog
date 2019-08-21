@@ -1,1 +1,2 @@
-include ':app', ':data', ':domain'
+include ':app', ':data', ':domain', ':expandablecardview'
+project(':expandablecardview').projectDir = new File(settingsDir, '../expandablecardview/library')
