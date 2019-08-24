@@ -25,7 +25,7 @@
     <string name="hint_notes">Notes for workout (optional)</string>
     <string name="hint_feeling">Feelings regarding the workout (optional)</string>
     <string name="abbreviation_pr">PR</string>
-    <string name="menu_edit">Edit</string>
+    <string name="menu_edit_workout">Edit workout</string>
     <string name="caption_edit_workout">Edit workout</string>
     <string name="day_streak">Day streak</string>
     <plurals name="quantity_monthly_workouts">
