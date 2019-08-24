@@ -1,10 +1,12 @@
 package de.fklappan.app.workoutlog.common
 
+import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
 import de.fklappan.app.workoutlog.ui.detailview.WorkoutDetailsGuiModel
 import de.fklappan.app.workoutlog.ui.detailview.WorkoutResultGuiModel
+import de.fklappan.app.workoutlog.ui.overviewstatistic.StatisticCurrentGuiModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import javax.inject.Inject
 
@@ -32,6 +34,15 @@ class GuiModelMapper @Inject constructor() {
         return WorkoutDetailsGuiModel(mapDomainToGui(domainModel.workout), guiResultList)
     }
 
+    fun mapDomainToGui(domainModel: StatisticCurrentDomainModel): StatisticCurrentGuiModel =
+        StatisticCurrentGuiModel(
+            domainModel.streak,
+            domainModel.isWorkoutStreak,
+            domainModel.workoutCountMonth,
+            domainModel.workoutCountYear
+        )
+
+
     fun mapGuiToDomain(guiModel: WorkoutGuiModel): WorkoutDomainModel =
         WorkoutDomainModel(guiModel.workoutId, guiModel.text, guiModel.favorite)
 
@@ -45,6 +56,7 @@ class GuiModelMapper @Inject constructor() {
             guiModel.note,
             guiModel.feeling
         )
+
 
 
 }

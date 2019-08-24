@@ -27,5 +27,20 @@
     <string name="abbreviation_pr">PR</string>
     <string name="menu_edit">Edit</string>
     <string name="caption_edit_workout">Edit workout</string>
+    <string name="day_streak">Day streak</string>
+    <plurals name="quantity_monthly_workouts">
+        <item quantity="one">day worked out this month</item>
+        <item quantity="other">days worked out this month</item>
+    </plurals>
+    <plurals name="quantity_yearly_workouts">
+        <item quantity="one">day worked out this year</item>
+        <item quantity="other">days worked out this year</item>
+    </plurals>
+    <plurals name="quantity_rest_days">
+        <item quantity="one">rest day</item>
+        <item quantity="other">rest days - come on!</item>
+    </plurals>
+    <string name="caption_statistic_overview">Statistics</string>
+    <string name="menu_statistics">Statistics</string>
 
 </resources>

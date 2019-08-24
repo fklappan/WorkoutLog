@@ -6,9 +6,13 @@ import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
 import io.reactivex.Single
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 //class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao) : WorkoutLogRepository {
 class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao, val resultDao: ResultDao) : WorkoutLogRepository {
+
 
     private val modelMapper = ModelMapper()
 
@@ -26,6 +30,17 @@ class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao, val resultDao: Result
         }
         return domainModelList
     }
+
+    override fun getResultsForPeriod(start: Date, end: Date) : List<WorkoutResultDomainModel> {
+        val domainModelList = ArrayList<WorkoutResultDomainModel>()
+
+        val dataModelList = resultDao.getResultsForPeriod(start, end)
+        for (dataModel in dataModelList) {
+            domainModelList.add(modelMapper.mapDataToDomain(dataModel))
+        }
+        return domainModelList
+    }
+
 
     override fun getWorkouts(): List<WorkoutDomainModel> {
         val domainModelList = ArrayList<WorkoutDomainModel>()

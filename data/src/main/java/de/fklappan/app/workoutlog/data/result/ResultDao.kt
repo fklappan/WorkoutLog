@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import java.util.*
 
 @Dao
 interface ResultDao{
@@ -13,4 +14,7 @@ interface ResultDao{
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insertResult(resultDataModel: ResultDataModel)
+
+    @Query("SELECT * FROM result WHERE date BETWEEN :start AND :end")
+    fun getResultsForPeriod(start: Date, end: Date) : List<ResultDataModel>
 }

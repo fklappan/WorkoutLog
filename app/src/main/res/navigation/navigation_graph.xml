@@ -34,4 +34,8 @@
     <fragment android:id="@+id/editWorkoutFragment"
               android:name="de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutFragment"
               android:label="EditWorkoutFragment"/>
+    <fragment
+            android:id="@+id/overviewStatisticFragment"
+            android:name="de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticFragment"
+            android:label="OverviewResultFragment" />
 </navigation>

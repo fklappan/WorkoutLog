@@ -77,8 +77,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     )
                 }
             }
-            R.id.nav_result -> {
-//                Navigation.findNavController(findViewById(R.id.navHostFragment)).navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment)
+            R.id.nav_statistic -> {
+                if (navController.currentDestination?.id != R.id.overviewStatisticFragment) {
+                    navController.navigate(R.id.overviewStatisticFragment)
+                }
             }
             R.id.nav_favorite -> {
 

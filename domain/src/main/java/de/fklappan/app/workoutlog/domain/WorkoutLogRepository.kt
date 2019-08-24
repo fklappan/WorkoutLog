@@ -1,6 +1,6 @@
 package de.fklappan.app.workoutlog.domain
 
-import io.reactivex.Single
+import java.util.*
 
 public interface WorkoutLogRepository {
 
@@ -15,5 +15,7 @@ public interface WorkoutLogRepository {
     fun addResult(workoutId: Int, result: WorkoutResultDomainModel)
 
     fun updateWorkout(workoutDomainModel: WorkoutDomainModel)
+
+    fun getResultsForPeriod(start: Date, end: Date) : List<WorkoutResultDomainModel>
 
 }
