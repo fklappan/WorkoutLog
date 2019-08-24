@@ -1,0 +1,90 @@
+package de.fklappan.app.workoutlog
+
+import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
+import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
+import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
+import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
+import de.fklappan.app.workoutlog.domain.usecases.GetStatisticUseCase
+import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutsUseCase
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import io.reactivex.observers.TestObserver
+import org.junit.Test
+import java.util.*
+import kotlin.collections.ArrayList
+
+class TestGetStatisticUseCase {
+
+    private val repository = mockk<WorkoutLogRepository>()
+
+
+    // creates 3 consecutive training days
+    private fun createConsecutiveWorkoutDays() : List<WorkoutResultDomainModel>{
+        val testData = ArrayList<WorkoutResultDomainModel>()
+
+        val calendar = Calendar.getInstance()
+
+        val today = WorkoutResultDomainModel(1, "today", calendar.time, 1, true, "note", "feeling")
+        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        val yesterday = WorkoutResultDomainModel(2, "yesterday", calendar.time, 1, true, "note", "feeling")
+        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        val beforeYesterday = WorkoutResultDomainModel(3, "day before yesterday", calendar.time, 1, true, "note", "feeling")
+
+        testData.add(today)
+        testData.add(yesterday)
+        testData.add(beforeYesterday)
+        return testData
+    }
+
+    // creates a workout two days ago
+    private fun createRestDays() : List<WorkoutResultDomainModel>{
+        val testData = ArrayList<WorkoutResultDomainModel>()
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, -2)
+
+        val beforeYesterday = WorkoutResultDomainModel(3, "day before yesterday", calendar.time, 1, true, "note", "feeling")
+        testData.add(beforeYesterday)
+        return testData
+    }
+
+
+    @Test
+    fun shouldHaveConsecutiveTrainingDays() {
+        // prepare test
+        every { repository.getResultsForPeriod(any(), any()) } returns createConsecutiveWorkoutDays()
+        val uut = GetStatisticUseCase(repository)
+
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute().test()
+        bla.awaitTerminalEvent()
+
+        bla.assertNoErrors()
+        bla.assertValue { statistics -> statistics.streak == 3 }
+        bla.assertValue { statistics -> statistics.isWorkoutStreak }
+        // as TODAY is the origin it is possible if today is the first of the month, we only have one workout day this month
+        bla.assertValue { statistics -> statistics.workoutCountMonth >= 1 }
+        bla.assertValue { statistics -> statistics.workoutCountYear == 3 }
+
+        verify { repository.getResultsForPeriod(any(), any()) }
+    }
+
+    @Test
+    fun shouldHaveRestDay() {
+        // prepare test
+        every { repository.getResultsForPeriod(any(), any()) } returns createRestDays()
+        val uut = GetStatisticUseCase(repository)
+
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute().test()
+        bla.awaitTerminalEvent()
+
+        bla.assertNoErrors()
+        bla.assertValue { statistics -> statistics.streak == 1 }
+        bla.assertValue { statistics -> !statistics.isWorkoutStreak }
+        bla.assertValue { statistics -> statistics.workoutCountMonth == 1 }
+        bla.assertValue { statistics -> statistics.workoutCountYear == 1 }
+
+        verify { repository.getResultsForPeriod(any(), any()) }
+    }
+
+}
