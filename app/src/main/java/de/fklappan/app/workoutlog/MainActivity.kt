@@ -9,13 +9,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
 import de.fklappan.app.workoutlog.common.AppBarHeader
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AppBarHeader {
+
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+        navController = Navigation.findNavController(navHostFragment.view!!)
     }
 
     override fun onBackPressed() {
@@ -66,9 +71,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_workout -> {
                 // setPopUpTo the root of the given navigation graph takes care of clearing the back stack
-                if (Navigation.findNavController(findViewById(R.id.navHostFragment)).currentDestination?.id != R.id.overviewFragment) {
-                    Navigation.findNavController(findViewById(R.id.navHostFragment)).navigate(
-                        R.id.overviewFragment, null,
+                if (navController.currentDestination?.id != R.id.overviewFragment) {
+                    navController.navigate(R.id.overviewFragment, null,
                         NavOptions.Builder().setPopUpTo(R.id.navigation_graph, true).build()
                     )
                 }
