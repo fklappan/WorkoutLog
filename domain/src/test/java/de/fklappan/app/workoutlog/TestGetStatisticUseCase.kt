@@ -18,12 +18,9 @@ class TestGetStatisticUseCase {
 
     private val repository = mockk<WorkoutLogRepository>()
 
-
-    // creates 3 consecutive training days
-    private fun createConsecutiveWorkoutDays() : List<WorkoutResultDomainModel>{
+    // creates 3 consecutive training days, starting from given calendar
+    private fun createConsecutiveWorkoutDays(calendar: Calendar) : List<WorkoutResultDomainModel>{
         val testData = ArrayList<WorkoutResultDomainModel>()
-
-        val calendar = Calendar.getInstance()
 
         val today = WorkoutResultDomainModel(1, "today", calendar.time, 1, true, "note", "feeling")
         calendar.add(Calendar.DAY_OF_MONTH, -1)
@@ -49,11 +46,31 @@ class TestGetStatisticUseCase {
         return testData
     }
 
+    @Test
+    fun shouldHaveConsecutiveTrainingDaysFromToday() {
+        // creates consecutive training days from today on
+        every { repository.getResultsForPeriod(any(), any()) } returns createConsecutiveWorkoutDays(Calendar.getInstance())
+        val uut = GetStatisticUseCase(repository)
+
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute().test()
+        bla.awaitTerminalEvent()
+
+        bla.assertNoErrors()
+        bla.assertValue { statistics -> statistics.streak == 3 }
+        bla.assertValue { statistics -> statistics.isWorkoutStreak }
+        // as TODAY is the origin it is possible if today is the first of the month, we only have one workout day this month
+        bla.assertValue { statistics -> statistics.workoutCountMonth >= 1 }
+        bla.assertValue { statistics -> statistics.workoutCountYear == 3 }
+
+        verify { repository.getResultsForPeriod(any(), any()) }
+    }
 
     @Test
-    fun shouldHaveConsecutiveTrainingDays() {
-        // prepare test
-        every { repository.getResultsForPeriod(any(), any()) } returns createConsecutiveWorkoutDays()
+    fun shouldHaveConsecutiveTrainingDaysFromYesterday() {
+        // creates consecutive training days from yesterday on
+        val yesterday = Calendar.getInstance()
+        yesterday.add(Calendar.DAY_OF_MONTH, -1)
+        every { repository.getResultsForPeriod(any(), any()) } returns createConsecutiveWorkoutDays(yesterday)
         val uut = GetStatisticUseCase(repository)
 
         val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute().test()
