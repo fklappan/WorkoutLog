@@ -1,11 +1,9 @@
 package de.fklappan.app.workoutlog
 
 import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
 import de.fklappan.app.workoutlog.domain.usecases.GetStatisticUseCase
-import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutsUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -52,7 +50,7 @@ class TestGetStatisticUseCase {
         every { repository.getResultsForPeriod(any(), any()) } returns createConsecutiveWorkoutDays(Calendar.getInstance())
         val uut = GetStatisticUseCase(repository)
 
-        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute().test()
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute(Calendar.getInstance()).test()
         bla.awaitTerminalEvent()
 
         bla.assertNoErrors()
@@ -73,7 +71,7 @@ class TestGetStatisticUseCase {
         every { repository.getResultsForPeriod(any(), any()) } returns createConsecutiveWorkoutDays(yesterday)
         val uut = GetStatisticUseCase(repository)
 
-        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute().test()
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute(Calendar.getInstance()).test()
         bla.awaitTerminalEvent()
 
         bla.assertNoErrors()
@@ -92,7 +90,7 @@ class TestGetStatisticUseCase {
         every { repository.getResultsForPeriod(any(), any()) } returns createRestDays()
         val uut = GetStatisticUseCase(repository)
 
-        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute().test()
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute(Calendar.getInstance()).test()
         bla.awaitTerminalEvent()
 
         bla.assertNoErrors()
@@ -104,4 +102,33 @@ class TestGetStatisticUseCase {
         verify { repository.getResultsForPeriod(any(), any()) }
     }
 
+    @Test
+    fun `consecutive days into last month`() {
+        // create first day of month
+        val firstDayOfMonth = Calendar.getInstance()
+        firstDayOfMonth.set(Calendar.DAY_OF_MONTH, 1)
+
+        every { repository.getResultsForPeriod(any(), any()) } returns createConsecutiveWorkoutDays(firstDayOfMonth.clone() as Calendar)
+        val uut = GetStatisticUseCase(repository)
+
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute(firstDayOfMonth).test()
+        bla.awaitTerminalEvent()
+        bla.assertNoErrors()
+        bla.assertValue { statistics -> statistics.streak == 3 }
+    }
+
+    @Test
+    fun `rest day edge case - never done a workout`() {
+
+        val emptyWorkoutList = ArrayList<WorkoutResultDomainModel>()
+        every { repository.getResultsForPeriod(any(), any()) } returns emptyWorkoutList
+
+        val uut = GetStatisticUseCase(repository)
+
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute(Calendar.getInstance()).test()
+        bla.awaitTerminalEvent()
+        bla.assertNoErrors()
+        bla.assertValue { statistics -> statistics.streak == 365 }
+        bla.assertValue { statistics -> !statistics.isWorkoutStreak }
+    }
 }

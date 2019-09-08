@@ -13,6 +13,7 @@ import de.fklappan.app.workoutlog.domain.usecases.GetStatisticUseCase
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class OverviewStatisticViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
     RxViewModel() {
@@ -31,7 +32,7 @@ class OverviewStatisticViewModel(private val repository: WorkoutLogRepository, p
 
     fun loadData() {
         addDisposable(
-            GetStatisticUseCase(repository).execute()
+            GetStatisticUseCase(repository).execute(Calendar.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
