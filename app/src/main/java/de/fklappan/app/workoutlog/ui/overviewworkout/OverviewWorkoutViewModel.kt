@@ -18,6 +18,7 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
 
     // exposing the whole list for initial data fetching or hard reload
     private val _workoutList = MutableLiveData<MutableList<WorkoutGuiModel>>()
+    private val _workoutListUnfiltered = ArrayList<WorkoutGuiModel>()
     val workoutList: LiveData<MutableList<WorkoutGuiModel>>
         get() = _workoutList
 
@@ -53,6 +54,17 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
         )
     }
 
+    fun searchWorkoutQueryChanged(query: String) {
+        val filteredList = ArrayList<WorkoutGuiModel>()
+
+        for(workout in _workoutListUnfiltered) {
+            if (workout.text.contains(query, true)) {
+                filteredList.add(workout)
+            }
+        }
+        _workoutList.value = filteredList
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // private methods
 
@@ -62,6 +74,8 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
         for (domainWorkout in workoutList) {
             guiModelList.add(modelMapper.mapDomainToGui(domainWorkout))
         }
+        _workoutListUnfiltered.clear()
+        _workoutListUnfiltered.addAll(guiModelList)
         _workoutList.value = guiModelList
     }
 

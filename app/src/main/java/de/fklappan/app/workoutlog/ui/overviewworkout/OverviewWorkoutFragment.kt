@@ -2,9 +2,8 @@ package de.fklappan.app.workoutlog.ui.overviewworkout
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -48,6 +47,28 @@ class OverviewWorkoutFragment : BaseFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_overview)
         overviewWorkoutAdapter = OverviewWorkoutAdapter(this::workoutClicked, this::favoriteClicked)
         recyclerViewWorkouts.adapter = overviewWorkoutAdapter
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.search, menu)
+
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModelOverviewWorkout.searchWorkoutQueryChanged(newText!!)
+                return true
+            }
+
+        })
     }
 
     private fun workoutClicked(workoutGuiModel: WorkoutGuiModel) {
