@@ -6,14 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import de.fklappan.app.workoutlog.common.GuiModelMapper
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.RxViewModel
+import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
-import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutsUseCase
-import de.fklappan.app.workoutlog.domain.usecases.ToggleFavoriteWorkoutUseCase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Scheduler
 
-class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
+class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
+                               private val schedulerIo: Scheduler,
+                               private val schedulerMainThread: Scheduler,
+                               private val modelMapper: GuiModelMapper
+) :
     RxViewModel() {
 
     // exposing the whole list for initial data fetching or hard reload
@@ -32,9 +33,9 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
 
     fun loadWorkouts() {
         addDisposable(
-            GetWorkoutsUseCase(repository).execute()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            useCaseFactory.createGetWorkoutsUseCase().execute()
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
                 .subscribe(
                     this::handleSuccess,
                     this::handleError
@@ -44,9 +45,9 @@ class OverviewWorkoutViewModel(private val repository: WorkoutLogRepository, pri
 
     fun favoriteClicked(workoutId: Int) {
         addDisposable(
-            ToggleFavoriteWorkoutUseCase(repository).execute(workoutId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            useCaseFactory.createToggleFavoriteWorkoutUseCase().execute(workoutId)
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
                 .subscribe(
                     this::handleSuccessFavoriteUseCase,
                     this::handleErrorFavoriteUseCase

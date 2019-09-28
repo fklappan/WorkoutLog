@@ -4,13 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.fklappan.app.workoutlog.common.GuiModelMapper
 import de.fklappan.app.workoutlog.common.RxViewModel
+import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.domain.usecases.AddWorkoutResultUseCase
 import de.fklappan.app.workoutlog.ui.detailview.WorkoutResultGuiModel
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class AddResultViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
+class AddResultViewModel(private val useCaseFactory: UseCasesFactory,
+                         private val schedulerIo: Scheduler,
+                         private val schedulerMainThread: Scheduler,
+                         private val modelMapper: GuiModelMapper) :
     RxViewModel() {
 
     private val _errorState = MutableLiveData<Throwable>()
@@ -25,9 +30,9 @@ class AddResultViewModel(private val repository: WorkoutLogRepository, private v
 
     fun saveResult(guiModel: WorkoutResultGuiModel) {
         addDisposable(
-            AddWorkoutResultUseCase(repository).execute(modelMapper.mapGuiToDomain(guiModel))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            useCaseFactory.createAddWorkoutResultUseCase().execute(modelMapper.mapGuiToDomain(guiModel))
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
                 .subscribe(
                     this::handleSuccess,
                     this::handleError

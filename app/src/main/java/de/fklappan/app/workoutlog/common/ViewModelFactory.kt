@@ -9,28 +9,36 @@ import de.fklappan.app.workoutlog.ui.detailview.DetailviewWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutViewModel
+import io.reactivex.Scheduler
 
-class ViewModelFactory(private val repository: WorkoutLogRepository, private val guiModelMapper: GuiModelMapper) :
+/**
+ * Factory for creating the ViewModel instances.
+ */
+class ViewModelFactory(private val guiModelMapper: GuiModelMapper,
+                       private val useCasesFactory: UseCasesFactory,
+                       private val schedulerIo : Scheduler,
+                       private val schedulerMainThread: Scheduler
+) :
     ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(OverviewWorkoutViewModel::class.java)) {
-            return OverviewWorkoutViewModel(repository, guiModelMapper) as T
+            return OverviewWorkoutViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
         if (modelClass.isAssignableFrom(AddWorkoutViewModel::class.java)) {
-            return AddWorkoutViewModel(repository, guiModelMapper) as T
+            return AddWorkoutViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
         if (modelClass.isAssignableFrom(DetailviewWorkoutViewModel::class.java)) {
-            return DetailviewWorkoutViewModel(repository, guiModelMapper) as T
+            return DetailviewWorkoutViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
         if (modelClass.isAssignableFrom(AddResultViewModel::class.java)) {
-            return AddResultViewModel(repository, guiModelMapper) as T
+            return AddResultViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
         if (modelClass.isAssignableFrom(EditWorkoutViewModel::class.java)) {
-            return EditWorkoutViewModel(repository, guiModelMapper) as T
+            return EditWorkoutViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
         if (modelClass.isAssignableFrom(OverviewStatisticViewModel::class.java)) {
-            return OverviewStatisticViewModel(repository, guiModelMapper) as T
+            return OverviewStatisticViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

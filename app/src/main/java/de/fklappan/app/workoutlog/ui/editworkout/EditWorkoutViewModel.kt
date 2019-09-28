@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.fklappan.app.workoutlog.common.GuiModelMapper
 import de.fklappan.app.workoutlog.common.RxViewModel
+import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
@@ -12,10 +13,15 @@ import de.fklappan.app.workoutlog.domain.usecases.EditWorkoutUseCase
 import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutDetailsUseCase
 import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutUseCase
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class EditWorkoutViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
+class EditWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
+                           private val schedulerIo: Scheduler,
+                           private val schedulerMainThread: Scheduler,
+                           private val modelMapper: GuiModelMapper
+) :
     RxViewModel() {
 
     private lateinit var currentWorkout: WorkoutGuiModel
@@ -37,9 +43,9 @@ class EditWorkoutViewModel(private val repository: WorkoutLogRepository, private
 
     fun loadWorkout(workoutId: Int) {
         addDisposable(
-            GetWorkoutUseCase(repository).execute(workoutId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            useCaseFactory.createGetWorkoutUseCase().execute(workoutId)
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
                 .subscribe(
                     this::workoutLoaded,
                     this::handleError
@@ -50,9 +56,9 @@ class EditWorkoutViewModel(private val repository: WorkoutLogRepository, private
     fun saveWorkout(text: String) {
         val workout = WorkoutGuiModel(currentWorkout.workoutId, text, currentWorkout.favorite)
         addDisposable(
-            EditWorkoutUseCase(repository).execute(modelMapper.mapGuiToDomain(workout))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            useCaseFactory.createEditWorkoutUseCase().execute(modelMapper.mapGuiToDomain(workout))
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
                 .subscribe(
                     this::handleSuccess,
                     this::handleError

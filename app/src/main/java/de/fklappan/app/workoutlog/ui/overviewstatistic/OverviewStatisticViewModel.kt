@@ -6,16 +6,21 @@ import androidx.lifecycle.MutableLiveData
 import de.fklappan.app.workoutlog.common.GuiModelMapper
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.RxViewModel
+import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.domain.usecases.GetStatisticUseCase
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class OverviewStatisticViewModel(private val repository: WorkoutLogRepository, private val modelMapper: GuiModelMapper) :
+class OverviewStatisticViewModel(private val useCaseFactory: UseCasesFactory,
+                                 private val schedulerIo: Scheduler,
+                                 private val schedulerMainThread: Scheduler,
+                                 private val modelMapper: GuiModelMapper) :
     RxViewModel() {
 
     private val _statisticCurrent = MutableLiveData<StatisticCurrentGuiModel>()
@@ -32,9 +37,9 @@ class OverviewStatisticViewModel(private val repository: WorkoutLogRepository, p
 
     fun loadData() {
         addDisposable(
-            GetStatisticUseCase(repository).execute(Calendar.getInstance())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            useCaseFactory.createGetStatisticUseCase().execute(Calendar.getInstance())
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
                 .subscribe(
                     this::handleSuccess,
                     this::handleError

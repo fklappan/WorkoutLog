@@ -8,7 +8,10 @@ import de.fklappan.app.workoutlog.ui.detailview.DetailviewWorkoutFragment
 import de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticFragment
 import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutFragment
 
-@Subcomponent(modules = arrayOf(ControllerModule::class))
+@Subcomponent(modules = arrayOf(
+    ControllerModule::class,
+    UseCasesModule::class,
+    SchedulersModule::class))
 interface ControllerComponent {
 
     fun inject(workoutFragment: OverviewWorkoutFragment)
