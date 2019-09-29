@@ -2,10 +2,9 @@ package de.fklappan.app.workoutlog.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.ui.addresult.AddResultViewModel
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutViewModel
-import de.fklappan.app.workoutlog.ui.detailview.DetailviewWorkoutViewModel
+import de.fklappan.app.workoutlog.ui.detailviewworkout.DetailviewWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutViewModel

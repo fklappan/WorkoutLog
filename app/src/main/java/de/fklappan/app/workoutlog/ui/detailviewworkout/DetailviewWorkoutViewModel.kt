@@ -1,4 +1,4 @@
-package de.fklappan.app.workoutlog.ui.detailview
+package de.fklappan.app.workoutlog.ui.detailviewworkout
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,13 +7,8 @@ import de.fklappan.app.workoutlog.common.RxViewModel
 import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
-import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutDetailsUseCase
-import de.fklappan.app.workoutlog.domain.usecases.ToggleFavoriteWorkoutUseCase
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
                                  private val schedulerIo: Scheduler,

@@ -4,8 +4,8 @@ import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
-import de.fklappan.app.workoutlog.ui.detailview.WorkoutDetailsGuiModel
-import de.fklappan.app.workoutlog.ui.detailview.WorkoutResultGuiModel
+import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
+import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
 import de.fklappan.app.workoutlog.ui.overviewstatistic.StatisticCurrentGuiModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import javax.inject.Inject

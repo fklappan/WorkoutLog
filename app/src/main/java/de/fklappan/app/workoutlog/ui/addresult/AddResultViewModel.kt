@@ -5,12 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import de.fklappan.app.workoutlog.common.GuiModelMapper
 import de.fklappan.app.workoutlog.common.RxViewModel
 import de.fklappan.app.workoutlog.common.UseCasesFactory
-import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
-import de.fklappan.app.workoutlog.domain.usecases.AddWorkoutResultUseCase
-import de.fklappan.app.workoutlog.ui.detailview.WorkoutResultGuiModel
+import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
 import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class AddResultViewModel(private val useCaseFactory: UseCasesFactory,
                          private val schedulerIo: Scheduler,

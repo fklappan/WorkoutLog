@@ -1,4 +1,4 @@
-package de.fklappan.app.workoutlog.ui.detailview
+package de.fklappan.app.workoutlog.ui.detailviewworkout
 
 import java.util.*
 
