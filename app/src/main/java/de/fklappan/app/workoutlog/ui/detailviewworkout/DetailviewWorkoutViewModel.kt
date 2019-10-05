@@ -1,8 +1,10 @@
 package de.fklappan.app.workoutlog.ui.detailviewworkout
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.fklappan.app.workoutlog.common.GuiModelMapper
+import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.RxViewModel
 import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
@@ -18,22 +20,12 @@ class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
 
     private lateinit var currentWorkoutDetails: WorkoutDetailsGuiModel
 
-    private val _workoutDetailStream = MutableLiveData<WorkoutDetailsGuiModel>()
-    // expose read only workoutState
-    val workoutDetailStream: LiveData<WorkoutDetailsGuiModel>
-        get() = _workoutDetailStream
-
-    private val _errorStream = MutableLiveData<Throwable>()
-    // expose read only workoutState
-    val errorStream: LiveData<Throwable>
-        get() = _errorStream
-
-    private val _updateWorkoutStream = MutableLiveData<WorkoutGuiModel>()
-    // expose read only
-    val updateWorkoutStream: LiveData<WorkoutGuiModel>
-        get() = _updateWorkoutStream
+    private val _state = MutableLiveData<DetailviewWorkoutState>()
+    val state: LiveData<DetailviewWorkoutState>
+        get() = _state
 
     fun loadWorkout(workoutId: Int) {
+        _state.value = DetailviewWorkoutState.Loading
         addDisposable(
             useCaseFactory.createGetWorkoutDetailsUseCase().execute(workoutId)
                 .subscribeOn(schedulerIo)
@@ -60,15 +52,16 @@ class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
     private fun workoutDetailsLoaded(workoutDetails: WorkoutDetailsDomainModel) {
         // map domain model to gui model
         currentWorkoutDetails = modelMapper.mapDomainToGui(workoutDetails)
-        _workoutDetailStream.value = currentWorkoutDetails
+        _state.value = DetailviewWorkoutState.WorkoutDetails(currentWorkoutDetails)
     }
 
     private fun workoutUpdated(workout: WorkoutDomainModel) {
-        _updateWorkoutStream.value = modelMapper.mapDomainToGui(workout)
+        _state.value = DetailviewWorkoutState.WorkoutUpdate(modelMapper.mapDomainToGui(workout))
     }
 
     private fun handleError(error: Throwable) {
-        _errorStream.value = error
+        Log.e(LOG_TAG, "Error while executing request", error)
+        _state.value = DetailviewWorkoutState.Error(error.localizedMessage)
     }
 
 }

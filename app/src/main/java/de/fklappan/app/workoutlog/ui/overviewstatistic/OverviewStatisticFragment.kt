@@ -44,14 +44,30 @@ class OverviewStatisticFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelOverviewStatistic.statisticCurrent.observe(this, Observer { showCurrentStatistic(it) })
+        viewModelOverviewStatistic.state.observe(this, Observer { state -> updateState(state) })
     }
 
     private fun fetchData() {
         viewModelOverviewStatistic.loadData()
     }
 
-    private fun showCurrentStatistic(statisticCurrentGuiModel: StatisticCurrentGuiModel) {
+    private fun updateState(state: OverviewStatisticState) {
+        when(state) {
+            is OverviewStatisticState.Loading -> showLoading()
+            is OverviewStatisticState.Error -> showError(state.message)
+            is OverviewStatisticState.Statistic -> showStatistic(state.statistic)
+        }
+    }
+
+    private fun showLoading() {
+        Log.d(LOG_TAG, "Loading statistics")
+    }
+
+    private fun showError(message: String) {
+        Log.e(LOG_TAG, "Error fetching statistics: $message")
+    }
+
+    private fun showStatistic(statisticCurrentGuiModel: StatisticCurrentGuiModel) {
         Log.d(LOG_TAG, "Statistics loaded")
         textViewStreakCount.text = statisticCurrentGuiModel.streak.toString()
         if (statisticCurrentGuiModel.isWorkoutStreak) {

@@ -88,15 +88,31 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelOverviewWorkout.workoutList.observe(this, Observer { workoutList -> showWorkoutList(workoutList) })
-        viewModelOverviewWorkout.updateStream.observe(this, Observer { workout -> updateWorkout(workout) })
+        viewModelOverviewWorkout.state.observe(this, Observer { state -> updateState(state) })
     }
 
     private fun fetchData() {
         viewModelOverviewWorkout.loadWorkouts()
     }
 
-    private fun updateWorkout(workoutGuiModel: WorkoutGuiModel) {
+    private fun updateState(state: OverviewWorkoutState) {
+        when (state) {
+            is OverviewWorkoutState.Loading -> showLoading()
+            is OverviewWorkoutState.Error -> showError(state.message)
+            is OverviewWorkoutState.WorkoutList -> showWorkoutList(state.workouts.toMutableList())
+            is OverviewWorkoutState.WorkoutUpdate -> showWorkoutUpdate(state.workout)
+        }
+    }
+
+    private fun showLoading() {
+        Log.d(LOG_TAG, "Loading workout list")
+    }
+
+    private fun showError(message: String) {
+        Log.e(LOG_TAG, "Error fetching workouts: $message")
+    }
+
+    private fun showWorkoutUpdate(workoutGuiModel: WorkoutGuiModel) {
         Log.d(LOG_TAG, "Updating workout ${workoutGuiModel.workoutId}")
         overviewWorkoutAdapter.update(workoutGuiModel)
     }
