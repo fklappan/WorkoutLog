@@ -80,16 +80,24 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelDetail.workoutDetailStream.observe(this, Observer { workoutDetails -> showResult(workoutDetails) })
-        viewModelDetail.updateWorkoutStream.observe(this, Observer { workout -> showWorkoutDetails(workout) })
-//        viewModelDetail.errorStream.observe(this, Observer { error -> showError(error)})
+        viewModelDetail.state.observe(this, Observer { state -> updateState(state)})
     }
 
     private fun fetchData() {
         viewModelDetail.loadWorkout(arguments!!.getInt("workoutId"))
     }
 
-    private fun showWorkoutDetails(workoutGuiModel: WorkoutGuiModel) {
+    private fun updateState(state: DetailviewWorkoutState) {
+        when(state) {
+            is DetailviewWorkoutState.Loading -> showLoading()
+            is DetailviewWorkoutState.Error -> showError(state.message)
+            is DetailviewWorkoutState.WorkoutDetails -> showWorkoutDetails(state.workoutDetails)
+            is DetailviewWorkoutState.WorkoutUpdate -> showWorkoutUpdate(state.workout)
+        }
+    }
+
+    private fun showWorkoutUpdate(workoutGuiModel: WorkoutGuiModel) {
+        Log.d(LOG_TAG, "Workout updated")
         textViewWorkoutDetails.text = workoutGuiModel.text
         if (workoutGuiModel.favorite) {
             imageButtonFavorite.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
@@ -103,15 +111,23 @@ class DetailviewWorkoutFragment : BaseFragment() {
             .navigate(R.id.action_detailviewWorkoutFragment_to_editWorkoutFragment, arguments)
     }
 
-    private fun showResult(result: WorkoutDetailsGuiModel) {
+    private fun showWorkoutDetails(result: WorkoutDetailsGuiModel) {
         Log.d(LOG_TAG, "Workout details loaded: " + result.workout.text)
         Log.d(LOG_TAG, "Results loaded: " + result.resultList.size)
-        showWorkoutDetails(result.workout)
+        showWorkoutUpdate(result.workout)
 
         val items = ArrayList<WorkoutResultGuiModel>()
         items.addAll(result.resultList)
 
         recyclerViewResults.visibility = View.VISIBLE
         workoutResultAdapter.items = items
+    }
+
+    private fun showLoading() {
+        Log.d(LOG_TAG, "Loading workout details")
+    }
+
+    private fun showError(message: String) {
+        Log.e(LOG_TAG, "Error fetching workout details: $message")
     }
 }

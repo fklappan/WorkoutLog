@@ -23,19 +23,15 @@ class OverviewStatisticViewModel(private val useCaseFactory: UseCasesFactory,
                                  private val modelMapper: GuiModelMapper) :
     RxViewModel() {
 
-    private val _statisticCurrent = MutableLiveData<StatisticCurrentGuiModel>()
-    val statisticCurrent: LiveData<StatisticCurrentGuiModel>
-        get() = _statisticCurrent
-
-    // exposing single workouts to be able to update it independently
-    private val _statisticPerYear = MutableLiveData<WorkoutGuiModel>()
-    val statisticPerYear: LiveData<WorkoutGuiModel>
-        get() = _statisticPerYear
+    private val _state = MutableLiveData<OverviewStatisticState>()
+    val state: LiveData<OverviewStatisticState>
+        get() = _state
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // public methods aka entry points - will be invoked by the view
 
     fun loadData() {
+        _state.value = OverviewStatisticState.Loading
         addDisposable(
             useCaseFactory.createGetStatisticUseCase().execute(Calendar.getInstance())
                 .subscribeOn(schedulerIo)
@@ -52,19 +48,11 @@ class OverviewStatisticViewModel(private val useCaseFactory: UseCasesFactory,
 
     private fun handleSuccess(statisticCurrentDomainModel: StatisticCurrentDomainModel) {
         // map domain model to gui model
-        _statisticCurrent.value = modelMapper.mapDomainToGui(statisticCurrentDomainModel)
+        _state.value = OverviewStatisticState.Statistic(modelMapper.mapDomainToGui(statisticCurrentDomainModel))
     }
 
     private fun handleError(error: Throwable) {
         Log.e(LOG_TAG, "Error while loading workouts", error)
-    }
-
-    private fun handleSuccessFavoriteUseCase(workoutDomainModel: WorkoutDomainModel) {
-//        _updateStream.value = modelMapper.mapDomainToGui(workoutDomainModel)
-    }
-
-    private fun handleErrorFavoriteUseCase(error: Throwable) {
-        // at least log the error. Maybe in the future we need to present it to the user
-        Log.e(LOG_TAG, "Error while executing toggle favorite", error)
+        _state.value = OverviewStatisticState.Error(error.localizedMessage)
     }
 }

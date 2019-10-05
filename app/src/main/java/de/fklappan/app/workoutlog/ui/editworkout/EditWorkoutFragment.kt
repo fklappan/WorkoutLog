@@ -55,26 +55,37 @@ class EditWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModel.saveState.observe(this, Observer { saved -> showResult(saved) })
-        viewModel.errorState.observe(this, Observer { error -> showError(error) })
-        viewModel.workoutStream.observe(this, Observer { workout -> showWorkout(workout)})
+        viewModel.state.observe(this, Observer { state -> updateState(state) })
+    }
+
+    private fun updateState(state: EditWorkoutState) {
+        when(state) {
+            is EditWorkoutState.Loading -> showLoading()
+            is EditWorkoutState.Error -> showError(state.message)
+            is EditWorkoutState.Workout -> showWorkout(state.workout)
+            is EditWorkoutState.Save -> showResult()
+        }
+    }
+
+    private fun showLoading() {
+        Log.d(LOG_TAG, "Loading workout")
     }
 
     private fun showWorkout(workout: WorkoutGuiModel) {
         editTextContent.setText(workout.text)
     }
 
-    private fun showResult(saved: Boolean) {
-        Log.d(LOG_TAG, "saved workout: $saved")
+    private fun showResult() {
+        Log.d(LOG_TAG, "saved workout")
         textViewError.visibility = View.GONE
         Snackbar.make(view!!, getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(view!!).navigateUp()
     }
 
-    private fun showError(error: Throwable) {
-        Log.d(LOG_TAG, "Error occured", error)
+    private fun showError(message: String) {
+        Log.e(LOG_TAG, "Error fetching workout: $message")
         textViewError.visibility = View.VISIBLE
-        textViewError.text = error.message
+        textViewError.text = message
     }
 
     private fun fetchData() {

@@ -81,21 +81,28 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelAddResult.saveState.observe(this, Observer { saved -> showResult(saved) })
-        viewModelAddResult.errorState.observe(this, Observer { error -> showError(error) })
+        viewModelAddResult.state.observe(this, Observer { state -> updateState(state) })
     }
 
-    private fun showResult(saved: Boolean) {
-        Log.d(LOG_TAG, "saved workout: $saved")
+
+    private fun updateState(state: AddResultState) {
+        when(state) {
+            is AddResultState.Save -> showResult()
+            is AddResultState.Error -> showError(state.message)
+        }
+    }
+
+    private fun showResult() {
+        Log.d(LOG_TAG, "saved workout")
         textViewError.visibility = View.GONE
         Snackbar.make(view!!, getString(R.string.message_added_workout_result), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(view!!).navigateUp()
     }
 
-    private fun showError(error: Throwable) {
-        Log.d(LOG_TAG, "Error occured", error)
+    private fun showError(message: String) {
+        Log.d(LOG_TAG, "Error occured: $message")
         textViewError.visibility = View.VISIBLE
-        textViewError.text = error.message
+        textViewError.text = message
     }
 
     private fun onClickDate(view: View) {

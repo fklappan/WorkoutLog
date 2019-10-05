@@ -26,22 +26,13 @@ class EditWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
 
     private lateinit var currentWorkout: WorkoutGuiModel
 
-    private val _workoutStream = MutableLiveData<WorkoutGuiModel>()
-    // expose read only
-    val workoutStream: LiveData<WorkoutGuiModel>
-        get() = _workoutStream
-
-    private val _errorState = MutableLiveData<Throwable>()
+    private val _state = MutableLiveData<EditWorkoutState>()
     // expose read only workoutState
-    val errorState: LiveData<Throwable>
-        get() = _errorState
-
-    private val _saveState = MutableLiveData<Boolean>()
-    // expose read only workoutState
-    val saveState: LiveData<Boolean>
-        get() = _saveState
+    val state: LiveData<EditWorkoutState>
+        get() = _state
 
     fun loadWorkout(workoutId: Int) {
+        _state.value = EditWorkoutState.Loading
         addDisposable(
             useCaseFactory.createGetWorkoutUseCase().execute(workoutId)
                 .subscribeOn(schedulerIo)
@@ -69,15 +60,15 @@ class EditWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
     private fun workoutLoaded(workout: WorkoutDomainModel) {
         // only pass workout to gui, no need for results here
         currentWorkout = modelMapper.mapDomainToGui(workout)
-        _workoutStream.value = currentWorkout
+        _state.value = EditWorkoutState.Workout(currentWorkout)
     }
 
     private fun handleSuccess() {
-        _saveState.value = true
+        _state.value = EditWorkoutState.Save
     }
 
     private fun handleError(error: Throwable) {
-        _errorState.value = error
+        _state.value = EditWorkoutState.Error(error.localizedMessage)
     }
 
 }

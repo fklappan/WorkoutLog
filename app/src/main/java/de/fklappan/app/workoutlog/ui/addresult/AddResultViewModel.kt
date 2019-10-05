@@ -14,15 +14,10 @@ class AddResultViewModel(private val useCaseFactory: UseCasesFactory,
                          private val modelMapper: GuiModelMapper) :
     RxViewModel() {
 
-    private val _errorState = MutableLiveData<Throwable>()
+    private val _state = MutableLiveData<AddResultState>()
     // expose read only workoutState
-    val errorState: LiveData<Throwable>
-        get() = _errorState
-
-    private val _saveState = MutableLiveData<Boolean>()
-    // expose read only workoutState
-    val saveState: LiveData<Boolean>
-        get() = _saveState
+    val state: LiveData<AddResultState>
+        get() = _state
 
     fun saveResult(guiModel: WorkoutResultGuiModel) {
         addDisposable(
@@ -37,11 +32,10 @@ class AddResultViewModel(private val useCaseFactory: UseCasesFactory,
     }
 
     private fun handleSuccess() {
-        _saveState.value = true
+        _state.value = AddResultState.Save
     }
 
     private fun handleError(error: Throwable) {
-        _errorState.value = error
+        _state.value = AddResultState.Error(error.localizedMessage)
     }
-
 }

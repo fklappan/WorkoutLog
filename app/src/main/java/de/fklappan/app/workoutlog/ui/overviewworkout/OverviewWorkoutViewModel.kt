@@ -17,21 +17,19 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
 ) :
     RxViewModel() {
 
-    // exposing the whole list for initial data fetching or hard reload
-    private val _workoutList = MutableLiveData<MutableList<WorkoutGuiModel>>()
+    // store the unfiltered list to be able to restore it after deleting a filter
     private val _workoutListUnfiltered = ArrayList<WorkoutGuiModel>()
-    val workoutList: LiveData<MutableList<WorkoutGuiModel>>
-        get() = _workoutList
 
-    // exposing single workouts to be able to update it independently
-    private val _updateStream = MutableLiveData<WorkoutGuiModel>()
-    val updateStream: LiveData<WorkoutGuiModel>
-        get() = _updateStream
+    // exposing only a state
+    private val _state = MutableLiveData<OverviewWorkoutState>()
+    val state: LiveData<OverviewWorkoutState>
+        get() = _state
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // public methods aka entry points - will be invoked by the view
 
     fun loadWorkouts() {
+        _state.value = OverviewWorkoutState.Loading
         addDisposable(
             useCaseFactory.createGetWorkoutsUseCase().execute()
                 .subscribeOn(schedulerIo)
@@ -63,7 +61,7 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
                 filteredList.add(workout)
             }
         }
-        _workoutList.value = filteredList
+        _state.value = OverviewWorkoutState.WorkoutList(filteredList)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,19 +75,21 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         }
         _workoutListUnfiltered.clear()
         _workoutListUnfiltered.addAll(guiModelList)
-        _workoutList.value = guiModelList
+        _state.value = OverviewWorkoutState.WorkoutList(guiModelList)
     }
 
     private fun handleError(error: Throwable) {
         Log.e(LOG_TAG, "Error while loading workouts", error)
+        _state.value = OverviewWorkoutState.Error(error.localizedMessage)
     }
 
     private fun handleSuccessFavoriteUseCase(workoutDomainModel: WorkoutDomainModel) {
-        _updateStream.value = modelMapper.mapDomainToGui(workoutDomainModel)
+        _state.value = OverviewWorkoutState.WorkoutUpdate(modelMapper.mapDomainToGui(workoutDomainModel))
     }
 
     private fun handleErrorFavoriteUseCase(error: Throwable) {
         // at least log the error. Maybe in the future we need to present it to the user
         Log.e(LOG_TAG, "Error while executing toggle favorite", error)
+        _state.value = OverviewWorkoutState.Error(error.localizedMessage)
     }
 }
