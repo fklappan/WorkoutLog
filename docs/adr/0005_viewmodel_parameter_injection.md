@@ -1,4 +1,4 @@
-# 4. Let a factory class take care of creating UseCase instances
+# 5. ViewModel parameters should be injected by Dagger
 
 Date: 2019-09-28
 

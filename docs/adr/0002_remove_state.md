@@ -1,4 +1,5 @@
-# 1. Remove the state objects from the view models
+# 2. Remove the state objects from the view models
+
 Reverted by [ADR 0006](0006_viewmodel_exposing_state.md)
 
 Date: 2019-07-29

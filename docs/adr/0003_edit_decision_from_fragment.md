@@ -1,4 +1,4 @@
-# 1. Fragment (View) decides what should happen if the user clicks Edit through the options menu
+# 3. Fragment (View) decides what should happen if the user clicks Edit through the options menu
 
 Date: 2019-08-18
 
