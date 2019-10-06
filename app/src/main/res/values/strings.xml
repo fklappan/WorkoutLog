@@ -12,7 +12,7 @@
     <string name="menu_results">Results</string>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_prs">Personal records</string>
-    <string name="menu_share">Share</string>
+    <string name="menu_licenses">Licenses</string>
     <string name="menu_send">Send</string>
     <string name="message_saved_workout">Saved workout</string>
     <string name="message_added_workout_result">Added workout result</string>
