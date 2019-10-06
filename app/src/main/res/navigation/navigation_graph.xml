@@ -38,4 +38,8 @@
             android:id="@+id/overviewStatisticFragment"
             android:name="de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticFragment"
             android:label="OverviewResultFragment" />
+    <fragment
+            android:id="@+id/licensesFragment"
+            android:name="de.fklappan.app.workoutlog.ui.licenses.LicensesFragment"
+            android:label="LicensesFragment" />
 </navigation>

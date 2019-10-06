@@ -13,26 +13,27 @@
                 android:icon="@drawable/result"
                 android:title="@string/menu_statistics"/>
         <item
-                android:id="@+id/nav_favorite"
-                android:icon="@drawable/favorite"
-                android:title="@string/menu_favorites"/>
-        <item
-                android:id="@+id/nav_personalrecord"
-                android:icon="@drawable/personalrecord"
-                android:title="@string/menu_prs"/>
+                android:id="@+id/nav_licenses"
+                android:icon="@drawable/info"
+                android:title="@string/menu_licenses"/>
+<!--        <item-->
+<!--                android:id="@+id/nav_favorite"-->
+<!--                android:icon="@drawable/favorite"-->
+<!--                android:title="@string/menu_favorites"/>-->
+<!--        <item-->
+<!--                android:id="@+id/nav_personalrecord"-->
+<!--                android:icon="@drawable/personalrecord"-->
+<!--                android:title="@string/menu_prs"/>-->
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                    android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="@string/menu_share"/>
-            <item
-                    android:id="@+id/nav_send"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="@string/menu_send"/>
-        </menu>
-    </item>
+<!--    <item android:title="@string/menu_general">-->
+<!--        <menu>-->
+
+<!--            <item-->
+<!--                    android:id="@+id/nav_send"-->
+<!--                    android:icon="@drawable/ic_menu_send"-->
+<!--                    android:title="@string/menu_send"/>-->
+<!--        </menu>-->
+<!--    </item>-->
 
 </menu>

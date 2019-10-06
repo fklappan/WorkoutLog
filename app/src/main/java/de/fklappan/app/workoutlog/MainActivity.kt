@@ -76,18 +76,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     navController.navigate(R.id.overviewStatisticFragment)
                 }
             }
-            R.id.nav_favorite -> {
-
+//            R.id.nav_favorite -> {
+//
+//            }
+//            R.id.nav_personalrecord -> {
+//
+//            }
+            R.id.nav_licenses -> {
+                if (navController.currentDestination?.id != R.id.licensesFragment) {
+                    navController.navigate(R.id.licensesFragment)
+                }
             }
-            R.id.nav_personalrecord -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
+//            R.id.nav_send -> {
+//
+//            }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
