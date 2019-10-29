@@ -1,8 +1,8 @@
 package de.fklappan.app.workoutlog.data
 
 import androidx.room.Room
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import de.fklappan.app.workoutlog.data.result.ResultDataModel
 import de.fklappan.app.workoutlog.data.workout.WorkoutDataModel
 import org.junit.After
@@ -18,7 +18,7 @@ open class DatabaseTest {
 
     @Before
     fun initDb() {
-        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), AppDatabase::class.java).build()
+        database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().context, AppDatabase::class.java).build()
     }
 
     @After
@@ -28,7 +28,7 @@ open class DatabaseTest {
 
     @Test
     fun addWorkout() {
-        val workout = WorkoutDataModel(0, "Aphrodite - 50/40/30/20/10: Burpees, Situps, Air Squats")
+        val workout = WorkoutDataModel(0, "Aphrodite - 50/40/30/20/10: Burpees, Situps, Air Squats", false)
         database.workoutDao().insertWorkout(workout)
 
         val workoutCompare = database.workoutDao().getWorkoutList()
@@ -38,7 +38,7 @@ open class DatabaseTest {
 
     @Test
     fun addResult() {
-        val workout = WorkoutDataModel(0, "Aphrodite - 50/40/30/20/10: Burpees, Situps, Air Squats")
+        val workout = WorkoutDataModel(0, "Aphrodite - 50/40/30/20/10: Burpees, Situps, Air Squats", false)
         database.workoutDao().insertWorkout(workout)
 
         val workoutCompare = database.workoutDao().getWorkoutList()
