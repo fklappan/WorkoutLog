@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomSheet"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        tools:context=".MainActivity"
+        android:background="@drawable/bottom_sheet_rounded_corner"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="50dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        >
+
+    <ImageView
+            android:id="@+id/imageViewDragHandle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/drag_handle"
+            android:tint="@color/darkGray"
+        />
+
+    <TextView
+            android:id="@+id/textViewCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@id/imageViewDragHandle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@string/workout_details"
+            style="@style/ImportantText"
+            />
+
+    <TextView
+            android:id="@+id/textViewWorkoutDetails"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin_small"
+            app:layout_constraintTop_toBottomOf="@id/textViewCaption"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="My hard workout"
+            style="@style/StandardText"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

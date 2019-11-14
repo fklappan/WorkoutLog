@@ -16,10 +16,12 @@ import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.*
+import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
 import kotlinx.android.synthetic.main.addresult.*
 import kotlinx.android.synthetic.main.addworkout.editTextContent
 import kotlinx.android.synthetic.main.addworkout.textViewError
+import kotlinx.android.synthetic.main.bottom_sheet_addresult.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.*
 import javax.inject.Inject
@@ -47,6 +49,7 @@ class AddResultFragment : BaseFragment() {
         initFab()
         initViewModels()
         observeViewModels()
+        fetchData()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -84,11 +87,16 @@ class AddResultFragment : BaseFragment() {
         viewModelAddResult.state.observe(this, Observer { state -> updateState(state) })
     }
 
+    private fun fetchData() {
+        viewModelAddResult.loadWorkout(arguments!!.getInt("workoutId"))
+    }
+
 
     private fun updateState(state: AddResultState) {
         when(state) {
             is AddResultState.Save -> showResult()
             is AddResultState.Error -> showError(state.message)
+            is AddResultState.WorkoutDetails -> showWorkoutDetails(state.workoutDetails)
         }
     }
 
@@ -97,6 +105,10 @@ class AddResultFragment : BaseFragment() {
         textViewError.visibility = View.GONE
         Snackbar.make(view!!, getString(R.string.message_added_workout_result), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(view!!).navigateUp()
+    }
+
+    private fun showWorkoutDetails(guiModel: WorkoutDetailsGuiModel) {
+        textViewWorkoutDetails.text = guiModel.workout.text
     }
 
     private fun showError(message: String) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import de.fklappan.app.workoutlog.common.GuiModelMapper
 import de.fklappan.app.workoutlog.common.RxViewModel
 import de.fklappan.app.workoutlog.common.UseCasesFactory
+import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
 import io.reactivex.Scheduler
 
@@ -29,6 +30,23 @@ class AddResultViewModel(private val useCaseFactory: UseCasesFactory,
                     this::handleError
                 )
         )
+    }
+
+    fun loadWorkout(workoutId: Int) {
+        _state.value = AddResultState.Loading
+        addDisposable(
+            useCaseFactory.createGetWorkoutDetailsUseCase().execute(workoutId)
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
+                .subscribe(
+                    this::workoutDetailsLoaded,
+                    this::handleError
+                )
+        )
+    }
+
+    private fun workoutDetailsLoaded(domainModel: WorkoutDetailsDomainModel) {
+        _state.value = AddResultState.WorkoutDetails(GuiModelMapper().mapDomainToGui(domainModel))
     }
 
     private fun handleSuccess() {
