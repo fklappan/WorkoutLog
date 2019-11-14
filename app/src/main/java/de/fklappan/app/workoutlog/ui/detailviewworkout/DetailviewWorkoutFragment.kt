@@ -43,12 +43,14 @@ class DetailviewWorkoutFragment : BaseFragment() {
         fetchData()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.edit, menu)
+    @Override
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edit, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == R.id.action_edit) {
+    @Override
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_edit) {
             editWorkout()
 //            viewModelDetail.editWorkoutClicked()
             return true

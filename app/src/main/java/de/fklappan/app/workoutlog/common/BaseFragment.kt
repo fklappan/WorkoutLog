@@ -13,10 +13,11 @@ open class BaseFragment : Fragment() {
     private lateinit var controllerComponent: ControllerComponent
     private lateinit var appBarHeader: AppBarHeader
 
-    override fun onAttach(context: Context?) {
+    @Override
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context!!.applicationContext is WorkoutLogApplication) {
+        if (context.applicationContext is WorkoutLogApplication) {
             val application: WorkoutLogApplication = context.applicationContext as WorkoutLogApplication
             controllerComponent = application.getApplicationComponent()
                 .newControllerComponent(ControllerModule(context))

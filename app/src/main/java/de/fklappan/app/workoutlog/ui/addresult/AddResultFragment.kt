@@ -119,7 +119,7 @@ class AddResultFragment : BaseFragment() {
 
     private fun onClickDate(view: View) {
         val bottomSheetFragment = BottomSheetFragment(this::chooseDate)
-        bottomSheetFragment.show(fragmentManager, "bottomSheet")
+        bottomSheetFragment.show(fragmentManager!!, "bottomSheet")
     }
 
     private fun chooseDate(view: DatePicker, year: Int, month: Int, day: Int) {
