@@ -17,7 +17,6 @@ import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.*
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
-import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
 import kotlinx.android.synthetic.main.addresult.*
 import kotlinx.android.synthetic.main.addworkout.editTextContent
 import kotlinx.android.synthetic.main.addworkout.textViewError
@@ -26,14 +25,11 @@ import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.*
 import javax.inject.Inject
 
-const val EXTRA_DATE = "EXTRA_DATE"
-
 class AddResultFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelAddResult: AddResultViewModel
-    private var currentdate = Date()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.addresult, container, false)
@@ -43,25 +39,11 @@ class AddResultFragment : BaseFragment() {
         getInjector().inject(this)
         super.onViewCreated(view, savedInstanceState)
 
-        restoreState(savedInstanceState)
-
         initFragment()
         initFab()
         initViewModels()
         observeViewModels()
         fetchData()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putLong(EXTRA_DATE, currentdate.time)
-    }
-
-    override fun restoreState(savedInstanceState: Bundle?) {
-        // note, dont access gui elements because they are not initialised yet
-        if (savedInstanceState != null) {
-            currentdate.time = savedInstanceState.getLong(EXTRA_DATE, Date().time)
-        }
     }
 
     private fun initFab() {
@@ -74,9 +56,6 @@ class AddResultFragment : BaseFragment() {
         // set listeners
         linearLayoutDate.setOnClickListener(this::onClickDate)
         imagebuttonPr.setOnClickListener(this::onClickPr)
-
-        // load initial data
-        textViewDate.text = currentdate.toPrettyString()
     }
 
     private fun initViewModels() {
@@ -88,16 +67,32 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun fetchData() {
-        viewModelAddResult.loadWorkout(arguments!!.getInt("workoutId"))
+        viewModelAddResult.initialize(arguments!!.getInt("workoutId"))
     }
-
 
     private fun updateState(state: AddResultState) {
         when(state) {
             is AddResultState.Save -> showResult()
             is AddResultState.Error -> showError(state.message)
-            is AddResultState.WorkoutDetails -> showWorkoutDetails(state.workoutDetails)
+            is AddResultState.Data -> showWorkoutDetails(state.workoutDetails, state.date, state.isPr)
+            is AddResultState.DateSelected -> showDate(state.date)
+            is AddResultState.PrChanged -> showPr(state.isPr)
         }
+    }
+
+    private fun showPr(isPr: Boolean) {
+        Log.d(LOG_TAG, "updating PR: $isPr")
+        if (isPr) {
+            playPrButtonAnimation()
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
+        } else {
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
+        }
+    }
+
+    private fun showDate(date: Date) {
+        Log.d(LOG_TAG, "updating date: " + date.toPrettyString())
+        textViewDate.text = date.toPrettyString()
     }
 
     private fun showResult() {
@@ -107,8 +102,10 @@ class AddResultFragment : BaseFragment() {
         Navigation.findNavController(view!!).navigateUp()
     }
 
-    private fun showWorkoutDetails(guiModel: WorkoutDetailsGuiModel) {
+    private fun showWorkoutDetails(guiModel: WorkoutDetailsGuiModel, date: Date, isPr: Boolean) {
         textViewWorkoutDetails.text = guiModel.workout.text
+        showDate(date)
+        showPr(isPr)
     }
 
     private fun showError(message: String) {
@@ -124,19 +121,11 @@ class AddResultFragment : BaseFragment() {
 
     private fun chooseDate(view: DatePicker, year: Int, month: Int, day: Int) {
         Log.d(LOG_TAG, "Date chosen: $year/$month/$day")
-        currentdate = Date(year-1900, month, day)
-        textViewDate.text = currentdate.toPrettyString()
+        viewModelAddResult.onDateSelected(year, month, day)
     }
 
     private fun onClickPr(view: View) {
-        if (imagebuttonPr.isSelected) {
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
-        }
-        else {
-            playPrButtonAnimation()
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
-        }
-        imagebuttonPr.isSelected = !imagebuttonPr.isSelected
+        viewModelAddResult.onPrClicked()
     }
 
     private fun playPrButtonAnimation() {
@@ -146,7 +135,6 @@ class AddResultFragment : BaseFragment() {
             repeatCount = 1
             repeatMode = REVERSE
             duration = 200
-
         }
 
         val animScaleY = ObjectAnimator.ofFloat(imagebuttonPr, "scaleY", 1.0f, 2.3f)
@@ -154,7 +142,6 @@ class AddResultFragment : BaseFragment() {
             repeatCount = 1
             repeatMode = REVERSE
             duration = 200
-
         }
 
         val growAnimator = AnimatorSet()
@@ -163,15 +150,6 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun onClickFab(view: View) {
-        val guiModel = WorkoutResultGuiModel(
-            0,
-            editTextContent.text.toString(),
-            currentdate,
-            arguments!!.getInt("workoutId"),
-            imagebuttonPr.isSelected,
-            editTextNote.text.toString(),
-            editTextFeeling.text.toString()
-        )
-        viewModelAddResult.saveResult(guiModel)
+        viewModelAddResult.onSaveClicked(editTextContent.text.toString(), editTextNote.text.toString(), editTextFeeling.text.toString())
     }
 }
