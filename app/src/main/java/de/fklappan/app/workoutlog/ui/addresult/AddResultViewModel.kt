@@ -92,7 +92,7 @@ class AddResultViewModel(private val useCaseFactory: UseCasesFactory,
     }
 
     private fun handleSuccess() {
-        _state.value = AddResultState.Save
+        _state.value = AddResultState.WorkoutSaved
     }
 
     private fun handleError(error: Throwable) {

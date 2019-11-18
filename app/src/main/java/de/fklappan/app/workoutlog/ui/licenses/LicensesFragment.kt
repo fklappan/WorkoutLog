@@ -1,19 +1,12 @@
 package de.fklappan.app.workoutlog.ui.licenses
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
-import de.fklappan.app.workoutlog.common.LOG_TAG
-import de.fklappan.app.workoutlog.common.ViewModelFactory
 import kotlinx.android.synthetic.main.licenses.*
-import kotlinx.android.synthetic.main.overviewresult.*
-import javax.inject.Inject
 
 class LicensesFragment : BaseFragment() {
 

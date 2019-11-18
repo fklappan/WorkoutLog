@@ -16,9 +16,6 @@ import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.mock
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 class OverviewWorkoutViewModelTest {
 

@@ -4,8 +4,8 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import de.fklappan.app.workoutlog.common.GuiModelMapper
-import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.common.UseCasesFactory
+import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.data.AppDatabase
 import de.fklappan.app.workoutlog.data.WorkoutLogRepositoryImpl
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository

@@ -8,7 +8,7 @@ sealed class AddResultState {
     object Loading : AddResultState()
     data class Error(val message: String) : AddResultState()
     data class Data(val workoutDetails: WorkoutDetailsGuiModel, val date:Date, val isPr: Boolean) : AddResultState()
-    object Save : AddResultState()
+    object WorkoutSaved : AddResultState()
     data class DateSelected(val date: Date) : AddResultState()
     data class PrChanged(val isPr: Boolean) : AddResultState()
 }

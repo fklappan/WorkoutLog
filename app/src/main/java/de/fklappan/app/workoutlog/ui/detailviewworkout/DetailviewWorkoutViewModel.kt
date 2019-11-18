@@ -9,7 +9,6 @@ import de.fklappan.app.workoutlog.common.RxViewModel
 import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
-import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.Scheduler
 
 class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,

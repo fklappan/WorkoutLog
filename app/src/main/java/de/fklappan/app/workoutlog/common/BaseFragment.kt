@@ -2,7 +2,6 @@ package de.fklappan.app.workoutlog.common
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import de.fklappan.app.workoutlog.WorkoutLogApplication
 import de.fklappan.app.workoutlog.di.ControllerComponent

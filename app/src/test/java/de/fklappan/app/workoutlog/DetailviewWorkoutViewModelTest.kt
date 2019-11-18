@@ -11,9 +11,6 @@ import de.fklappan.app.workoutlog.domain.usecases.GetWorkoutDetailsUseCase
 import de.fklappan.app.workoutlog.domain.usecases.ToggleFavoriteWorkoutUseCase
 import de.fklappan.app.workoutlog.ui.detailviewworkout.DetailviewWorkoutState
 import de.fklappan.app.workoutlog.ui.detailviewworkout.DetailviewWorkoutViewModel
-import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutState
-import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutViewModel
-import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.mockk.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -21,7 +18,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.util.*
-import kotlin.collections.ArrayList
 
 class DetailviewWorkoutViewModelTest {
 

@@ -4,21 +4,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import de.fklappan.app.workoutlog.common.GuiModelMapper
 import de.fklappan.app.workoutlog.common.UseCasesFactory
-import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
-import de.fklappan.app.workoutlog.domain.usecases.*
+import de.fklappan.app.workoutlog.domain.usecases.AddWorkoutResultUseCase
 import de.fklappan.app.workoutlog.ui.addresult.AddResultState
 import de.fklappan.app.workoutlog.ui.addresult.AddResultViewModel
-import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutState
-import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutViewModel
-import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutState
-import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutViewModel
-import de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticState
-import de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticViewModel
 import io.mockk.*
 import io.reactivex.Completable
-import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
@@ -61,7 +52,7 @@ class AddResultViewModelTest {
 
         //then
         verifySequence {
-            stateObserver.onChanged(AddResultState.Save)
+            stateObserver.onChanged(AddResultState.WorkoutSaved)
         }
     }
 }

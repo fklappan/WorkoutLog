@@ -11,7 +11,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 //class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao) : WorkoutLogRepository {
-class WorkoutLogRepositoryImpl(val workoutDao: WorkoutDao, val resultDao: ResultDao) : WorkoutLogRepository {
+class WorkoutLogRepositoryImpl(private val workoutDao: WorkoutDao, private val resultDao: ResultDao) : WorkoutLogRepository {
 
 
     private val modelMapper = ModelMapper()

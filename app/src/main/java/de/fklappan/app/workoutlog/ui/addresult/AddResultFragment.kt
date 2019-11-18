@@ -72,7 +72,7 @@ class AddResultFragment : BaseFragment() {
 
     private fun updateState(state: AddResultState) {
         when(state) {
-            is AddResultState.Save -> showResult()
+            is AddResultState.WorkoutSaved -> showResult()
             is AddResultState.Error -> showError(state.message)
             is AddResultState.Data -> showWorkoutDetails(state.workoutDetails, state.date, state.isPr)
             is AddResultState.DateSelected -> showDate(state.date)

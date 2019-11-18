@@ -8,13 +8,7 @@ import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.RxViewModel
 import de.fklappan.app.workoutlog.common.UseCasesFactory
 import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
-import de.fklappan.app.workoutlog.domain.usecases.GetStatisticUseCase
-import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class OverviewStatisticViewModel(private val useCaseFactory: UseCasesFactory,
