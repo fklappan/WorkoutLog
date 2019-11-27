@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.fklappan.app.workoutlog.R
-import de.fklappan.app.workoutlog.common.toPrettyString
+import de.fklappan.app.workoutlog.domain.toPrettyString
 import kotlinx.android.synthetic.main.list_item_workout.view.textViewContent
 import kotlinx.android.synthetic.main.list_item_workout_result.view.*
 import kotlinx.android.synthetic.main.list_item_workout_result.view.imageButtonFavorite
