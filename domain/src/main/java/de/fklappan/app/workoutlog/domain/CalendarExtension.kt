@@ -7,7 +7,8 @@ fun Calendar.getYearBegin() : Calendar  {
     with(ret) {
         set(Calendar.MONTH, Calendar.JANUARY)
     }
-    return getMonthBegin()
+    val dateString = ret.time.toPrettyString()
+    return ret.getMonthBegin()
 }
 
 fun Calendar.getMonthBegin() : Calendar {
@@ -18,6 +19,7 @@ fun Calendar.getMonthBegin() : Calendar {
         set(Calendar.MINUTE, 0)
         set(Calendar.SECOND, 0)
     }
+    val dateString = ret.time.toPrettyString()
     return ret
 }
 
@@ -27,6 +29,10 @@ fun Calendar.getYearEnd() : Calendar  {
         set(Calendar.MONTH, Calendar.DECEMBER)
     }
     return getMonthEnd()
+}
+
+fun Calendar.setYesterday() {
+    this.set(Calendar.DAY_OF_YEAR, this.get(Calendar.DAY_OF_YEAR) - 1)
 }
 
 fun Calendar.getMonthEnd() : Calendar {

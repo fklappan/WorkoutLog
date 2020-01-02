@@ -1,11 +1,9 @@
 package de.fklappan.app.workoutlog.common
 
-import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutDetailsDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutDomainModel
-import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
+import de.fklappan.app.workoutlog.domain.*
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
+import de.fklappan.app.workoutlog.ui.overviewresult.OverviewResultGuiModel
 import de.fklappan.app.workoutlog.ui.overviewstatistic.StatisticCurrentGuiModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import javax.inject.Inject
@@ -57,6 +55,9 @@ class GuiModelMapper @Inject constructor() {
             guiModel.feeling
         )
 
-
-
+    fun mapDomainToGui(domainModel: OverviewResultDomainModel) : OverviewResultGuiModel =
+        OverviewResultGuiModel(
+            mapDomainToGui(domainModel.workout),
+            mapDomainToGui(domainModel.result)
+        )
 }

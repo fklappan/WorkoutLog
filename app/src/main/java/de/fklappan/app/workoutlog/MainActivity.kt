@@ -75,9 +75,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     navController.navigate(R.id.overviewStatisticFragment)
                 }
             }
-//            R.id.nav_favorite -> {
-//
-//            }
+            R.id.nav_result -> {
+                if (navController.currentDestination?.id != R.id.overviewResultFragment) {
+                    navController.navigate(R.id.overviewResultFragment)
+                }
+            }
 //            R.id.nav_personalrecord -> {
 //
 //            }

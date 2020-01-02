@@ -37,6 +37,10 @@
     <fragment
             android:id="@+id/overviewStatisticFragment"
             android:name="de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticFragment"
+            android:label="OverviewStatisticFragment" />
+    <fragment
+            android:id="@+id/overviewResultFragment"
+            android:name="de.fklappan.app.workoutlog.ui.overviewresult.OverviewResultFragment"
             android:label="OverviewResultFragment" />
     <fragment
             android:id="@+id/licensesFragment"
