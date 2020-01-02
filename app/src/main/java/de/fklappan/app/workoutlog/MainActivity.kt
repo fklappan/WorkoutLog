@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AppBarHeader {
 
     lateinit var navController: NavController
+    lateinit var navView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
         navView.menu[0].isChecked = true
 
         val toggle = ActionBarDrawerToggle(
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navView.setNavigationItemSelectedListener(this)
         navController = Navigation.findNavController(navHostFragment.view!!)
+        // make sure that the correct item is selected after returning from another fragment
+        navController.addOnDestinationChangedListener { _, destination, _ -> updateNavItem(destination) }
     }
 
     override fun onBackPressed() {
@@ -95,6 +99,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun updateNavItem(destination: NavDestination) {
+        // TODO 02.01.2020 Flo maybe it's sufficient to check only for overviewFragment as this is the only fragment to which we can return to
+        when(destination.id) {
+            R.id.overviewFragment -> navView.menu.findItem(R.id.nav_result).isChecked = true
+            R.id.overviewResultFragment -> navView.menu.findItem(R.id.nav_result).isChecked = true
+            R.id.overviewStatisticFragment -> navView.menu.findItem(R.id.nav_result).isChecked = true
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
