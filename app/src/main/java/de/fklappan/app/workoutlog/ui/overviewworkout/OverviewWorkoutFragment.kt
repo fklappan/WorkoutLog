@@ -34,7 +34,6 @@ class OverviewWorkoutFragment : BaseFragment() {
         initFab()
         initViewModels()
         observeViewModels()
-        fetchData()
     }
 
     private fun initFab() {
@@ -89,10 +88,6 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun observeViewModels() {
         viewModelOverviewWorkout.state.observe(this, Observer { state -> updateState(state) })
-    }
-
-    private fun fetchData() {
-        viewModelOverviewWorkout.loadWorkouts()
     }
 
     private fun updateState(state: OverviewWorkoutState) {

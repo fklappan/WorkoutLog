@@ -25,6 +25,10 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
     val state: LiveData<OverviewWorkoutState>
         get() = _state
 
+    init {
+        loadWorkouts()
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // public methods aka entry points - will be invoked by the view
 
