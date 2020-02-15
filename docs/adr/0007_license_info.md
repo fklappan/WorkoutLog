@@ -18,5 +18,4 @@ For simplicity we should use a simple webview showing a pre created HTML page.
 
 ## Consequences
 
-All ViewModel classes have to be refactored and state classes have to be implemented. Therefore also
-the unit tests have to be altered to fit the new logic.
+A new fragment containing a WebView has to be implemented.
