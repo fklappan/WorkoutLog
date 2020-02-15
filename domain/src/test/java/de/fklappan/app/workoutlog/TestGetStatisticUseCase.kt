@@ -1,5 +1,6 @@
 package de.fklappan.app.workoutlog
 
+import com.sun.org.apache.bcel.internal.generic.CALOAD
 import de.fklappan.app.workoutlog.domain.StatisticCurrentDomainModel
 import de.fklappan.app.workoutlog.domain.WorkoutLogRepository
 import de.fklappan.app.workoutlog.domain.WorkoutResultDomainModel
@@ -115,6 +116,33 @@ class TestGetStatisticUseCase {
         bla.awaitTerminalEvent()
         bla.assertNoErrors()
         bla.assertValue { statistics -> statistics.streak == 3 }
+    }
+
+    @Test
+    fun `no workout in current but in last month`() {
+
+        val today = Calendar.getInstance()
+        today.set(Calendar.MONTH, 1)
+        today.set(Calendar.DAY_OF_MONTH, 2)
+        today.set(Calendar.YEAR, 2020)
+
+        val lastMonthDay = today.clone() as Calendar
+        lastMonthDay.set(Calendar.MONTH, 0)
+        lastMonthDay.set(Calendar.DAY_OF_MONTH, 15)
+
+        // create first day of month
+        val lastMonth = Calendar.getInstance()
+        lastMonth.set(Calendar.DAY_OF_MONTH, 1)
+        lastMonth.add(Calendar.DAY_OF_MONTH, -1)
+
+        val workout = WorkoutResultDomainModel(1, "today", lastMonthDay.time, 1, true, "note", "feeling")
+        every { repository.getResultsForPeriod(any(), any()) } returns Collections.singletonList(workout)
+        val uut = GetStatisticUseCase(repository)
+
+        val bla : TestObserver<StatisticCurrentDomainModel> = uut.execute(today).test()
+        bla.awaitTerminalEvent()
+        bla.assertNoErrors()
+        bla.assertValue { statistics -> !statistics.isWorkoutStreak }
     }
 
     @Test
