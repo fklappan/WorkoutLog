@@ -104,9 +104,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun updateNavItem(destination: NavDestination) {
         // TODO 02.01.2020 Flo maybe it's sufficient to check only for overviewFragment as this is the only fragment to which we can return to
         when(destination.id) {
-            R.id.overviewFragment -> navView.menu.findItem(R.id.nav_result).isChecked = true
+            R.id.overviewFragment -> navView.menu.findItem(R.id.nav_workout).isChecked = true
             R.id.overviewResultFragment -> navView.menu.findItem(R.id.nav_result).isChecked = true
-            R.id.overviewStatisticFragment -> navView.menu.findItem(R.id.nav_result).isChecked = true
+            R.id.overviewStatisticFragment -> navView.menu.findItem(R.id.nav_statistic).isChecked = true
+            R.id.licensesFragment -> navView.menu.findItem(R.id.nav_licenses).isChecked = true
         }
     }
 
