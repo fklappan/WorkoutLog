@@ -55,6 +55,8 @@ class OverviewWorkoutFragment : BaseFragment() {
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
+        searchView.setQuery(viewModelOverviewWorkout.getLastSearchQuery(), false)
+        searchView.setIconifiedByDefault(viewModelOverviewWorkout.getLastSearchQuery().isEmpty())
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 

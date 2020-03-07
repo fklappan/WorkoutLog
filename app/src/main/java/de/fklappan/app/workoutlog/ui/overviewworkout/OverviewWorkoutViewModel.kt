@@ -17,6 +17,8 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
 ) :
     RxViewModel() {
 
+    private var lastSearchQuery: String = ""
+
     // store the unfiltered list to be able to restore it after deleting a filter
     private val _workoutListUnfiltered = ArrayList<WorkoutGuiModel>()
 
@@ -58,6 +60,7 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
     }
 
     fun searchWorkoutQueryChanged(query: String) {
+        lastSearchQuery = query
         val filteredList = ArrayList<WorkoutGuiModel>()
 
         for(workout in _workoutListUnfiltered) {
@@ -67,6 +70,8 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         }
         _state.value = OverviewWorkoutState.WorkoutList(filteredList)
     }
+
+    fun getLastSearchQuery() = lastSearchQuery
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // private methods
