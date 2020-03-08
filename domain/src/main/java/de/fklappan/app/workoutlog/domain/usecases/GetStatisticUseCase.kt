@@ -2,7 +2,6 @@ package de.fklappan.app.workoutlog.domain.usecases
 
 import de.fklappan.app.workoutlog.domain.*
 import io.reactivex.Single
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashSet
 import kotlin.math.max
@@ -33,7 +32,7 @@ class GetStatisticUseCase(val repository: WorkoutLogRepository) : UseCase<Calend
         if (consecutiveDays == 0) {
             // rest days are always calculated from yesterday, because it is still possible to make
             // a workout today
-            val consecutiveRestDays = getConsecutiveRestDays(resultMonthList, yesterday)
+            val consecutiveRestDays = getConsecutiveRestDays(resultYearList, yesterday)
             val statisticModel = StatisticCurrentDomainModel(consecutiveRestDays, false, monthCount, yearCount)
             return Single.just(statisticModel)
         }
@@ -79,10 +78,10 @@ class GetStatisticUseCase(val repository: WorkoutLogRepository) : UseCase<Calend
         return set
     }
 
-    private fun getConsecutiveRestDays(workoutMonthList: List<WorkoutResultDomainModel>, fromDay: Calendar): Int {
+    private fun getConsecutiveRestDays(workoutYearList: List<WorkoutResultDomainModel>, fromDay: Calendar): Int {
         // move calendar from fromDay backwards using the Date as identifier (converted to string)
         // till there is a workout entry in the set (or 365 days are passed)
-        val set = createDateAsStringSet(workoutMonthList)
+        val set = createDateAsStringSet(workoutYearList)
 
         var currentDayString = fromDay.time.toEqualizableString()
         var restDays = 0
