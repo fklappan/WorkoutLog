@@ -47,7 +47,7 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         )
     }
 
-    fun favoriteClicked(workoutId: Int) {
+    fun onFavoriteClicked(workoutId: Int) {
         addDisposable(
             useCaseFactory.createToggleFavoriteWorkoutUseCase().execute(workoutId)
                 .subscribeOn(schedulerIo)
@@ -59,7 +59,7 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         )
     }
 
-    fun searchWorkoutQueryChanged(query: String) {
+    fun onSearchWorkoutQueryChanged(query: String) {
         lastSearchQuery = query
         val filteredList = ArrayList<WorkoutGuiModel>()
 

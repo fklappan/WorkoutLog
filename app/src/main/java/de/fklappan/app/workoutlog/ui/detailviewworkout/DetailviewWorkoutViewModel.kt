@@ -36,7 +36,7 @@ class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         )
     }
 
-    fun favoriteClicked() {
+    fun onFavoriteClicked() {
         addDisposable(
             useCaseFactory.createToggleFavoriteWorkoutUseCase().execute(currentWorkoutDetails.workout.workoutId)
                 .subscribeOn(schedulerIo)

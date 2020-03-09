@@ -71,7 +71,7 @@ class OverviewWorkoutViewModelTest {
         every { toggleFavoriteWorkoutUseCase.execute(1) } returns Single.just(domainModel)
 
         // when
-        uut.favoriteClicked(1)
+        uut.onFavoriteClicked(1)
 
         // then
         verifySequence {
@@ -105,7 +105,7 @@ class OverviewWorkoutViewModelTest {
         every { getWorkoutsUseCaseMock.execute() } returns Single.just(domainModelList)
 
         uut.loadWorkouts()
-        uut.searchWorkoutQueryChanged("wew")
+        uut.onSearchWorkoutQueryChanged("wew")
 
         verifySequence {
             stateObserver.onChanged(OverviewWorkoutState.Loading)

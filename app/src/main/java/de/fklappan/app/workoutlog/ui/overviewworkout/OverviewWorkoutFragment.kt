@@ -65,7 +65,7 @@ class OverviewWorkoutFragment : BaseFragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                viewModelOverviewWorkout.searchWorkoutQueryChanged(newText!!)
+                viewModelOverviewWorkout.onSearchWorkoutQueryChanged(newText!!)
                 return true
             }
 
@@ -80,7 +80,7 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun favoriteClicked(workoutId: Int) {
         Log.d(LOG_TAG, "clicked workout $workoutId to toggle favorite")
-        viewModelOverviewWorkout.favoriteClicked(workoutId)
+        viewModelOverviewWorkout.onFavoriteClicked(workoutId)
     }
 
     private fun initViewModels() {

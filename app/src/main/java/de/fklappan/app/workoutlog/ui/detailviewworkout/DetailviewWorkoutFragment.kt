@@ -65,7 +65,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
         }
 
         recyclerViewResults.adapter = workoutResultAdapter
-        imageButtonFavorite.setOnClickListener { viewModelDetail.favoriteClicked() }
+        imageButtonFavorite.setOnClickListener { viewModelDetail.onFavoriteClicked() }
         setHasOptionsMenu(true)
     }
 

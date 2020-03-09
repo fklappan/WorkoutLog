@@ -61,7 +61,7 @@ class DetailviewWorkoutViewModelTest {
 
         // when
         uut.loadWorkout(1)
-        uut.favoriteClicked()
+        uut.onFavoriteClicked()
 
         //then
         verifySequence {
