@@ -8,10 +8,12 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutFragment
 import kotlinx.android.synthetic.main.overview.*
 import javax.inject.Inject
 
@@ -90,6 +92,13 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun observeViewModels() {
         viewModelOverviewWorkout.state.observe(this, Observer { state -> updateState(state) })
+
+        // observe livedata which will be created by the AddWorkoutFragment
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(AddWorkoutFragment.KEY_WORKOUT_ADDED, false)?.
+        observe(viewLifecycleOwner, Observer { addedWorkout ->
+            if (addedWorkout) {
+                viewModelOverviewWorkout.loadWorkouts()
+            }})
     }
 
     private fun updateState(state: OverviewWorkoutState) {

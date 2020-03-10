@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
@@ -19,6 +20,10 @@ import kotlinx.android.synthetic.main.overview.floatingActionButton
 import javax.inject.Inject
 
 class AddWorkoutFragment : BaseFragment() {
+
+    companion object {
+        val KEY_WORKOUT_ADDED = "KEY_WORKOUT_ADDED"
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -68,6 +73,8 @@ class AddWorkoutFragment : BaseFragment() {
         Log.d(LOG_TAG, "saved workout")
         textViewError.visibility = View.GONE
         Snackbar.make(view!!, getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
+        // create livedata to notify calling fragment about workout creation
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(KEY_WORKOUT_ADDED, true)
         Navigation.findNavController(view!!).navigateUp()
     }
 

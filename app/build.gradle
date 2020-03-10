@@ -51,8 +51,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     // navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.2.1"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.1"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0-alpha03"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0-alpha03"
 
     implementation "androidx.room:room-runtime:2.2.4"
     kapt "androidx.room:room-compiler:2.2.4"
