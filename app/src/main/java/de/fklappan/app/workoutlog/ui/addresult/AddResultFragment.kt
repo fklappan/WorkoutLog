@@ -104,7 +104,13 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun showWorkoutDetails(guiModel: WorkoutDetailsGuiModel, date: Date, isPr: Boolean) {
+        if (!guiModel.resultList.isEmpty()) {
+            editTextContent.setText(guiModel.resultList.last().score)
+        } else {
+            editTextContent.setText(guiModel.workout.text)
+        }
         textViewWorkoutDetails.text = guiModel.workout.text
+
         showDate(date)
         showPr(isPr)
     }
