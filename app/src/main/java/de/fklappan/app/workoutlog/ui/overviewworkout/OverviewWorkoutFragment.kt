@@ -3,18 +3,25 @@ package de.fklappan.app.workoutlog.ui.overviewworkout
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutFragment
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.overview.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class OverviewWorkoutFragment : BaseFragment() {
@@ -22,7 +29,10 @@ class OverviewWorkoutFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelOverviewWorkout: OverviewWorkoutViewModel
+    private lateinit var viewModelDelete: DeleteViewModel
     private lateinit var overviewWorkoutAdapter: OverviewWorkoutAdapter
+    private lateinit var snackbarDelete: Snackbar
+    private var disposableDelete = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.overview, container, false)
@@ -46,8 +56,11 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_overview)
-        overviewWorkoutAdapter = OverviewWorkoutAdapter(this::workoutClicked, this::favoriteClicked)
+        overviewWorkoutAdapter = OverviewWorkoutAdapter(this::workoutClicked, this::optionsClicked, this::favoriteClicked)
+        recyclerViewWorkouts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewWorkouts.adapter = overviewWorkoutAdapter
+        snackbarDelete = Snackbar.make(view!!, getString(R.string.success_deleted_workout), Snackbar.LENGTH_LONG)
+            .setActionTextColor(resources.getColor(android.R.color.holo_red_light, requireActivity().theme))
         setHasOptionsMenu(true)
     }
 
@@ -85,9 +98,49 @@ class OverviewWorkoutFragment : BaseFragment() {
         viewModelOverviewWorkout.onFavoriteClicked(workoutId)
     }
 
+    private fun optionsClicked(view: View, workoutGuiModel: WorkoutGuiModel) {
+        val menu = PopupMenu(requireContext(), view)
+        menu.inflate(R.menu.options)
+        menu.setOnMenuItemClickListener{menuItemClicked(it, workoutGuiModel)}
+        menu.show()
+    }
+
+    private fun menuItemClicked(item: MenuItem, workoutGuiModel: WorkoutGuiModel) : Boolean {
+        when(item.itemId) {
+            R.id.action_delete -> {
+                prepareDeleteWorkout(workoutGuiModel)
+                return true
+            }
+            R.id.action_edit -> {
+                val bundle = bundleOf("workoutId" to workoutGuiModel.workoutId)
+                Navigation.findNavController(view!!)
+                    .navigate(R.id.editWorkoutFragment, bundle)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun prepareDeleteWorkout(workoutGuiModel: WorkoutGuiModel) {
+        Log.d(LOG_TAG, "deleteWorkout")
+
+        val deletedIndex = overviewWorkoutAdapter.deleteItem(workoutGuiModel)
+
+        snackbarDelete
+            .setAction(getString(R.string.undo)) { undoDelete(workoutGuiModel, deletedIndex) }
+            .show()
+
+        disposableDelete.add(
+            Single.just(workoutGuiModel)
+                .delay(2000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::deleteForGood)
+        )
+    }
+
     private fun initViewModels() {
-        viewModelOverviewWorkout =
-            ViewModelProviders.of(this, viewModelFactory).get(OverviewWorkoutViewModel::class.java)
+        viewModelOverviewWorkout = ViewModelProviders.of(this, viewModelFactory).get(OverviewWorkoutViewModel::class.java)
+        viewModelDelete = ViewModelProviders.of(this, viewModelFactory).get(DeleteViewModel::class.java)
     }
 
     private fun observeViewModels() {
@@ -127,4 +180,14 @@ class OverviewWorkoutFragment : BaseFragment() {
         Log.d(LOG_TAG, "Results loaded: " + resultList.size)
         overviewWorkoutAdapter.items = resultList
     }
+
+    private fun undoDelete(workoutGuiModel: WorkoutGuiModel, deletedIndex: Int) {
+        disposableDelete.clear()
+        overviewWorkoutAdapter.addItem(workoutGuiModel, deletedIndex)
+    }
+
+    fun deleteForGood(workoutGuiModel: WorkoutGuiModel) {
+        viewModelDelete.deleteWorkout(workoutGuiModel.workoutId)
+    }
+
 }

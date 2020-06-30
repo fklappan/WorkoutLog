@@ -10,5 +10,7 @@
     <color name="gray">#AAAAAA</color>
     <color name="darkGray">#515151</color>
     <color name="transparent">#00000000</color>
+    <color name="white">#fff</color>
+    <color name="light_background">#FFFFFFFF</color>
 
 </resources>

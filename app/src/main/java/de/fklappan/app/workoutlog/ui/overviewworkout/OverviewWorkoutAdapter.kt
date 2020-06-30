@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.list_item_workout.view.*
 
 class OverviewWorkoutAdapter(
     private val clickListener: (WorkoutGuiModel) -> Unit,
+    private val optionsListener: (View, WorkoutGuiModel) -> Unit,
     private val favoriteListener: (Int) -> Unit
 ) : RecyclerView.Adapter<OverviewWorkoutAdapter.ViewHolder>() {
 
@@ -44,20 +45,37 @@ class OverviewWorkoutAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(items.get(position), clickListener, favoriteListener)
+        holder.bindItem(items.get(position), clickListener, optionsListener, favoriteListener)
     }
 
     override fun getItemCount() = items.size
+
+    fun addItem(workoutGuiModel: WorkoutGuiModel, index: Int) {
+        items.add(index, workoutGuiModel)
+        notifyItemInserted(index)
+    }
+
+    fun deleteItem(workoutGuiModel: WorkoutGuiModel): Int {
+        val removedIndex = items.indexOf(workoutGuiModel)
+        if (items.remove(workoutGuiModel)) {
+            notifyItemRemoved(removedIndex)
+        }
+        return removedIndex
+    }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItem(
             workoutGuiModel: WorkoutGuiModel,
             clickListener: (WorkoutGuiModel) -> Unit,
+            optionsListener: (View, WorkoutGuiModel) -> Unit,
             favoriteListener: (Int) -> Unit
         ) {
             itemView.textViewContent.text = workoutGuiModel.text
-            itemView.setOnClickListener { clickListener.invoke(workoutGuiModel) }
+            itemView.setOnClickListener {
+                clickListener(workoutGuiModel)
+            }
+            itemView.imageButtonOptions.setOnClickListener{optionsListener(it, workoutGuiModel)}
             itemView.imageButtonFavorite.setOnClickListener {
                 clickedButton(
                     it as ImageButton,
@@ -86,6 +104,5 @@ class OverviewWorkoutAdapter(
             }
             view.isSelected = select
         }
-
     }
 }

@@ -13,8 +13,8 @@ android {
         applicationId "de.fklappan.app.workoutlog"
         minSdkVersion globalConfig["androidMinSdkVersion"]
         targetSdkVersion globalConfig["androidTargetSdkVersion"]
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -26,6 +26,8 @@
     <string name="hint_notes">Notes for workout (optional)</string>
     <string name="hint_feeling">Feelings regarding the workout (optional)</string>
     <string name="abbreviation_pr">PR</string>
+    <string name="delete">Delete</string>
+    <string name="undo">Undo</string>
     <string name="menu_edit_workout">Edit workout</string>
     <string name="caption_edit_workout">Edit workout</string>
     <string name="day_streak">Day streak</string>
@@ -43,5 +45,6 @@
     </plurals>
     <string name="caption_statistic_overview">Statistics</string>
     <string name="menu_statistics">Statistics</string>
+    <string name="success_deleted_workout">Workout deleted</string>
 
 </resources>
