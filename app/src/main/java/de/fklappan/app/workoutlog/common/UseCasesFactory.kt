@@ -15,4 +15,5 @@ interface UseCasesFactory {
     fun createEditWorkoutUseCase() : EditWorkoutUseCase
     fun createGetStatisticUseCase() : GetStatisticUseCase
     fun createGetResultsUseCase() : GetResultsUseCase
+    fun createDeleteWorkoutUseCase() : DeleteWorkoutUseCase
 }

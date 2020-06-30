@@ -25,4 +25,6 @@ class UseCasesFactoryImpl(val repository: WorkoutLogRepository) : UseCasesFactor
     override fun createGetStatisticUseCase(): GetStatisticUseCase = GetStatisticUseCase(repository)
 
     override fun createGetResultsUseCase(): GetResultsUseCase = GetResultsUseCase(repository)
+
+    override fun createDeleteWorkoutUseCase(): DeleteWorkoutUseCase = DeleteWorkoutUseCase(repository)
 }

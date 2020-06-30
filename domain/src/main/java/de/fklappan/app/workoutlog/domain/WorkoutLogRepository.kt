@@ -18,4 +18,7 @@ public interface WorkoutLogRepository {
 
     fun getResultsForPeriod(start: Date, end: Date) : List<WorkoutResultDomainModel>
 
+    fun deleteWorkout(workoutId: Int)
+
+    fun deleteResult(resultId: Int)
 }

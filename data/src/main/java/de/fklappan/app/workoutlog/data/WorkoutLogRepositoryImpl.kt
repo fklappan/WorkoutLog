@@ -41,6 +41,13 @@ class WorkoutLogRepositoryImpl(private val workoutDao: WorkoutDao, private val r
         return domainModelList
     }
 
+    override fun deleteWorkout(workoutId: Int) {
+        workoutDao.deleteWorkout(workoutDao.getWorkoutById(workoutId))
+    }
+
+    override fun deleteResult(resultId: Int) {
+        resultDao.deleteResult(resultDao.getResultById(resultId))
+    }
 
     override fun getWorkouts(): List<WorkoutDomainModel> {
         val domainModelList = ArrayList<WorkoutDomainModel>()

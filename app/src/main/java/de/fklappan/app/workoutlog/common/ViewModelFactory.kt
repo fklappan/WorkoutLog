@@ -8,6 +8,7 @@ import de.fklappan.app.workoutlog.ui.detailviewworkout.DetailviewWorkoutViewMode
 import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.overviewresult.OverviewResultViewModel
 import de.fklappan.app.workoutlog.ui.overviewstatistic.OverviewStatisticViewModel
+import de.fklappan.app.workoutlog.ui.overviewworkout.DeleteViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.OverviewWorkoutViewModel
 import io.reactivex.Scheduler
 
@@ -43,6 +44,10 @@ class ViewModelFactory(private val guiModelMapper: GuiModelMapper,
         if (modelClass.isAssignableFrom(OverviewResultViewModel::class.java)) {
             return OverviewResultViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
+        if (modelClass.isAssignableFrom(DeleteViewModel::class.java)) {
+            return DeleteViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
+        }
+
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

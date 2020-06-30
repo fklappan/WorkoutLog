@@ -16,4 +16,7 @@ interface WorkoutDao{
 
     @Update
     fun updateWorkout(workoutDataModel: WorkoutDataModel)
+
+    @Delete
+    fun deleteWorkout(workoutDataModel: WorkoutDataModel)
 }
