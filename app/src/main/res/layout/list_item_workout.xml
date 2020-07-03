@@ -4,12 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/default_margin"
-        android:background="@color/light_background"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
->
+    style="@style/card_item_style">
     <ImageButton
             android:id="@+id/imageButtonFavorite"
             android:layout_width="32dp"

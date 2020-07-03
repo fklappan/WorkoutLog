@@ -7,6 +7,7 @@ import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
@@ -63,7 +64,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
         workoutResultAdapter = WorkoutResultAdapter { clickedResult ->
             Log.d(LOG_TAG, "clicked result id" + clickedResult.workout)
         }
-
+        recyclerViewResults.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewResults.adapter = workoutResultAdapter
         imageButtonFavorite.setOnClickListener { viewModelDetail.onFavoriteClicked() }
         setHasOptionsMenu(true)

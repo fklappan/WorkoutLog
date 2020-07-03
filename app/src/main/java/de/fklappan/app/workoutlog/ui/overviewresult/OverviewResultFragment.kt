@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
@@ -41,6 +42,7 @@ class OverviewResultFragment : BaseFragment() {
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_results)
         adapter = OverviewResultAdapter(this::resultClicked)
+        recyclerViewWorkouts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewWorkouts.adapter = adapter
     }
 
