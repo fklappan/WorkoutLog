@@ -144,7 +144,7 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelOverviewWorkout.state.observe(this, Observer { state -> updateState(state) })
+        viewModelOverviewWorkout.state.observe(viewLifecycleOwner, Observer { state -> updateState(state) })
 
         // observe livedata which will be created by the AddWorkoutFragment
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(AddWorkoutFragment.KEY_WORKOUT_ADDED, false)?.

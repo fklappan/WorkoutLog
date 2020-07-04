@@ -59,7 +59,7 @@ class AddWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelAddWorkout.state.observe(this, Observer { state -> updateState(state) })
+        viewModelAddWorkout.state.observe(viewLifecycleOwner, Observer { state -> updateState(state) })
     }
 
     private fun updateState(state: AddWorkoutState) {

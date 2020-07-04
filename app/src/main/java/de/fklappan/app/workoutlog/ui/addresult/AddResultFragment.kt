@@ -64,7 +64,7 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelAddResult.state.observe(this, Observer { state -> updateState(state) })
+        viewModelAddResult.state.observe(viewLifecycleOwner, Observer { state -> updateState(state) })
     }
 
     private fun fetchData() {

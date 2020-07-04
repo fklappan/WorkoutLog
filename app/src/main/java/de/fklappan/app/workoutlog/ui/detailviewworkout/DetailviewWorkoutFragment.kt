@@ -83,7 +83,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModelDetail.state.observe(this, Observer { state -> updateState(state)})
+        viewModelDetail.state.observe(viewLifecycleOwner, Observer { state -> updateState(state)})
     }
 
     private fun fetchData() {
