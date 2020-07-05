@@ -21,6 +21,7 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
 
     // store the unfiltered list to be able to restore it after deleting a filter
     private val _workoutListUnfiltered = ArrayList<WorkoutGuiModel>()
+    private val _workoutListFiltered = ArrayList<WorkoutGuiModel>()
 
     // exposing only a state
     private val _state = MutableLiveData<OverviewWorkoutState>()
@@ -61,14 +62,14 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
 
     fun onSearchWorkoutQueryChanged(query: String) {
         lastSearchQuery = query
-        val filteredList = ArrayList<WorkoutGuiModel>()
+        _workoutListFiltered.clear()
 
         for(workout in _workoutListUnfiltered) {
             if (workout.text.contains(query, true)) {
-                filteredList.add(workout)
+                _workoutListFiltered.add(workout)
             }
         }
-        _state.value = OverviewWorkoutState.WorkoutList(filteredList)
+        _state.value = OverviewWorkoutState.WorkoutList(_workoutListFiltered)
     }
 
     fun getLastSearchQuery() = lastSearchQuery
@@ -84,7 +85,8 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         }
         _workoutListUnfiltered.clear()
         _workoutListUnfiltered.addAll(guiModelList)
-        _state.value = OverviewWorkoutState.WorkoutList(guiModelList)
+        // apply last known filter on new result
+        onSearchWorkoutQueryChanged(lastSearchQuery)
     }
 
     private fun handleError(error: Throwable) {
@@ -93,7 +95,11 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
     }
 
     private fun handleSuccessFavoriteUseCase(workoutDomainModel: WorkoutDomainModel) {
-        _state.value = OverviewWorkoutState.WorkoutUpdate(modelMapper.mapDomainToGui(workoutDomainModel))
+        // after changing the model we need to make sure that the state of the view will be updated
+        // so that after (ie) orientation change the correct list state is loaded.
+        // if we only update the single element of the internal list, after orientation change the
+        // LAST known state will be provided by the livedata again - which is without the changed data
+        loadWorkouts()
     }
 
     private fun handleErrorFavoriteUseCase(error: Throwable) {
