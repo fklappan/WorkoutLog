@@ -34,6 +34,8 @@ class OverviewWorkoutFragment : BaseFragment() {
     private lateinit var snackbarDelete: Snackbar
     private var disposableDelete = CompositeDisposable()
 
+    private var motionProgress: Float = 0f
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.overview, container, false)
     }
@@ -46,6 +48,22 @@ class OverviewWorkoutFragment : BaseFragment() {
         initFab()
         initViewModels()
         observeViewModels()
+
+        savedInstanceState?.let{
+            motionProgress = it.getFloat("motion-progress", 0f)
+        }
+
+        motionLayout.progress = motionProgress
+    }
+
+    override fun onDestroyView() {
+        motionProgress = motionLayout.progress
+        super.onDestroyView()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putFloat("motion-progress", motionProgress)
     }
 
     private fun initFab() {
