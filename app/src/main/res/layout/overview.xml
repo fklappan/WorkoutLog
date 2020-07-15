@@ -46,7 +46,8 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:backgroundTint="@color/colorAccent"
             app:srcCompat="@drawable/add"
-            android:tint="#FFFFFF"/>
+            app:tint="#FFFFFF"/>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

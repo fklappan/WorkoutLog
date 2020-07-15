@@ -42,10 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/gray"
-                android:layout_marginTop="@dimen/default_margin_small"
-                android:layout_marginBottom="@dimen/default_margin_small"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
         />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -54,7 +50,6 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/list_item_workout_result"
-                android:layout_marginBottom="@dimen/default_margin_small"
         />
 
     </LinearLayout>
@@ -65,9 +60,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:backgroundTint="@color/colorAccent"
             app:srcCompat="@drawable/add"
-            android:tint="#FFFFFF"/>
+            app:tint="#FFFFFF"/>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

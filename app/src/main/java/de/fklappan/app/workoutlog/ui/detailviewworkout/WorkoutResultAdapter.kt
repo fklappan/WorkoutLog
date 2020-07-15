@@ -9,7 +9,6 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import kotlinx.android.synthetic.main.list_item_workout.view.textViewContent
 import kotlinx.android.synthetic.main.list_item_workout_result.view.*
-import kotlinx.android.synthetic.main.list_item_workout_result.view.imageButtonFavorite
 
 class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) -> Unit) :
     RecyclerView.Adapter<WorkoutResultAdapter.ViewHolder>() {
@@ -43,11 +42,6 @@ class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) ->
             itemView.textViewDate.text = workoutGuiModel.date.toPrettyString()
             itemView.textViewContent.text = workoutGuiModel.score
             itemView.setOnClickListener { clickListener.invoke(workoutGuiModel) }
-            if (workoutGuiModel.pr) {
-                itemView.imageButtonFavorite.imageTintList = ColorStateList.valueOf(itemView.context.getColor(R.color.colorAccent))
-            } else {
-                itemView.imageButtonFavorite.imageTintList = ColorStateList.valueOf(itemView.context.getColor(R.color.gray))
-            }
         }
 
     }

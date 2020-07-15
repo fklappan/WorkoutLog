@@ -66,8 +66,26 @@ class DetailviewWorkoutFragment : BaseFragment() {
         }
         recyclerViewResults.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewResults.adapter = workoutResultAdapter
-        imageButtonFavorite.setOnClickListener { viewModelDetail.onFavoriteClicked() }
+        buttonFavorite.setOnClickListener { viewModelDetail.onFavoriteClicked() }
         setHasOptionsMenu(true)
+        imageButtonExpand.setOnClickListener{onExpandClicked()}
+    }
+
+    private fun onExpandClicked() {
+        imageButtonExpand.isSelected = !imageButtonExpand.isSelected
+        // TODO: 15.07.20 animate
+        if (imageButtonExpand.isSelected) {
+            imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_more, null))
+            textViewWorkoutDetails.visibility = View.GONE
+            viewDividerWorkoutDetail.visibility = View.GONE
+            buttonFavorite.visibility = View.GONE
+        } else {
+            imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_less, null))
+            textViewWorkoutDetails.visibility = View.VISIBLE
+            viewDividerWorkoutDetail.visibility = View.VISIBLE
+            buttonFavorite.visibility = View.VISIBLE
+        }
+
     }
 
     private fun initFab() {
@@ -103,9 +121,13 @@ class DetailviewWorkoutFragment : BaseFragment() {
         Log.d(LOG_TAG, "Workout updated")
         textViewWorkoutDetails.text = workoutGuiModel.text
         if (workoutGuiModel.favorite) {
-            imageButtonFavorite.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
+            buttonFavorite.strokeColor = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
+            buttonFavorite.backgroundTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
+            buttonFavorite.setTextColor(ColorStateList.valueOf(context!!.getColor(R.color.white)))
         } else {
-            imageButtonFavorite.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
+            buttonFavorite.strokeColor = ColorStateList.valueOf(context!!.getColor(R.color.gray))
+            buttonFavorite.backgroundTintList = ColorStateList.valueOf(context!!.getColor(R.color.transparent))
+            buttonFavorite.setTextColor(ColorStateList.valueOf(context!!.getColor(R.color.black)))
         }
     }
 

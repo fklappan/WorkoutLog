@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    style="@style/card_item_style">
+    style="@style/card_item_style_clickable">
     <ImageButton
             android:id="@+id/imageButtonFavorite"
             android:layout_width="32dp"
@@ -24,9 +24,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageButtonFavorite"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
+        android:maxLines="3"
             android:layout_marginStart="@dimen/default_margin"
-            tools:text="My hard workout\nmultiline\nbam\nno we know"
+        android:layout_marginEnd="@dimen/default_margin_small"
+            tools:text="My "
             style="@style/StandardText"
     />
 

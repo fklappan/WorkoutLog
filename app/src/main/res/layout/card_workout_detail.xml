@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/mainLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tool="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/card_min_height"
         style="@style/card_item_style"
 >
+
+    <!--    <ImageButton-->
+    <!--            android:id="@+id/imageButtonFavorite"-->
+    <!--            android:layout_width="32dp"-->
+    <!--            android:layout_height="32dp"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            android:src="@drawable/favorite"-->
+    <!--            android:tint="@color/gray"-->
+    <!--            android:background="?attr/selectableItemBackgroundBorderless"-->
+    <!--    />-->
 
     <TextView
             android:id="@+id/textViewCaption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="@string/workout_details"
@@ -24,20 +36,47 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin_small"
             app:layout_constraintTop_toBottomOf="@id/textViewCaption"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonFavorite"
+            app:layout_constraintHorizontal_bias="0"
             tool:text="My hard workout"
             style="@style/StandardText"
     />
 
     <ImageButton
-            android:id="@+id/imageButtonFavorite"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/favorite"
-            android:tint="@color/gray"
-            android:background="?attr/selectableItemBackgroundBorderless"
-    />
+        android:id="@+id/imageButtonExpand"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
+        android:src="@drawable/expand_less"
+        android:tint="@color/gray"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        />
+
+    <View
+        android:id="@+id/viewDividerWorkoutDetail"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/default_margin_small"
+        android:layout_marginBottom="@dimen/default_margin_small"
+        android:background="@color/lightGray"
+        app:layout_constraintTop_toBottomOf="@id/textViewWorkoutDetails"
+        app:layout_constraintBottom_toTopOf="@id/buttonFavorite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin_small"
+        app:layout_constraintTop_toBottomOf="@id/viewDividerWorkoutDetail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="Favorite"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
