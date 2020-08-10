@@ -72,10 +72,10 @@ class AddWorkoutFragment : BaseFragment() {
     private fun showResult() {
         Log.d(LOG_TAG, "saved workout")
         textViewError.visibility = View.GONE
-        Snackbar.make(view!!, getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
+        Snackbar.make(requireView(), getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
         // create livedata to notify calling fragment about workout creation
         findNavController().previousBackStackEntry?.savedStateHandle?.set(KEY_WORKOUT_ADDED, true)
-        Navigation.findNavController(view!!).navigateUp()
+        Navigation.findNavController(requireView()).navigateUp()
     }
 
     private fun showError(message: String) {

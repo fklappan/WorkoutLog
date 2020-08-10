@@ -68,7 +68,7 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun fetchData() {
-        viewModelAddResult.initialize(arguments!!.getInt("workoutId"))
+        viewModelAddResult.initialize(requireArguments().getInt("workoutId"))
     }
 
     private fun updateState(state: AddResultState) {
@@ -85,9 +85,9 @@ class AddResultFragment : BaseFragment() {
         Log.d(LOG_TAG, "updating PR: $isPr")
         if (isPr) {
             playPrButtonAnimation()
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
         } else {
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.gray))
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
         }
     }
 
@@ -99,8 +99,8 @@ class AddResultFragment : BaseFragment() {
     private fun showResult() {
         Log.d(LOG_TAG, "saved workout")
         textViewError.visibility = View.GONE
-        Snackbar.make(view!!, getString(R.string.message_added_workout_result), Snackbar.LENGTH_LONG).show()
-        Navigation.findNavController(view!!).navigateUp()
+        Snackbar.make(requireView(), getString(R.string.message_added_workout_result), Snackbar.LENGTH_LONG).show()
+        Navigation.findNavController(requireView()).navigateUp()
     }
 
     private fun showWorkoutDetails(guiModel: WorkoutDetailsGuiModel, date: Date, isPr: Boolean) {
@@ -123,7 +123,7 @@ class AddResultFragment : BaseFragment() {
 
     private fun onClickDate(view: View) {
         val bottomSheetFragment = BottomSheetFragment(this::chooseDate)
-        bottomSheetFragment.show(fragmentManager!!, "bottomSheet")
+        bottomSheetFragment.show(parentFragmentManager, "bottomSheet")
     }
 
     private fun chooseDate(view: DatePicker, year: Int, month: Int, day: Int) {

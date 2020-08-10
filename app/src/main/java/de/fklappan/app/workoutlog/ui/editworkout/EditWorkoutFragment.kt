@@ -55,7 +55,7 @@ class EditWorkoutFragment : BaseFragment() {
     }
 
     private fun observeViewModels() {
-        viewModel.state.observe(this, Observer { state -> updateState(state) })
+        viewModel.state.observe(viewLifecycleOwner, Observer { state -> updateState(state) })
     }
 
     private fun updateState(state: EditWorkoutState) {
@@ -78,8 +78,8 @@ class EditWorkoutFragment : BaseFragment() {
     private fun showResult() {
         Log.d(LOG_TAG, "saved workout")
         textViewError.visibility = View.GONE
-        Snackbar.make(view!!, getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
-        Navigation.findNavController(view!!).navigateUp()
+        Snackbar.make(requireView(), getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
+        Navigation.findNavController(requireView()).navigateUp()
     }
 
     private fun showError(message: String) {
@@ -89,7 +89,7 @@ class EditWorkoutFragment : BaseFragment() {
     }
 
     private fun fetchData() {
-        viewModel.loadWorkout(arguments!!.getInt("workoutId"))
+        viewModel.loadWorkout(requireArguments().getInt("workoutId"))
     }
 
 

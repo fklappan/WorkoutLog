@@ -49,7 +49,7 @@ class OverviewResultFragment : BaseFragment() {
     private fun resultClicked(resultGuiModel: WorkoutResultGuiModel) {
         Log.d(LOG_TAG, "clicked result id" + resultGuiModel.resultId)
         val bundle = bundleOf("workoutId" to resultGuiModel.workout)
-        Navigation.findNavController(view!!).navigate(R.id.detailviewWorkoutFragment, bundle)
+        Navigation.findNavController(requireView()).navigate(R.id.detailviewWorkoutFragment, bundle)
     }
 
     private fun initViewModels() {

@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
-        navController = Navigation.findNavController(navHostFragment.view!!)
+        navController = Navigation.findNavController(navHostFragment.requireView())
         // make sure that the correct item is selected after returning from another fragment
         navController.addOnDestinationChangedListener { _, destination, _ -> updateNavItem(destination) }
     }

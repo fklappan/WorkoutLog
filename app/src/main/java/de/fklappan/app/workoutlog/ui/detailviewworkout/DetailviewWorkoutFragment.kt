@@ -91,7 +91,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
     private fun initFab() {
         floatingActionButton.setOnClickListener { view ->
             // TODO 05.07.2019 Flo maybe simply passing arguments is not the correct thing to do. But it should be ok for now
-            Navigation.findNavController(view!!)
+            Navigation.findNavController(requireView())
                 .navigate(R.id.action_detailviewWorkoutFragment_to_addResultFragment, arguments)
         }
     }
@@ -105,7 +105,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun fetchData() {
-        viewModelDetail.loadWorkout(arguments!!.getInt("workoutId"))
+        viewModelDetail.loadWorkout(requireArguments().getInt("workoutId"))
     }
 
     private fun updateState(state: DetailviewWorkoutState) {
@@ -121,18 +121,18 @@ class DetailviewWorkoutFragment : BaseFragment() {
         Log.d(LOG_TAG, "Workout updated")
         textViewWorkoutDetails.text = workoutGuiModel.text
         if (workoutGuiModel.favorite) {
-            buttonFavorite.strokeColor = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
-            buttonFavorite.backgroundTintList = ColorStateList.valueOf(context!!.getColor(R.color.colorAccent))
-            buttonFavorite.setTextColor(ColorStateList.valueOf(context!!.getColor(R.color.white)))
+            buttonFavorite.strokeColor = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
+            buttonFavorite.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
+            buttonFavorite.setTextColor(ColorStateList.valueOf(requireContext().getColor(R.color.white)))
         } else {
-            buttonFavorite.strokeColor = ColorStateList.valueOf(context!!.getColor(R.color.gray))
-            buttonFavorite.backgroundTintList = ColorStateList.valueOf(context!!.getColor(R.color.transparent))
-            buttonFavorite.setTextColor(ColorStateList.valueOf(context!!.getColor(R.color.black)))
+            buttonFavorite.strokeColor = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
+            buttonFavorite.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.transparent))
+            buttonFavorite.setTextColor(ColorStateList.valueOf(requireContext().getColor(R.color.black)))
         }
     }
 
     private fun editWorkout() {
-        Navigation.findNavController(view!!)
+        Navigation.findNavController(requireView())
             .navigate(R.id.action_detailviewWorkoutFragment_to_editWorkoutFragment, arguments)
     }
 

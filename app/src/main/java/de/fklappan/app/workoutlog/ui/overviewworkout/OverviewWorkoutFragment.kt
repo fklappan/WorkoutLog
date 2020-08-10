@@ -77,7 +77,7 @@ class OverviewWorkoutFragment : BaseFragment() {
         overviewWorkoutAdapter = OverviewWorkoutAdapter(this::workoutClicked, this::optionsClicked, this::favoriteClicked)
         recyclerViewWorkouts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewWorkouts.adapter = overviewWorkoutAdapter
-        snackbarDelete = Snackbar.make(view!!, getString(R.string.success_deleted_workout), Snackbar.LENGTH_LONG)
+        snackbarDelete = Snackbar.make(requireView(), getString(R.string.success_deleted_workout), Snackbar.LENGTH_LONG)
             .setActionTextColor(resources.getColor(android.R.color.holo_red_light, requireActivity().theme))
         setHasOptionsMenu(true)
     }
@@ -108,7 +108,7 @@ class OverviewWorkoutFragment : BaseFragment() {
     private fun workoutClicked(workoutGuiModel: WorkoutGuiModel) {
         Log.d(LOG_TAG, "clicked workout id" + workoutGuiModel.workoutId)
         val bundle = bundleOf("workoutId" to workoutGuiModel.workoutId)
-        Navigation.findNavController(view!!).navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
+        Navigation.findNavController(requireView()).navigate(R.id.action_overviewFragment_to_detailviewWorkoutFragment, bundle)
     }
 
     private fun favoriteClicked(workoutId: Int) {
@@ -131,7 +131,7 @@ class OverviewWorkoutFragment : BaseFragment() {
             }
             R.id.action_edit -> {
                 val bundle = bundleOf("workoutId" to workoutGuiModel.workoutId)
-                Navigation.findNavController(view!!)
+                Navigation.findNavController(requireView())
                     .navigate(R.id.editWorkoutFragment, bundle)
                 return true
             }
