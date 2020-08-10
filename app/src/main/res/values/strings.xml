@@ -28,7 +28,7 @@
     <string name="abbreviation_pr">PR</string>
     <string name="delete">Delete</string>
     <string name="undo">Undo</string>
-    <string name="menu_edit_workout">Edit workout</string>
+    <string name="menu_edit_workout">Edit</string>
     <string name="caption_edit_workout">Edit workout</string>
     <string name="day_streak">Day streak</string>
     <plurals name="quantity_monthly_workouts">

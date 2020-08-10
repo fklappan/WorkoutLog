@@ -10,7 +10,8 @@ import de.fklappan.app.workoutlog.domain.toPrettyString
 import kotlinx.android.synthetic.main.list_item_workout.view.textViewContent
 import kotlinx.android.synthetic.main.list_item_workout_result.view.*
 
-class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) -> Unit) :
+class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) -> Unit,
+                           private val optionsListener: (View, WorkoutResultGuiModel) -> Unit) :
     RecyclerView.Adapter<WorkoutResultAdapter.ViewHolder>() {
 
     var items: MutableList<WorkoutResultGuiModel> = ArrayList()
@@ -31,17 +32,20 @@ class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) ->
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(items.get(position), clickListener)
+        holder.bindItem(items.get(position), clickListener, optionsListener)
     }
 
     override fun getItemCount() = items.size
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(workoutGuiModel: WorkoutResultGuiModel, clickListener: (WorkoutResultGuiModel) -> Unit) {
+        fun bindItem(workoutGuiModel: WorkoutResultGuiModel,
+                     clickListener: (WorkoutResultGuiModel) -> Unit,
+                     optionsListener: (View, WorkoutResultGuiModel) -> Unit) {
             itemView.textViewDate.text = workoutGuiModel.date.toPrettyString()
             itemView.textViewContent.text = workoutGuiModel.score
             itemView.setOnClickListener { clickListener.invoke(workoutGuiModel) }
+            itemView.imageButtonMore.setOnClickListener { optionsListener.invoke(it, workoutGuiModel) }
         }
 
     }

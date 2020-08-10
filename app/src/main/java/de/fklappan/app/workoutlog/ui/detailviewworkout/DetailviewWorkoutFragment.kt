@@ -1,9 +1,12 @@
 package de.fklappan.app.workoutlog.ui.detailviewworkout
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -61,14 +64,36 @@ class DetailviewWorkoutFragment : BaseFragment() {
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_results)
-        workoutResultAdapter = WorkoutResultAdapter { clickedResult ->
-            Log.d(LOG_TAG, "clicked result id" + clickedResult.workout)
-        }
+        workoutResultAdapter = WorkoutResultAdapter(this::clickedResult, this::clickedOptions)
         recyclerViewResults.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewResults.adapter = workoutResultAdapter
         buttonFavorite.setOnClickListener { viewModelDetail.onFavoriteClicked() }
         setHasOptionsMenu(true)
         imageButtonExpand.setOnClickListener{onExpandClicked()}
+    }
+
+    fun clickedResult(workoutResultGuiModel: WorkoutResultGuiModel) {
+
+    }
+
+    @SuppressLint("RestrictedApi")
+    fun clickedOptions(view: View, workoutResultGuiModel: WorkoutResultGuiModel) {
+        val menuBuilder = MenuBuilder(requireContext())
+        val inflater = MenuInflater(requireContext())
+        inflater.inflate(R.menu.options, menuBuilder)
+
+        val menuHelper = MenuPopupHelper(requireContext(), menuBuilder, view)
+        menuHelper.setForceShowIcon(true)
+        val callback = object: MenuBuilder.Callback {
+            override fun onMenuModeChange(menu: MenuBuilder?) {
+            }
+
+            override fun onMenuItemSelected(menu: MenuBuilder?, item: MenuItem?): Boolean {
+                return true
+            }
+        }
+        menuBuilder.setCallback(callback)
+        menuHelper.show()
     }
 
     private fun onExpandClicked() {
