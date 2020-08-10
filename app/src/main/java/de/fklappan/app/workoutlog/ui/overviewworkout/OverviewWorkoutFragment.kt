@@ -1,9 +1,11 @@
 package de.fklappan.app.workoutlog.ui.overviewworkout
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.PopupMenu
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
@@ -116,11 +118,24 @@ class OverviewWorkoutFragment : BaseFragment() {
         viewModelOverviewWorkout.onFavoriteClicked(workoutId)
     }
 
+    @SuppressLint("RestrictedApi")
     private fun optionsClicked(view: View, workoutGuiModel: WorkoutGuiModel) {
-        val menu = PopupMenu(requireContext(), view)
-        menu.inflate(R.menu.options)
-        menu.setOnMenuItemClickListener{menuItemClicked(it, workoutGuiModel)}
-        menu.show()
+        val menuBuilder = MenuBuilder(requireContext())
+        val inflater = MenuInflater(requireContext())
+        inflater.inflate(R.menu.options, menuBuilder)
+
+        val menuHelper = MenuPopupHelper(requireContext(), menuBuilder, view)
+        menuHelper.setForceShowIcon(true)
+        val callback = object: MenuBuilder.Callback {
+            override fun onMenuModeChange(menu: MenuBuilder?) {
+            }
+
+            override fun onMenuItemSelected(menu: MenuBuilder?, item: MenuItem?): Boolean {
+                return menuItemClicked(item!!, workoutGuiModel)
+            }
+        }
+        menuBuilder.setCallback(callback)
+        menuHelper.show()
     }
 
     private fun menuItemClicked(item: MenuItem, workoutGuiModel: WorkoutGuiModel) : Boolean {

@@ -6,12 +6,14 @@
         android:id="@+id/action_edit"
         android:title="@string/menu_edit_workout"
         android:orderInCategory="100"
+        android:icon="@drawable/edit"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_delete"
         android:title="@string/delete"
         android:orderInCategory="200"
+        android:icon="@drawable/delete"
         app:showAsAction="never"/>
 
 </menu>
