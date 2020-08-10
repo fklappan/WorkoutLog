@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -55,7 +55,7 @@ class AddWorkoutFragment : BaseFragment() {
     }
 
     private fun initViewModels() {
-        viewModelAddWorkout = ViewModelProviders.of(this, viewModelFactory).get(AddWorkoutViewModel::class.java)
+        viewModelAddWorkout = ViewModelProvider(this, viewModelFactory).get(AddWorkoutViewModel::class.java)
     }
 
     private fun observeViewModels() {

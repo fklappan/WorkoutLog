@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
@@ -40,7 +40,7 @@ class OverviewStatisticFragment : BaseFragment() {
 
     private fun initViewModels() {
         viewModelOverviewStatistic =
-            ViewModelProviders.of(this, viewModelFactory).get(OverviewStatisticViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(OverviewStatisticViewModel::class.java)
     }
 
     private fun observeViewModels() {

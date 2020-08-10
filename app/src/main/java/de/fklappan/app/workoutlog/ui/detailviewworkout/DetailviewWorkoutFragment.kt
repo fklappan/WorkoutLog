@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import de.fklappan.app.workoutlog.R
@@ -97,7 +97,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun initViewModels() {
-        viewModelDetail = ViewModelProviders.of(this, viewModelFactory).get(DetailviewWorkoutViewModel::class.java)
+        viewModelDetail = ViewModelProvider(this, viewModelFactory).get(DetailviewWorkoutViewModel::class.java)
     }
 
     private fun observeViewModels() {

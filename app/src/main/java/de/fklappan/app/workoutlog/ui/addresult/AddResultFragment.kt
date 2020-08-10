@@ -11,11 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
-import de.fklappan.app.workoutlog.common.*
+import de.fklappan.app.workoutlog.common.BaseFragment
+import de.fklappan.app.workoutlog.common.BottomSheetFragment
+import de.fklappan.app.workoutlog.common.LOG_TAG
+import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
 import kotlinx.android.synthetic.main.addresult.*
@@ -60,7 +63,7 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun initViewModels() {
-        viewModelAddResult = ViewModelProviders.of(this, viewModelFactory).get(AddResultViewModel::class.java)
+        viewModelAddResult = ViewModelProvider(this, viewModelFactory).get(AddResultViewModel::class.java)
     }
 
     private fun observeViewModels() {

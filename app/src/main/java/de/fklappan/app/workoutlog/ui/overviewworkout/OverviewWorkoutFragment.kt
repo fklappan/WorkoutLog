@@ -7,7 +7,7 @@ import android.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -157,8 +157,10 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun initViewModels() {
-        viewModelOverviewWorkout = ViewModelProviders.of(this, viewModelFactory).get(OverviewWorkoutViewModel::class.java)
-        viewModelDelete = ViewModelProviders.of(this, viewModelFactory).get(DeleteViewModel::class.java)
+        viewModelOverviewWorkout = ViewModelProvider(this, viewModelFactory).get(OverviewWorkoutViewModel::class.java)
+//        viewModelOverviewWorkout = ViewModelProviders.of(this, viewModelFactory).get(OverviewWorkoutViewModel::class.java)
+        viewModelDelete = ViewModelProvider(this, viewModelFactory).get(DeleteViewModel::class.java)
+//        viewModelDelete = ViewModelProviders.of(this, viewModelFactory).get(DeleteViewModel::class.java)
     }
 
     private fun observeViewModels() {
