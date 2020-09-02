@@ -13,5 +13,6 @@
     <color name="white">#fff</color>
     <color name="light_background">#FFFFFFFF</color>
     <color name="black">@android:color/black</color>
+    <color name="red">#FF1744</color>
 
 </resources>

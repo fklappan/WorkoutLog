@@ -8,6 +8,8 @@ public interface WorkoutLogRepository {
 
     fun getWorkoutById(workoutId: Int) : WorkoutDomainModel
 
+    fun getResultById(resultId: Int) : WorkoutResultDomainModel
+
     fun getResultsForWorkout(workoutId: Int) : List<WorkoutResultDomainModel>
 
     fun addWorkout(workoutDomainModel: WorkoutDomainModel)

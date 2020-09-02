@@ -3,6 +3,7 @@ package de.fklappan.app.workoutlog.di
 import dagger.Subcomponent
 import de.fklappan.app.workoutlog.ui.addresult.AddResultFragment
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutFragment
+import de.fklappan.app.workoutlog.ui.detailviewresult.DetailviewResultFragment
 import de.fklappan.app.workoutlog.ui.detailviewworkout.DetailviewWorkoutFragment
 import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutFragment
 import de.fklappan.app.workoutlog.ui.overviewresult.OverviewResultFragment
@@ -22,4 +23,5 @@ interface ControllerComponent {
     fun inject(fragment: AddResultFragment)
     fun inject(fragment: OverviewStatisticFragment)
     fun inject(fragment: OverviewResultFragment)
+    fun inject(fragment: DetailviewResultFragment)
 }

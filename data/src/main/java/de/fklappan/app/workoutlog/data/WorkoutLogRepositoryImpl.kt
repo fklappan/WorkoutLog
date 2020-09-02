@@ -20,6 +20,10 @@ class WorkoutLogRepositoryImpl(private val workoutDao: WorkoutDao, private val r
         return modelMapper.mapDataToDomain(workoutDao.getWorkoutById(workoutId))
     }
 
+    override fun getResultById(resultId: Int): WorkoutResultDomainModel {
+        return modelMapper.mapDataToDomain(resultDao.getResultById(resultId))
+    }
+
     override fun getResultsForWorkout(workoutId: Int): List<WorkoutResultDomainModel> {
         val domainModelList = ArrayList<WorkoutResultDomainModel>()
 

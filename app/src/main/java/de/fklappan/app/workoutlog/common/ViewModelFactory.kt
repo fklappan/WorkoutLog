@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import de.fklappan.app.workoutlog.ui.addresult.AddResultViewModel
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutViewModel
+import de.fklappan.app.workoutlog.ui.detailviewresult.DetailviewResultViewModel
 import de.fklappan.app.workoutlog.ui.detailviewworkout.DetailviewWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.editworkout.EditWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.overviewresult.OverviewResultViewModel
@@ -46,6 +47,9 @@ class ViewModelFactory(private val guiModelMapper: GuiModelMapper,
         }
         if (modelClass.isAssignableFrom(DeleteViewModel::class.java)) {
             return DeleteViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
+        }
+        if (modelClass.isAssignableFrom(DetailviewResultViewModel::class.java)) {
+            return DetailviewResultViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

@@ -8,6 +8,7 @@ import de.fklappan.app.workoutlog.domain.usecases.*
 interface UseCasesFactory {
     fun createGetWorkoutsUseCase() : GetWorkoutsUseCase
     fun createGetWorkoutDetailsUseCase() : GetWorkoutDetailsUseCase
+    fun createGetResultDetailsUseCase() : GetResultDetailsUseCase
     fun createToggleFavoriteWorkoutUseCase() : ToggleFavoriteWorkoutUseCase
     fun createAddWorkoutResultUseCase() : AddWorkoutResultUseCase
     fun createAddWorkoutUseCase() : AddWorkoutUseCase

@@ -29,6 +29,11 @@
                 app:destination="@id/editWorkoutFragment"/>
     </fragment >
 
+    <fragment  android:id="@+id/detailViewResultFragment"
+        android:name="de.fklappan.app.workoutlog.ui.detailviewresult.DetailviewResultFragment"
+        android:label="DetailViewResultFragment">
+    </fragment >
+
     <fragment  android:id="@+id/addResultFragment" android:name="de.fklappan.app.workoutlog.ui.addresult.AddResultFragment"
               android:label="AddResultFragment"/>
     <fragment android:id="@+id/editWorkoutFragment"

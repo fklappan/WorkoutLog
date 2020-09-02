@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -73,7 +74,8 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     fun clickedResult(workoutResultGuiModel: WorkoutResultGuiModel) {
-
+        val bundle = bundleOf("resultId" to workoutResultGuiModel.resultId)
+        Navigation.findNavController(requireView()).navigate(R.id.detailViewResultFragment, bundle)
     }
 
     @SuppressLint("RestrictedApi")
