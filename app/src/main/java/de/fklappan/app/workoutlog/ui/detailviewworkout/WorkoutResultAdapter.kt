@@ -37,6 +37,19 @@ class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) ->
 
     override fun getItemCount() = items.size
 
+    fun addItem(workoutResultGuiModel: WorkoutResultGuiModel, index: Int) {
+        items.add(index, workoutResultGuiModel)
+        notifyItemInserted(index)
+    }
+
+    fun deleteItem(workoutResultGuiModel: WorkoutResultGuiModel): Int {
+        val removedIndex = items.indexOf(workoutResultGuiModel)
+        if (items.remove(workoutResultGuiModel)) {
+            notifyItemRemoved(removedIndex)
+        }
+        return removedIndex
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItem(workoutGuiModel: WorkoutResultGuiModel,

@@ -27,16 +27,33 @@ class DeleteViewModel(private val useCaseFactory: UseCasesFactory,
             useCaseFactory.createDeleteWorkoutUseCase().execute(workoutId)
                 .subscribeOn(schedulerIo)
                 .observeOn(schedulerMainThread)
-                .subscribe(this::success, this::error)
+                .subscribe(this::deleteWorkoutSuccess, this::deleteWorkoutError)
         )
     }
 
-    private fun success() {
+    fun deleteResult(resultId: Int) {
+        addDisposable(
+            useCaseFactory.createDeleteResultUseCase().execute(resultId)
+                .subscribeOn(schedulerIo)
+                .observeOn(schedulerMainThread)
+                .subscribe(this::deleteResultSuccess, this::deleteResultError)
+        )
+    }
+
+    private fun deleteWorkoutSuccess() {
         Log.d(LOG_TAG, "Deleted workout with results")
     }
 
-    private fun error(throwable: Throwable) {
+    private fun deleteWorkoutError(throwable: Throwable) {
         Log.e(LOG_TAG, "Error deleting workouts", throwable)
+    }
+
+    private fun deleteResultSuccess() {
+        Log.d(LOG_TAG, "Deleted result")
+    }
+
+    private fun deleteResultError(throwable: Throwable) {
+        Log.e(LOG_TAG, "Error deleting result", throwable)
     }
 }
 

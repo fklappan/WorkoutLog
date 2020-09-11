@@ -12,14 +12,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.ui.overviewworkout.DeleteViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.card_workout_detail.*
 import kotlinx.android.synthetic.main.detailview_workout.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 // TODO 29.07.2019 Flo Add possible argument keys as const val EXTRA_blabla
@@ -31,7 +37,10 @@ class DetailviewWorkoutFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModelDetail: DetailviewWorkoutViewModel
+    private lateinit var viewModelDelete: DeleteViewModel
     private lateinit var workoutResultAdapter: WorkoutResultAdapter
+    private lateinit var snackbarDelete: Snackbar
+    private var disposableDelete = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.detailview_workout, container, false)
@@ -69,6 +78,8 @@ class DetailviewWorkoutFragment : BaseFragment() {
         recyclerViewResults.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewResults.adapter = workoutResultAdapter
         buttonFavorite.setOnClickListener { viewModelDetail.onFavoriteClicked() }
+        snackbarDelete = Snackbar.make(requireView(), getString(R.string.success_deleted_result), Snackbar.LENGTH_LONG)
+            .setActionTextColor(resources.getColor(android.R.color.holo_red_light, requireActivity().theme))
         setHasOptionsMenu(true)
         imageButtonExpand.setOnClickListener{onExpandClicked()}
     }
@@ -91,11 +102,55 @@ class DetailviewWorkoutFragment : BaseFragment() {
             }
 
             override fun onMenuItemSelected(menu: MenuBuilder?, item: MenuItem?): Boolean {
-                return true
+                return if (item == null) false
+                else menuItemClicked(item, workoutResultGuiModel)
             }
         }
         menuBuilder.setCallback(callback)
         menuHelper.show()
+    }
+
+    fun menuItemClicked(item: MenuItem, workoutResultGuiModel: WorkoutResultGuiModel) : Boolean {
+        when(item.itemId) {
+            R.id.action_delete -> {
+                prepareDeleteResult(workoutResultGuiModel)
+                return true
+            }
+            R.id.action_edit -> {
+//                val bundle = bundleOf("resultId" to workoutResultGuiModel.resultId)
+//                Navigation.findNavController(requireView())
+//                    .navigate(R.id.editWorkoutFragment, bundle)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun prepareDeleteResult(workoutResultGuiModel: WorkoutResultGuiModel) {
+        Log.d(LOG_TAG, "deleteResult")
+
+        val deletedIndex = workoutResultAdapter.deleteItem(workoutResultGuiModel)
+
+        snackbarDelete
+            .setAction(getString(R.string.undo)) { undoDelete(workoutResultGuiModel, deletedIndex) }
+            .show()
+
+        disposableDelete.add(
+            Single.just(workoutResultGuiModel)
+                .delay(2000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::deleteForGood)
+        )
+    }
+
+    private fun undoDelete(workoutResultGuiModel: WorkoutResultGuiModel, deletedIndex: Int) {
+        disposableDelete.clear()
+        workoutResultAdapter.addItem(workoutResultGuiModel, deletedIndex)
+    }
+
+    private fun deleteForGood(workoutResultGuiModel: WorkoutResultGuiModel) {
+        viewModelDelete.deleteResult(workoutResultGuiModel.resultId)
+//        vi.deleteWorkout(workoutGuiModel.workoutId)
     }
 
     private fun onExpandClicked() {
@@ -125,6 +180,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
 
     private fun initViewModels() {
         viewModelDetail = ViewModelProvider(this, viewModelFactory).get(DetailviewWorkoutViewModel::class.java)
+        viewModelDelete = ViewModelProvider(this, viewModelFactory).get(DeleteViewModel::class.java)
     }
 
     private fun observeViewModels() {
