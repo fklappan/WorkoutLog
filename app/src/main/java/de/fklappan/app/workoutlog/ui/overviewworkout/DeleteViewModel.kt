@@ -7,6 +7,11 @@ import de.fklappan.app.workoutlog.common.RxViewModel
 import de.fklappan.app.workoutlog.common.UseCasesFactory
 import io.reactivex.Scheduler
 
+/**
+ * Dedicated ViewModel class to delete a workout.
+ * This is a dedicated/standalone ViewModel for reusability. The delete process should also be
+ * invokable from within the detailview of a workout.
+ */
 class DeleteViewModel(private val useCaseFactory: UseCasesFactory,
                       private val schedulerIo: Scheduler,
                       private val schedulerMainThread: Scheduler,
