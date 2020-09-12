@@ -1,6 +1,7 @@
 package de.fklappan.app.workoutlog.ui.detailviewresult
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,8 +12,12 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
+import kotlinx.android.synthetic.main.addresult.*
 import kotlinx.android.synthetic.main.detailview_result.*
+import kotlinx.android.synthetic.main.detailview_result.imagebuttonPr
+import kotlinx.android.synthetic.main.detailview_result.textViewDate
 import javax.inject.Inject
 
 class DetailviewResultFragment : BaseFragment() {
@@ -66,6 +71,12 @@ class DetailviewResultFragment : BaseFragment() {
         textViewResultDetails.text = resultGuiModel.score
         textViewResultNote.text = resultGuiModel.note
         textViewResultFeeling.text = resultGuiModel.feeling
+        textViewDate.text = resultGuiModel.date.toPrettyString()
+        if (resultGuiModel.pr) {
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
+        } else {
+            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
+        }
     }
 //
 //    private fun editWorkout() {

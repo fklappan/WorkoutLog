@@ -8,12 +8,11 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_margin_small"
+        android:layout_height="match_parent"
+        android:background="@color/lightGray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/buttonDelete"
         app:layout_constraintVertical_bias="0.0"
         >
 
@@ -40,12 +39,67 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutScore"
+                    android:id="@+id/linearLayoutDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:background="@color/light_background"
+                    >
+
+                <ImageView
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
+                    android:layout_margin="@dimen/default_margin"
+                    android:src="@drawable/calendar"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="30.07.2019"
+                    android:layout_gravity="center"
+                    style="@style/StandardText"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewPr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/abbreviation_pr"
+                    android:layout_gravity="center"
+                    style="@style/StandardText"
+                    />
+
+                <ImageButton
+                    android:id="@+id/imagebuttonPr"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
+                    android:src="@drawable/star"
+                    android:tint="@color/gray"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_margin="@dimen/default_margin"
+                     />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/divider_height"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayoutDate"
+                    android:background="@color/light_background"
                     >
 
                     <ImageView
@@ -67,17 +121,10 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textViewCaption"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_gravity="center_vertical"
                         tools:text="My hard workout" />
 
                 </LinearLayout>
-
-                <View
-                    android:id="@+id/divider1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutScore"
-                    />
 
                 <LinearLayout
                     android:background="@color/light_background"
@@ -85,8 +132,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/divider_height"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayoutScore"
                     >
 
                     <ImageView
@@ -108,26 +156,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textViewCaption"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_gravity="center_vertical"
                         tools:text="My hard workout" />
 
                 </LinearLayout>
-
-                <View
-                    android:id="@+id/divider2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutNote"
-                    />
 
                 <LinearLayout
                     android:background="@color/light_background"
                     android:id="@+id/linearLayoutFeeling"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/divider_height"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider2"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayoutNote"
                     >
 
                     <ImageView
@@ -149,6 +191,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textViewCaption"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_gravity="center_vertical"
                         tools:text="My hard workout" />
 
                 </LinearLayout>
@@ -156,36 +199,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonEdit"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/default_margin_small"
-        android:text="@string/menu_edit_workout"
-        app:icon="@drawable/edit"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonDelete"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="@dimen/default_margin_small"
-        android:text="@string/delete"
-        android:textColor="@color/red"
-        app:icon="@drawable/delete"
-        app:iconTint="@color/red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/red"
-        app:strokeColor="@color/red" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

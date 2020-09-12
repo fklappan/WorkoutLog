@@ -12,4 +12,5 @@
     <dimen name="spacing_default">8dp</dimen>
     <dimen name="card_min_height">100dp</dimen>
     <dimen name="imagebutton_size">32dp</dimen>
+    <dimen name="divider_height">2dp</dimen>
 </resources>
