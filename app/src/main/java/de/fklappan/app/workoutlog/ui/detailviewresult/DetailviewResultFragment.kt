@@ -40,8 +40,23 @@ class DetailviewResultFragment : BaseFragment() {
         fetchData()
     }
 
+    @Override
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edit, menu)
+    }
+
+    @Override
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_edit) {
+            editResult()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.result_details)
+        setHasOptionsMenu(true)
     }
 
     private fun initViewModels() {
@@ -78,11 +93,11 @@ class DetailviewResultFragment : BaseFragment() {
             imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
         }
     }
-//
-//    private fun editWorkout() {
-//        Navigation.findNavController(requireView())
-//            .navigate(R.id.action_detailviewWorkoutFragment_to_editWorkoutFragment, arguments)
-//    }
+
+    private fun editResult() {
+        Navigation.findNavController(requireView())
+            .navigate(R.id.editResultFragment, arguments)
+    }
 
     private fun showResultDetails(result: WorkoutResultGuiModel) {
         Log.d(LOG_TAG, "Result details loaded: " + result.score)
