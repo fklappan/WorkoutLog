@@ -7,14 +7,14 @@ import android.widget.ImageButton
 
 fun ImageButton.playGrowAnimation() {
     // double scale the button for 200 ms and return back to normal size
-    val animScaleX = ObjectAnimator.ofFloat(this, "scaleX", 1.0f, 2.3f)
+    val animScaleX = ObjectAnimator.ofFloat(this, "scaleX", 1.0f, 1.6f)
     with(animScaleX) {
         repeatCount = 1
         repeatMode = ValueAnimator.REVERSE
         duration = 200
     }
 
-    val animScaleY = ObjectAnimator.ofFloat(this, "scaleY", 1.0f, 2.3f)
+    val animScaleY = ObjectAnimator.ofFloat(this, "scaleY", 1.0f, 1.6f)
     with(animScaleY) {
         repeatCount = 1
         repeatMode = ValueAnimator.REVERSE

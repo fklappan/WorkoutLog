@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.LOG_TAG
+import de.fklappan.app.workoutlog.common.playGrowAnimation
 import kotlinx.android.synthetic.main.list_item_workout.view.*
 
 class OverviewWorkoutAdapter(
@@ -77,6 +78,9 @@ class OverviewWorkoutAdapter(
             }
             itemView.imageButtonOptions.setOnClickListener{optionsListener(it, workoutGuiModel)}
             itemView.imageButtonFavorite.setOnClickListener {
+                if (!workoutGuiModel.favorite) {
+                    itemView.imageButtonFavorite.playGrowAnimation()
+                }
                 clickedButton(
                     it as ImageButton,
                     workoutGuiModel,
