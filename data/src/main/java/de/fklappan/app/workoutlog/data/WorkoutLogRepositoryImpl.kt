@@ -78,4 +78,9 @@ class WorkoutLogRepositoryImpl(private val workoutDao: WorkoutDao, private val r
         val dataModel = modelMapper.mapDomainToData(workoutDomainModel)
         workoutDao.updateWorkout(dataModel)
     }
+
+    override fun updateResult(resultDomainModel: WorkoutResultDomainModel) {
+        val dataModel = modelMapper.mapDomainToData(resultDomainModel)
+        resultDao.updateResult(dataModel)
+    }
 }

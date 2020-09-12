@@ -31,6 +31,7 @@
     <string name="undo">Undo</string>
     <string name="menu_edit_workout">Edit</string>
     <string name="caption_edit_workout">Edit workout</string>
+    <string name="caption_edit_result">Edit result</string>
     <string name="day_streak">Day streak</string>
     <plurals name="quantity_monthly_workouts">
         <item quantity="one">day worked out this month</item>
@@ -48,4 +49,6 @@
     <string name="menu_statistics">Statistics</string>
     <string name="success_deleted_workout">Workout deleted</string>
     <string name="success_deleted_result">Result deleted</string>
+    <string name="message_saved_changes_success">Successfully saved changes</string>
+
 </resources>

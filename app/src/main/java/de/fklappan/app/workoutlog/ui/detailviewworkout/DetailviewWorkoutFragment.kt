@@ -117,9 +117,9 @@ class DetailviewWorkoutFragment : BaseFragment() {
                 return true
             }
             R.id.action_edit -> {
-//                val bundle = bundleOf("resultId" to workoutResultGuiModel.resultId)
-//                Navigation.findNavController(requireView())
-//                    .navigate(R.id.editWorkoutFragment, bundle)
+                val bundle = bundleOf("resultId" to workoutResultGuiModel.resultId)
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.editResultFragment, bundle)
                 return true
             }
         }

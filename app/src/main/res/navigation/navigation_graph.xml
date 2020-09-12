@@ -51,4 +51,8 @@
             android:id="@+id/licensesFragment"
             android:name="de.fklappan.app.workoutlog.ui.licenses.LicensesFragment"
             android:label="LicensesFragment" />
+
+    <fragment android:id="@+id/editResultFragment"
+        android:name="de.fklappan.app.workoutlog.ui.editresult.EditResultFragment"
+        android:label="EditResultFragment"/>
 </navigation>

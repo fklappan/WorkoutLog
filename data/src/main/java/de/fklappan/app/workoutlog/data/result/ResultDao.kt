@@ -1,6 +1,7 @@
 package de.fklappan.app.workoutlog.data.result
 
 import androidx.room.*
+import de.fklappan.app.workoutlog.data.workout.WorkoutDataModel
 import java.util.*
 
 @Dao
@@ -17,6 +18,9 @@ interface ResultDao{
 
     @Query("SELECT * FROM result WHERE result_id = :resultId")
     fun getResultById(resultId: Int): ResultDataModel
+
+    @Update
+    fun updateResult(resultDataModel: ResultDataModel)
 
     @Delete
     fun deleteResult(resultDataModel: ResultDataModel)
