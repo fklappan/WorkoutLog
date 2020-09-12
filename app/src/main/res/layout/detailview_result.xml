@@ -1,203 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lightGray"
+    >
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/lightGray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/barbell_alone_victor_freitas_unsplash"
+            android:contentDescription="@null"
+            android:fitsSystemWindows="true"
+            android:scaleType="center"
+            />
 
         <LinearLayout
+            android:id="@+id/linearLayoutDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:background="@color/light_background"
+            >
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/colorPrimary"
-                android:contentDescription="@null"
-                android:fitsSystemWindows="true"
-                android:scaleType="center"
-                android:src="@drawable/barbell_alone_victor_freitas_unsplash"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="@dimen/imagebutton_size"
+                android:layout_height="@dimen/imagebutton_size"
+                android:layout_margin="@dimen/default_margin"
+                android:src="@drawable/calendar"
+                android:tint="@color/colorAccent"
+                android:layout_gravity="center"
+                />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_small"
+                tools:text="30.07.2019"
+                android:layout_gravity="center"
+                style="@style/StandardText"
+                android:layout_weight="1"
+                />
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@color/light_background"
-                    >
+            <TextView
+                android:id="@+id/textViewPr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/abbreviation_pr"
+                android:layout_gravity="center"
+                style="@style/StandardText"
+                />
 
-                <ImageView
-                    android:layout_width="@dimen/imagebutton_size"
-                    android:layout_height="@dimen/imagebutton_size"
-                    android:layout_margin="@dimen/default_margin"
-                    android:src="@drawable/calendar"
-                    android:tint="@color/colorAccent"
-                    android:layout_gravity="center"
-                    />
+            <ImageButton
+                android:id="@+id/imagebuttonPr"
+                android:focusable="false"
+                android:clickable="false"
+                android:layout_width="@dimen/imagebutton_size"
+                android:layout_height="@dimen/imagebutton_size"
+                android:src="@drawable/star"
+                android:tint="@color/gray"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="center_vertical|right"
+                android:layout_margin="@dimen/default_margin"
+                 />
 
-                <TextView
-                    android:id="@+id/textViewDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    tools:text="30.07.2019"
-                    android:layout_gravity="center"
-                    style="@style/StandardText"
-                    android:layout_weight="1"
-                    />
-
-                <TextView
-                    android:id="@+id/textViewPr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/abbreviation_pr"
-                    android:layout_gravity="center"
-                    style="@style/StandardText"
-                    />
-
-                <ImageButton
-                    android:id="@+id/imagebuttonPr"
-                    android:focusable="false"
-                    android:clickable="false"
-                    android:layout_width="@dimen/imagebutton_size"
-                    android:layout_height="@dimen/imagebutton_size"
-                    android:src="@drawable/star"
-                    android:tint="@color/gray"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_margin="@dimen/default_margin"
-                     />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/divider_height"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutDate"
-                    android:background="@color/light_background"
-                    >
-
-                    <ImageView
-                        android:layout_width="@dimen/imagebutton_size"
-                        android:layout_height="@dimen/imagebutton_size"
-                        android:layout_margin="@dimen/default_margin"
-                        android:src="@drawable/workout"
-                        android:tint="@color/colorAccent"
-                        android:layout_gravity="center"
-                        />
-
-                    <TextView
-                        android:id="@+id/textViewResultDetails"
-                        style="@style/StandardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_small"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewCaption"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_gravity="center_vertical"
-                        tools:text="My hard workout" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:background="@color/light_background"
-                    android:id="@+id/linearLayoutNote"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/divider_height"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutScore"
-                    >
-
-                    <ImageView
-                        android:layout_width="@dimen/imagebutton_size"
-                        android:layout_height="@dimen/imagebutton_size"
-                        android:layout_margin="@dimen/default_margin"
-                        android:src="@drawable/info"
-                        android:tint="@color/colorAccent"
-                        android:layout_gravity="center"
-                        />
-
-                    <TextView
-                        android:id="@+id/textViewResultNote"
-                        style="@style/StandardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_small"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewCaption"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_gravity="center_vertical"
-                        tools:text="My hard workout" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:background="@color/light_background"
-                    android:id="@+id/linearLayoutFeeling"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/divider_height"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutNote"
-                    >
-
-                    <ImageView
-                        android:layout_width="@dimen/imagebutton_size"
-                        android:layout_height="@dimen/imagebutton_size"
-                        android:layout_margin="@dimen/default_margin"
-                        android:src="@drawable/personalrecord"
-                        android:tint="@color/colorAccent"
-                        android:layout_gravity="center"
-                        />
-
-                    <TextView
-                        android:id="@+id/textViewResultFeeling"
-                        style="@style/StandardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin_small"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewCaption"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_gravity="center_vertical"
-                        tools:text="My hard workout" />
-
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-    </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/linearLayoutScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/divider_height"
+            android:orientation="horizontal"
+            android:background="@color/light_background"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/imagebutton_size"
+                android:layout_height="@dimen/imagebutton_size"
+                android:layout_margin="@dimen/default_margin"
+                android:src="@drawable/workout"
+                android:tint="@color/colorAccent"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/textViewResultDetails"
+                style="@style/StandardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_small"
+                android:layout_gravity="center_vertical"
+                tools:text="My hard workout" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/divider_height"
+            android:orientation="horizontal"
+            android:background="@color/light_background"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/imagebutton_size"
+                android:layout_height="@dimen/imagebutton_size"
+                android:layout_margin="@dimen/default_margin"
+                android:src="@drawable/info"
+                android:tint="@color/colorAccent"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/textViewResultNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_small"
+                android:layout_gravity="center_vertical"
+                style="@style/StandardText"
+                tools:text="My hard workout" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutFeeling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/divider_height"
+            android:orientation="horizontal"
+            android:background="@color/light_background"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/imagebutton_size"
+                android:layout_height="@dimen/imagebutton_size"
+                android:layout_margin="@dimen/default_margin"
+                android:src="@drawable/personalrecord"
+                android:tint="@color/colorAccent"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/textViewResultFeeling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_small"
+                android:layout_gravity="center_vertical"
+                style="@style/StandardText"
+                tools:text="My hard workout" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
