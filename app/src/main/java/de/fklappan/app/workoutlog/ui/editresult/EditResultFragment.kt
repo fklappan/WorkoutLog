@@ -15,12 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
-import de.fklappan.app.workoutlog.common.BaseFragment
-import de.fklappan.app.workoutlog.common.BottomSheetFragment
-import de.fklappan.app.workoutlog.common.LOG_TAG
-import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.common.*
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
+import kotlinx.android.synthetic.main.card_workout_detail.*
 import kotlinx.android.synthetic.main.editresult.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.*
