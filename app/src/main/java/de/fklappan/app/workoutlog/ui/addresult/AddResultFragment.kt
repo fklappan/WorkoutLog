@@ -87,7 +87,7 @@ class AddResultFragment : BaseFragment() {
     private fun showPr(isPr: Boolean) {
         Log.d(LOG_TAG, "updating PR: $isPr")
         if (isPr) {
-            playPrButtonAnimation()
+            imagebuttonPr.playGrowAnimation()
             imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
         } else {
             imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
@@ -136,27 +136,6 @@ class AddResultFragment : BaseFragment() {
 
     private fun onClickPr(view: View) {
         viewModelAddResult.onPrClicked()
-    }
-
-    private fun playPrButtonAnimation() {
-        // double scale the button for 200 ms and return back to normal size
-        val animScaleX = ObjectAnimator.ofFloat(imagebuttonPr, "scaleX", 1.0f, 2.3f)
-        with(animScaleX) {
-            repeatCount = 1
-            repeatMode = REVERSE
-            duration = 200
-        }
-
-        val animScaleY = ObjectAnimator.ofFloat(imagebuttonPr, "scaleY", 1.0f, 2.3f)
-        with(animScaleY) {
-            repeatCount = 1
-            repeatMode = REVERSE
-            duration = 200
-        }
-
-        val growAnimator = AnimatorSet()
-        growAnimator.play(animScaleX).with(animScaleY)
-        growAnimator.start()
     }
 
     private fun onClickFab(view: View) {
