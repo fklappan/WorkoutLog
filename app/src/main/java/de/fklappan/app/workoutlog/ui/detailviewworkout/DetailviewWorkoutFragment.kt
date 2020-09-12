@@ -77,7 +77,6 @@ class DetailviewWorkoutFragment : BaseFragment() {
         workoutResultAdapter = WorkoutResultAdapter(this::clickedResult, this::clickedOptions)
         recyclerViewResults.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recyclerViewResults.adapter = workoutResultAdapter
-        buttonFavorite.setOnClickListener { viewModelDetail.onFavoriteClicked() }
         snackbarDelete = Snackbar.make(requireView(), getString(R.string.success_deleted_result), Snackbar.LENGTH_LONG)
             .setActionTextColor(resources.getColor(android.R.color.holo_red_light, requireActivity().theme))
         setHasOptionsMenu(true)
@@ -159,13 +158,9 @@ class DetailviewWorkoutFragment : BaseFragment() {
         if (imageButtonExpand.isSelected) {
             imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_more, null))
             textViewWorkoutDetails.visibility = View.GONE
-            viewDividerWorkoutDetail.visibility = View.GONE
-            buttonFavorite.visibility = View.GONE
         } else {
             imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_less, null))
             textViewWorkoutDetails.visibility = View.VISIBLE
-            viewDividerWorkoutDetail.visibility = View.VISIBLE
-            buttonFavorite.visibility = View.VISIBLE
         }
 
     }
@@ -203,15 +198,6 @@ class DetailviewWorkoutFragment : BaseFragment() {
     private fun showWorkoutUpdate(workoutGuiModel: WorkoutGuiModel) {
         Log.d(LOG_TAG, "Workout updated")
         textViewWorkoutDetails.text = workoutGuiModel.text
-        if (workoutGuiModel.favorite) {
-            buttonFavorite.strokeColor = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
-            buttonFavorite.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
-            buttonFavorite.setTextColor(ColorStateList.valueOf(requireContext().getColor(R.color.white)))
-        } else {
-            buttonFavorite.strokeColor = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
-            buttonFavorite.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.transparent))
-            buttonFavorite.setTextColor(ColorStateList.valueOf(requireContext().getColor(R.color.black)))
-        }
     }
 
     private fun editWorkout() {
