@@ -81,8 +81,8 @@ class EditResultFragment : BaseFragment() {
 
     private fun showPr(isPr: Boolean) {
         Log.d(LOG_TAG, "updating PR: $isPr")
+        imagebuttonPr.isSelected = isPr
         if (isPr) {
-            imagebuttonPr.playGrowAnimation()
             imagebuttonPr.color = R.color.colorAccent
         } else {
             imagebuttonPr.color = R.color.gray
@@ -126,6 +126,9 @@ class EditResultFragment : BaseFragment() {
     }
 
     private fun onClickPr(view: View) {
+        if (!view.isSelected) {
+            imagebuttonPr.playGrowAnimation()
+        }
         viewModel.onPrClicked()
     }
 

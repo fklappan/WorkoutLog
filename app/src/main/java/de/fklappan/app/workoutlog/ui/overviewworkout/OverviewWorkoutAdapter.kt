@@ -78,9 +78,6 @@ class OverviewWorkoutAdapter(
             }
             itemView.imageButtonOptions.setOnClickListener{optionsListener(it, workoutGuiModel)}
             itemView.imageButtonFavorite.setOnClickListener {
-                if (!workoutGuiModel.favorite) {
-                    itemView.imageButtonFavorite.playGrowAnimation()
-                }
                 clickedButton(
                     it as ImageButton,
                     workoutGuiModel,
@@ -96,6 +93,9 @@ class OverviewWorkoutAdapter(
             favoriteListener: (Int) -> Unit
         ) {
             Log.d(LOG_TAG, "Clicked favorite button")
+            if (!view.isSelected) {
+                view.playGrowAnimation()
+            }
             setFavoriteButtonState(view, !view.isSelected)
             favoriteListener.invoke(workoutGuiModel.workoutId)
         }
