@@ -3,6 +3,8 @@ package de.fklappan.app.workoutlog.common
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.widget.ImageButton
 
 fun ImageButton.playGrowAnimation() {
@@ -25,3 +27,9 @@ fun ImageButton.playGrowAnimation() {
     growAnimator.play(animScaleX).with(animScaleY)
     growAnimator.start()
 }
+
+var ImageButton.color: Int
+    set(colorResource: Int) {
+        this.imageTintList = ColorStateList.valueOf(this.context.getColor(colorResource))
+    }
+    get() = 0

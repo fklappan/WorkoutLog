@@ -1,9 +1,5 @@
 package de.fklappan.app.workoutlog.ui.addresult
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator.REVERSE
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +15,9 @@ import de.fklappan.app.workoutlog.common.*
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
 import kotlinx.android.synthetic.main.addresult.*
+import kotlinx.android.synthetic.main.addresult.imagebuttonPr
+import kotlinx.android.synthetic.main.addresult.linearLayoutDate
+import kotlinx.android.synthetic.main.addresult.textViewDate
 import kotlinx.android.synthetic.main.addworkout.editTextContent
 import kotlinx.android.synthetic.main.addworkout.textViewError
 import kotlinx.android.synthetic.main.bottom_sheet_addresult.*
@@ -85,9 +84,9 @@ class AddResultFragment : BaseFragment() {
         Log.d(LOG_TAG, "updating PR: $isPr")
         if (isPr) {
             imagebuttonPr.playGrowAnimation()
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
+            imagebuttonPr.color = R.color.colorAccent
         } else {
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
+            imagebuttonPr.color = R.color.gray
         }
     }
 

@@ -1,6 +1,5 @@
 package de.fklappan.app.workoutlog.ui.overviewworkout
 
-import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.LOG_TAG
+import de.fklappan.app.workoutlog.common.color
 import de.fklappan.app.workoutlog.common.playGrowAnimation
 import kotlinx.android.synthetic.main.list_item_workout.view.*
 
@@ -102,9 +102,9 @@ class OverviewWorkoutAdapter(
 
         private fun setFavoriteButtonState(view: ImageButton, select: Boolean) {
             if (select) {
-                view.imageTintList = ColorStateList.valueOf(view.context.getColor(R.color.colorAccent))
+                view.color = R.color.colorAccent
             } else {
-                view.imageTintList = ColorStateList.valueOf(view.context.getColor(R.color.gray))
+                view.color = R.color.gray
             }
             view.isSelected = select
         }

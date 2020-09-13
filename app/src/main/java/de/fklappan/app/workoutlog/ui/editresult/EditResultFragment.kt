@@ -83,9 +83,9 @@ class EditResultFragment : BaseFragment() {
         Log.d(LOG_TAG, "updating PR: $isPr")
         if (isPr) {
             imagebuttonPr.playGrowAnimation()
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.colorAccent))
+            imagebuttonPr.color = R.color.colorAccent
         } else {
-            imagebuttonPr.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.gray))
+            imagebuttonPr.color = R.color.gray
         }
     }
 
