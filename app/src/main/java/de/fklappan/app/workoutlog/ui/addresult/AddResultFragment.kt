@@ -15,11 +15,6 @@ import de.fklappan.app.workoutlog.common.*
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
 import kotlinx.android.synthetic.main.addresult.*
-import kotlinx.android.synthetic.main.addresult.imagebuttonPr
-import kotlinx.android.synthetic.main.addresult.linearLayoutDate
-import kotlinx.android.synthetic.main.addresult.textViewDate
-import kotlinx.android.synthetic.main.addworkout.editTextContent
-import kotlinx.android.synthetic.main.addworkout.textViewError
 import kotlinx.android.synthetic.main.bottom_sheet_addresult.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.*
