@@ -50,5 +50,6 @@
     <string name="success_deleted_workout">Workout deleted</string>
     <string name="success_deleted_result">Result deleted</string>
     <string name="message_saved_changes_success">Successfully saved changes</string>
+    <string name="caption_enter_workout">Enter your workout</string>
 
 </resources>

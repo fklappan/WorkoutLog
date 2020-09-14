@@ -13,9 +13,9 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.common.errorStyle
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import kotlinx.android.synthetic.main.addworkout.editTextContent
-import kotlinx.android.synthetic.main.addworkout.textViewError
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import javax.inject.Inject
 
@@ -77,20 +77,19 @@ class EditWorkoutFragment : BaseFragment() {
 
     private fun showResult() {
         Log.d(LOG_TAG, "saved workout")
-        textViewError.visibility = View.GONE
         Snackbar.make(requireView(), getString(R.string.message_saved_workout), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(requireView()).navigateUp()
     }
 
     private fun showError(message: String) {
         Log.e(LOG_TAG, "Error fetching workout: $message")
-        textViewError.visibility = View.VISIBLE
-        textViewError.text = message
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
+            .errorStyle(requireContext())
+            .show()
     }
 
     private fun fetchData() {
         viewModel.loadWorkout(requireArguments().getInt("workoutId"))
     }
-
 
 }
