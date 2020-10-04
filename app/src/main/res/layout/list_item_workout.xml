@@ -7,8 +7,8 @@
     style="@style/card_item_style_clickable">
     <ImageButton
             android:id="@+id/imageButtonFavorite"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/imagebutton_size"
+            android:layout_height="@dimen/imagebutton_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,8 +35,8 @@
 
     <ImageButton
             android:id="@+id/imageButtonOptions"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/imagebutton_size"
+            android:layout_height="@dimen/imagebutton_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/textViewContent"
             app:layout_constraintTop_toTopOf="parent"

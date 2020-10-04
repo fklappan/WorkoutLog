@@ -32,8 +32,8 @@
 
             <ImageView
                     android:id="@+id/imageViewStreak"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
                     android:src="@drawable/personalrecord"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -79,8 +79,8 @@
 
             <ImageView
                     android:id="@+id/imageViewStatistic"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
                     android:src="@drawable/workout"
                     app:layout_constraintTop_toBottomOf="@id/divider1"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -125,8 +125,8 @@
 
             <ImageView
                     android:id="@+id/imageViewYear"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="@dimen/imagebutton_size"
+                    android:layout_height="@dimen/imagebutton_size"
                     android:src="@drawable/calendar"
                     app:layout_constraintTop_toBottomOf="@id/divider2"
                     app:layout_constraintLeft_toLeftOf="parent"
