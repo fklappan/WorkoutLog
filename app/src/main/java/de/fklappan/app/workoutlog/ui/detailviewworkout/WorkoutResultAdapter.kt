@@ -59,7 +59,16 @@ class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) ->
             itemView.textViewContent.text = workoutGuiModel.score
             itemView.setOnClickListener { clickListener.invoke(workoutGuiModel) }
             itemView.imageButtonMore.setOnClickListener { optionsListener.invoke(it, workoutGuiModel) }
+            itemView.imageViewFeeling.visibility =
+                if (workoutGuiModel.feeling.isNullOrEmpty())
+                    View.GONE
+                else
+                    View.VISIBLE
+            itemView.imageViewNote.visibility =
+                if (workoutGuiModel.note.isNullOrEmpty())
+                    View.GONE
+                else
+                    View.VISIBLE
         }
-
     }
 }
