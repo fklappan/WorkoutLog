@@ -97,12 +97,11 @@ class DetailviewWorkoutFragment : BaseFragment() {
         val menuHelper = MenuPopupHelper(requireContext(), menuBuilder, view)
         menuHelper.setForceShowIcon(true)
         val callback = object: MenuBuilder.Callback {
-            override fun onMenuModeChange(menu: MenuBuilder?) {
+            override fun onMenuModeChange(menu: MenuBuilder) {
             }
 
-            override fun onMenuItemSelected(menu: MenuBuilder?, item: MenuItem?): Boolean {
-                return if (item == null) false
-                else menuItemClicked(item, workoutResultGuiModel)
+            override fun onMenuItemSelected(menu: MenuBuilder, item: MenuItem): Boolean {
+                return menuItemClicked(item, workoutResultGuiModel)
             }
         }
         menuBuilder.setCallback(callback)
