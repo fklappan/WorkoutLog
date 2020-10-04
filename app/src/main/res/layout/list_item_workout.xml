@@ -19,15 +19,17 @@
 
     <TextView
             android:id="@+id/textViewContent"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageButtonFavorite"
             app:layout_constraintBottom_toBottomOf="parent"
-        android:maxLines="3"
+            app:layout_constraintEnd_toStartOf="@id/imageButtonOptions"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:maxLines="3"
             android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin_small"
-            tools:text="My "
+            android:layout_marginEnd="@dimen/default_margin_small"
+            tools:text="My\nsuper duper workout with long text and lots of descriptions "
             style="@style/StandardText"
     />
 
@@ -36,6 +38,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textViewContent"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/more"
             android:tint="@color/gray"
