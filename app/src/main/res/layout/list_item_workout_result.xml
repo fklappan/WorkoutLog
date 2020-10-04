@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin_small"
         android:layout_marginBottom="@dimen/default_margin_small"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/linearLayoutIndicators"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +36,36 @@
         app:layout_constraintTop_toBottomOf="@id/textViewDate"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="asdf" />
+
+    <LinearLayout
+            android:id="@+id/linearLayoutIndicators"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/imageButtonMore"
+            app:layout_constraintTop_toTopOf="@id/imageButtonMore"
+            app:layout_constraintBottom_toBottomOf="@id/imageButtonMore"
+            android:layout_marginEnd="@dimen/default_margin_small"
+            >
+
+        <ImageView
+                android:id="@+id/imageViewNote"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/info"
+                android:tint="@color/darkGray"
+                android:layout_marginEnd="@dimen/default_margin_small"
+            />
+
+        <ImageView
+                android:id="@+id/imageViewFeeling"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/personalrecord"
+                android:tint="@color/darkGray"
+                android:layout_marginEnd="@dimen/default_margin_small"
+                />
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/imageButtonMore"
