@@ -50,8 +50,8 @@
 
         <ImageView
                 android:id="@+id/imageViewNote"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="@dimen/imageview_size_small"
+                android:layout_height="@dimen/imageview_size_small"
                 android:src="@drawable/info"
                 android:tint="@color/darkGray"
                 android:layout_marginEnd="@dimen/default_margin_small"
@@ -59,8 +59,8 @@
 
         <ImageView
                 android:id="@+id/imageViewFeeling"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="@dimen/imageview_size_small"
+                android:layout_height="@dimen/imageview_size_small"
                 android:src="@drawable/personalrecord"
                 android:tint="@color/darkGray"
                 android:layout_marginEnd="@dimen/default_margin_small"
@@ -69,8 +69,8 @@
 
     <ImageButton
         android:id="@+id/imageButtonMore"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/imagebutton_size"
+        android:layout_height="@dimen/imagebutton_size"
         android:src="@drawable/more"
         android:tint="@color/darkGray"
         app:layout_constraintEnd_toEndOf="parent"
