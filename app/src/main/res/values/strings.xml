@@ -51,5 +51,8 @@
     <string name="success_deleted_result">Result deleted</string>
     <string name="message_saved_changes_success">Successfully saved changes</string>
     <string name="caption_enter_workout">Enter your workout</string>
+    <string name="result_no_details_captured">No workout details captured</string>
+    <string name="result_no_note_captured">No note captured</string>
+    <string name="result_no_feeling_captured">No feeling captured</string>
 
 </resources>

@@ -82,9 +82,31 @@ class DetailviewResultFragment : BaseFragment() {
     @SuppressLint("SetTextI18n")
     private fun showResultUpdate(resultGuiModel: WorkoutResultGuiModel) {
         Log.d(LOG_TAG, "result updated")
-        textViewResultDetails.text = resultGuiModel.score
-        textViewResultNote.text = resultGuiModel.note
-        textViewResultFeeling.text = resultGuiModel.feeling
+        if (resultGuiModel.score.isEmpty()) {
+            textViewResultDetailsNo.visibility = View.VISIBLE
+            textViewResultDetails.visibility = View.GONE
+        } else {
+            textViewResultDetailsNo.visibility = View.GONE
+            textViewResultDetails.visibility = View.VISIBLE
+            textViewResultDetails.text = resultGuiModel.score
+        }
+        if (resultGuiModel.note.isEmpty()) {
+            textViewResultNoteNo.visibility = View.VISIBLE
+            textViewResultNote.visibility = View.GONE
+        } else {
+            textViewResultNoteNo.visibility = View.GONE
+            textViewResultNote.visibility = View.VISIBLE
+            textViewResultNote.text = resultGuiModel.note
+        }
+        if (resultGuiModel.feeling.isEmpty()) {
+            textViewResultFeelingNo.visibility = View.VISIBLE
+            textViewResultFeeling.visibility = View.GONE
+        } else {
+            textViewResultFeelingNo.visibility = View.GONE
+            textViewResultFeeling.visibility = View.VISIBLE
+            textViewResultFeeling.text = resultGuiModel.feeling
+        }
+
         textViewDate.text = resultGuiModel.date.toPrettyString()
         if (resultGuiModel.pr) {
             imagebuttonPr.color = R.color.colorAccent

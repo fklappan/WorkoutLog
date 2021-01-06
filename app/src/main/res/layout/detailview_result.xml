@@ -110,6 +110,14 @@
                 android:layout_gravity="center_vertical"
                 tools:text="My hard workout" />
 
+            <TextView
+                android:id="@+id/textViewResultDetailsNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_small"
+                android:layout_gravity="center_vertical"
+                android:text="@string/result_no_details_captured" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -140,6 +148,14 @@
                 style="@style/StandardText"
                 tools:text="My hard workout" />
 
+            <TextView
+                android:id="@+id/textViewResultNoteNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_small"
+                android:layout_gravity="center_vertical"
+                android:text="@string/result_no_note_captured" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -169,6 +185,14 @@
                 android:layout_gravity="center_vertical"
                 style="@style/StandardText"
                 tools:text="My hard workout" />
+
+            <TextView
+                android:id="@+id/textViewResultFeelingNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_small"
+                android:layout_gravity="center_vertical"
+                android:text="@string/result_no_feeling_captured" />
 
         </LinearLayout>
     </LinearLayout>
