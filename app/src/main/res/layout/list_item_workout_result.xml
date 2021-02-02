@@ -53,18 +53,16 @@
                 android:layout_width="@dimen/imageview_size_small"
                 android:layout_height="@dimen/imageview_size_small"
                 android:src="@drawable/info"
-                android:tint="@color/darkGray"
                 android:layout_marginEnd="@dimen/default_margin_small"
-            />
+                app:tint="@color/darkGray" />
 
         <ImageView
                 android:id="@+id/imageViewFeeling"
                 android:layout_width="@dimen/imageview_size_small"
                 android:layout_height="@dimen/imageview_size_small"
                 android:src="@drawable/personalrecord"
-                android:tint="@color/darkGray"
                 android:layout_marginEnd="@dimen/default_margin_small"
-                />
+                app:tint="@color/darkGray" />
     </LinearLayout>
 
     <ImageButton

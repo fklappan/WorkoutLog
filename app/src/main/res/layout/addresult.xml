@@ -40,10 +40,9 @@
                         android:layout_height="@dimen/imagebutton_size"
                         android:layout_margin="@dimen/default_margin"
                         android:src="@drawable/calendar"
-                        android:tint="@color/colorAccent"
                         android:layout_gravity="center"
 
-                />
+                        app:tint="@color/colorAccent" />
 
                 <TextView
                         android:id="@+id/textViewDate"
@@ -102,9 +101,8 @@
                         android:layout_height="@dimen/imagebutton_size"
                         android:layout_margin="@dimen/default_margin"
                         android:src="@drawable/workout"
-                        android:tint="@color/colorAccent"
                         android:layout_gravity="center"
-                />
+                        app:tint="@color/colorAccent" />
 
                 <EditText
                         android:id="@+id/editTextContent"
@@ -140,9 +138,8 @@
                         android:layout_height="@dimen/imagebutton_size"
                         android:layout_margin="@dimen/default_margin"
                         android:src="@drawable/info"
-                        android:tint="@color/colorAccent"
                         android:layout_gravity="center"
-                />
+                        app:tint="@color/colorAccent" />
 
                 <EditText
                         android:id="@+id/editTextNote"
@@ -179,9 +176,8 @@
                         android:layout_height="@dimen/imagebutton_size"
                         android:layout_margin="@dimen/default_margin"
                         android:src="@drawable/personalrecord"
-                        android:tint="@color/colorAccent"
                         android:layout_gravity="center"
-                />
+                        app:tint="@color/colorAccent" />
 
                 <EditText
                         android:id="@+id/editTextFeeling"

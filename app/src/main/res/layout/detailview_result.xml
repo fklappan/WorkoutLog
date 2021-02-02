@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,9 +44,8 @@
                 android:layout_height="@dimen/imagebutton_size"
                 android:layout_margin="@dimen/default_margin"
                 android:src="@drawable/calendar"
-                android:tint="@color/colorAccent"
-                android:layout_gravity="center"
-                />
+                    android:layout_gravity="center"
+                    app:tint="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/textViewDate"
@@ -97,9 +97,8 @@
                 android:layout_height="@dimen/imagebutton_size"
                 android:layout_margin="@dimen/default_margin"
                 android:src="@drawable/workout"
-                android:tint="@color/colorAccent"
-                android:layout_gravity="center"
-                />
+                    android:layout_gravity="center"
+                    app:tint="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/textViewResultDetails"
@@ -127,9 +126,8 @@
                 android:layout_height="@dimen/imagebutton_size"
                 android:layout_margin="@dimen/default_margin"
                 android:src="@drawable/info"
-                android:tint="@color/colorAccent"
-                android:layout_gravity="center"
-                />
+                    android:layout_gravity="center"
+                    app:tint="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/textViewResultNote"
@@ -157,9 +155,8 @@
                 android:layout_height="@dimen/imagebutton_size"
                 android:layout_margin="@dimen/default_margin"
                 android:src="@drawable/personalrecord"
-                android:tint="@color/colorAccent"
-                android:layout_gravity="center"
-                />
+                    android:layout_gravity="center"
+                    app:tint="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/textViewResultFeeling"
