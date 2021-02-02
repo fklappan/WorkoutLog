@@ -22,11 +22,11 @@ class GetStatisticUseCase(val repository: WorkoutLogRepository) : UseCase<Calend
         val yearCount = filterUniqueDailyWorkout(resultYearList)
 
         // check for streak or rest days
-        val consecutiveDaysFromToday = getConsecutiveTrainingDays(resultMonthList, startDay.clone() as Calendar)
+        val consecutiveDaysFromToday = getConsecutiveTrainingDays(resultYearList, startDay.clone() as Calendar)
         val yesterday = startDay.clone() as Calendar
         yesterday.add(Calendar.DAY_OF_MONTH, -1)
 
-        val consecutiveDaysFromYesterday = getConsecutiveTrainingDays(resultMonthList, yesterday.clone() as Calendar)
+        val consecutiveDaysFromYesterday = getConsecutiveTrainingDays(resultYearList, yesterday.clone() as Calendar)
         val consecutiveDays = max(consecutiveDaysFromToday, consecutiveDaysFromYesterday)
 
         if (consecutiveDays == 0) {
