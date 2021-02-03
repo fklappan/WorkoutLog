@@ -1,5 +1,6 @@
 package de.fklappan.app.workoutlog.domain
 
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun Calendar.getYearBegin() : Calendar  {
@@ -51,3 +52,5 @@ fun Calendar.isSameDay(calendar: Calendar) : Boolean {
             (this.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
             (this.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH))
 }
+
+fun Calendar.toPrettyString(): String = SimpleDateFormat("dd.MM.yyyy").format(time)
