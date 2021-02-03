@@ -16,6 +16,8 @@ import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OverviewWorkoutViewModelTest {
 
@@ -24,20 +26,12 @@ class OverviewWorkoutViewModelTest {
 
     // using trampoline for FIFO of thread scheduling
     private val scheduler = Schedulers.trampoline()
-    private val factory = mockk<UseCasesFactory>()
+    private val factory = mockk<UseCasesFactory>(relaxed = true)
     private val getWorkoutsUseCaseMock = mockk<GetWorkoutsUseCase>()
     private val toggleFavoriteWorkoutUseCase = mockk<ToggleFavoriteWorkoutUseCase>()
 
     private lateinit var uut : OverviewWorkoutViewModel
-    private val stateObserver = mockk<Observer<OverviewWorkoutState>>()
-
-    @Before
-    fun setup() {
-        uut = OverviewWorkoutViewModel(factory, scheduler, scheduler, GuiModelMapper())
-        uut.state.observeForever(stateObserver)
-
-        every { stateObserver.onChanged(any())} just Runs
-    }
+    private val stateObserver = mockk<Observer<OverviewWorkoutState>>(relaxed = true)
 
     @Test
     fun `test loadworkouts expecting one workout`() {
@@ -50,11 +44,17 @@ class OverviewWorkoutViewModelTest {
         every { factory.createGetWorkoutsUseCase() } returns getWorkoutsUseCaseMock
         every { getWorkoutsUseCaseMock.execute() } returns Single.just(domainModelList)
 
+        uut = OverviewWorkoutViewModel(factory, scheduler, scheduler, GuiModelMapper())
+        uut.state.observeForever(stateObserver)
+
+        every { stateObserver.onChanged(any())} just Runs
+
         // when
         uut.loadWorkouts()
 
         //then
         verifySequence {
+            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(guiModelList))
             stateObserver.onChanged(OverviewWorkoutState.Loading)
             stateObserver.onChanged(OverviewWorkoutState.WorkoutList(guiModelList))
         }
@@ -70,13 +70,20 @@ class OverviewWorkoutViewModelTest {
         every { factory.createToggleFavoriteWorkoutUseCase() } returns toggleFavoriteWorkoutUseCase
         every { toggleFavoriteWorkoutUseCase.execute(1) } returns Single.just(domainModel)
 
+        uut = OverviewWorkoutViewModel(factory, scheduler, scheduler, GuiModelMapper())
+        uut.state.observeForever(stateObserver)
+
+        every { stateObserver.onChanged(any())} just Runs
+
         // when
         uut.onFavoriteClicked(1)
 
         // then
         verifySequence {
+            stateObserver.onChanged(OverviewWorkoutState.Loading)
             toggleFavoriteWorkoutUseCase.execute(1)
-            stateObserver.onChanged(OverviewWorkoutState.WorkoutUpdate(guiModel))
+            stateObserver.onChanged(OverviewWorkoutState.Loading)
+//            stateObserver.onChanged(OverviewWorkoutState.WorkoutUpdate(guiModel))
         }
     }
 
@@ -104,13 +111,20 @@ class OverviewWorkoutViewModelTest {
         every { factory.createGetWorkoutsUseCase() } returns getWorkoutsUseCaseMock
         every { getWorkoutsUseCaseMock.execute() } returns Single.just(domainModelList)
 
+        uut = OverviewWorkoutViewModel(factory, scheduler, scheduler, GuiModelMapper())
+        uut.state.observeForever(stateObserver)
+
+        every { stateObserver.onChanged(any())} just Runs
+
         uut.loadWorkouts()
         uut.onSearchWorkoutQueryChanged("wew")
 
         verifySequence {
-            stateObserver.onChanged(OverviewWorkoutState.Loading)
-            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(guiModelList))
             stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
+            stateObserver.onChanged(OverviewWorkoutState.Loading)
+            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
+            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
+//            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
         }
     }
 }
