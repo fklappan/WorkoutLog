@@ -87,6 +87,7 @@ class OverviewWorkoutFragment : BaseFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.search, menu)
+        inflater.inflate(R.menu.random, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
@@ -103,8 +104,19 @@ class OverviewWorkoutFragment : BaseFragment() {
                 viewModelOverviewWorkout.onSearchWorkoutQueryChanged(newText!!)
                 return true
             }
-
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_random_workout) {
+            viewModelOverviewWorkout.onRandomWorkoutClicked()
+            return true
+        }
+        if (item.itemId == R.id.action_random_workout_favorite) {
+            viewModelOverviewWorkout.onRandomWorkoutFavoriteClicked()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun workoutClicked(workoutGuiModel: WorkoutGuiModel) {
@@ -180,6 +192,7 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun observeViewModels() {
         viewModelOverviewWorkout.state.observe(viewLifecycleOwner, Observer { state -> updateState(state) })
+        viewModelOverviewWorkout.event.observe(viewLifecycleOwner, Observer { event -> updateEvent(event) })
 
         // observe livedata which will be created by the AddWorkoutFragment
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(AddWorkoutFragment.KEY_WORKOUT_ADDED, false)?.
@@ -192,10 +205,19 @@ class OverviewWorkoutFragment : BaseFragment() {
     private fun updateState(state: OverviewWorkoutState) {
         when (state) {
             is OverviewWorkoutState.Loading -> showLoading()
-            is OverviewWorkoutState.Error -> showError(state.message)
             is OverviewWorkoutState.WorkoutList -> showWorkoutList(state.workouts.toMutableList())
-            is OverviewWorkoutState.WorkoutUpdate -> showWorkoutUpdate(state.workout)
         }
+    }
+
+    private fun updateEvent(event: OverviewWorkoutEvent) {
+        when(event) {
+            is OverviewWorkoutEvent.Error -> showError(event.message)
+            is OverviewWorkoutEvent.WorkoutNavigate -> workoutClicked(event.workout)
+            is OverviewWorkoutEvent.WorkoutUpdate -> showWorkoutUpdate(event.workout)
+            is OverviewWorkoutEvent.None -> return
+            is OverviewWorkoutEvent.ErrorLocalized -> showError(getString(event.resourceId))
+        }
+        viewModelOverviewWorkout.eventHandled()
     }
 
     private fun showLoading() {
@@ -204,6 +226,7 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     private fun showError(message: String) {
         Log.e(LOG_TAG, "Error fetching workouts: $message")
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showWorkoutUpdate(workoutGuiModel: WorkoutGuiModel) {
