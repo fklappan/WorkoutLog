@@ -7,6 +7,6 @@ import io.reactivex.Single
 class GetWorkoutsUseCase(val repository: WorkoutLogRepository) : InputlessUseCase<List<WorkoutDomainModel>> {
 
     override fun execute(): Single<List<WorkoutDomainModel>> {
-        return Single.just(repository.getWorkouts())
+        return Single.fromCallable { repository.getWorkouts() }
     }
 }
