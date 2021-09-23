@@ -54,5 +54,6 @@
     <string name="menu_random_workout">Random workout</string>
     <string name="menu_random_workout_favorite">Random favorite workout</string>
     <string name="error_no_workout_favorite">No favorite workout stored</string>
+    <string name="placeholder_version">V8.12</string>
 
 </resources>

@@ -30,6 +30,9 @@
 <!--                android:title="@string/menu_prs"/>-->
     </group>
 
+    <item
+        android:id="@+id/nav_version"
+        android:title="@string/placeholder_version"/>
 <!--    <item android:title="@string/menu_general">-->
 <!--        <menu>-->
 
