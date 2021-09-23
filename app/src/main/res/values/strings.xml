@@ -54,5 +54,8 @@
     <string name="menu_random_workout">Random workout</string>
     <string name="menu_random_workout_favorite">Random favorite workout</string>
     <string name="error_no_workout_favorite">No favorite workout stored</string>
+    <string name="caption_search_filter">Search and filter</string>
+    <string name="hint_search_workout">Search for workout</string>
+    <string name="caption_active_filters">Active filters</string>
 
 </resources>

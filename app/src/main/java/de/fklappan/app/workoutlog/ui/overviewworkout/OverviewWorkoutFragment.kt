@@ -19,6 +19,7 @@ import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutFragment
+import de.fklappan.app.workoutlog.ui.filter.FilterFragment
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -51,6 +52,7 @@ class OverviewWorkoutFragment : BaseFragment() {
         initViewModels()
         observeViewModels()
 
+        childFragmentManager.beginTransaction().replace(R.id.containerLayout, FilterFragment.newInstance()).commit()
         savedInstanceState?.let{
             motionProgress = it.getFloat("motion-progress", 0f)
         }
