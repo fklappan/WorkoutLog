@@ -63,6 +63,14 @@
                 android:src="@drawable/personalrecord"
                 android:layout_marginEnd="@dimen/default_margin_small"
                 app:tint="@color/darkGray" />
+
+        <ImageView
+            android:id="@+id/imageViewPr"
+            android:layout_width="@dimen/imageview_size_small"
+            android:layout_height="@dimen/imageview_size_small"
+            android:src="@drawable/star"
+            android:layout_marginEnd="@dimen/default_margin_small"
+            app:tint="@color/colorAccent" />
     </LinearLayout>
 
     <ImageButton
