@@ -34,7 +34,7 @@ class OverviewWorkoutViewModelTest {
     private val stateObserver = mockk<Observer<OverviewWorkoutState>>(relaxed = true)
 
     @Test
-    fun `test loadworkouts expecting one workout`() {
+    fun `test loadworkouts expecting loading and one workout`() {
 
         // given
         val domainModel = WorkoutDomainModel(1, "workout", true)
@@ -49,12 +49,13 @@ class OverviewWorkoutViewModelTest {
 
         every { stateObserver.onChanged(any())} just Runs
 
-        // when
         uut.loadWorkouts()
 
         //then
         verifySequence {
+            // first list is the repeated loaded result when initialising the ViewModel
             stateObserver.onChanged(OverviewWorkoutState.WorkoutList(guiModelList))
+            // following the states which are sent after loadWorkouts()
             stateObserver.onChanged(OverviewWorkoutState.Loading)
             stateObserver.onChanged(OverviewWorkoutState.WorkoutList(guiModelList))
         }
@@ -116,15 +117,11 @@ class OverviewWorkoutViewModelTest {
 
         every { stateObserver.onChanged(any())} just Runs
 
-        uut.loadWorkouts()
         uut.onSearchWorkoutQueryChanged("wew")
 
         verifySequence {
+            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(guiModelList))
             stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
-            stateObserver.onChanged(OverviewWorkoutState.Loading)
-            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
-            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
-//            stateObserver.onChanged(OverviewWorkoutState.WorkoutList(listOf(matchingGuiModel)))
         }
     }
 }

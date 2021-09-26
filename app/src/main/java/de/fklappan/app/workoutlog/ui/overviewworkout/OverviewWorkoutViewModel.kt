@@ -70,13 +70,18 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
     fun onSearchWorkoutQueryChanged(query: String) {
         lastSearchQuery = query
         _workoutListFiltered.clear()
+        _workoutListFiltered.addAll(applySearchQuery(_workoutListUnfiltered, lastSearchQuery))
+        _state.value = OverviewWorkoutState.WorkoutList(_workoutListFiltered)
+    }
 
-        for(workout in _workoutListUnfiltered) {
+    private fun applySearchQuery(workoutsUnfiltered: List<WorkoutGuiModel>, query: String) : List<WorkoutGuiModel> {
+        val workoutsFiltered = ArrayList<WorkoutGuiModel>()
+        for(workout in workoutsUnfiltered) {
             if (workout.text.contains(query, true)) {
-                _workoutListFiltered.add(workout)
+                workoutsFiltered.add(workout)
             }
         }
-        _state.value = OverviewWorkoutState.WorkoutList(_workoutListFiltered)
+        return workoutsFiltered
     }
 
     fun onRandomWorkoutClicked() {
@@ -92,7 +97,6 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         }
         val rnd = (favoriteList.indices).random()
         _event.value = OverviewWorkoutEvent.WorkoutNavigate(favoriteList[rnd])
-
     }
 
     fun getLastSearchQuery() = lastSearchQuery
@@ -113,10 +117,9 @@ class OverviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
         _workoutListUnfiltered.clear()
         _workoutListUnfiltered.addAll(guiModelList)
         _workoutListFiltered.clear()
-        _workoutListFiltered.addAll(guiModelList)
-        _state.value = OverviewWorkoutState.WorkoutList(guiModelList)
         // apply last known filter on new result
-        onSearchWorkoutQueryChanged(lastSearchQuery)
+        _workoutListFiltered.addAll(applySearchQuery(_workoutListUnfiltered, lastSearchQuery))
+        _state.value = OverviewWorkoutState.WorkoutList(guiModelList)
     }
 
     private fun handleError(error: Throwable) {
