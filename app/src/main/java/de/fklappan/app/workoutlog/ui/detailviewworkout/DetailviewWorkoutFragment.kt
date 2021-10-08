@@ -1,7 +1,6 @@
 package de.fklappan.app.workoutlog.ui.detailviewworkout
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -24,6 +23,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.card_workout_detail.*
 import kotlinx.android.synthetic.main.detailview_workout.*
+import kotlinx.android.synthetic.main.overview.*
 import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -41,6 +41,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
     private lateinit var workoutResultAdapter: WorkoutResultAdapter
     private lateinit var snackbarDelete: Snackbar
     private var disposableDelete = CompositeDisposable()
+    private var motionProgress: Float = 0f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.detailview_workout, container, false)
@@ -55,6 +56,21 @@ class DetailviewWorkoutFragment : BaseFragment() {
         initViewModels()
         observeViewModels()
         fetchData()
+
+        savedInstanceState?.let{
+            motionProgress = it.getFloat("motion-progress", 0f)
+        }
+        motionLayout.progress = motionProgress
+    }
+
+    override fun onDestroyView() {
+        motionProgress = motionLayout.progress
+        super.onDestroyView()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putFloat("motion-progress", motionProgress)
     }
 
     @Override
@@ -182,7 +198,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun fetchData() {
-        viewModelDetail.loadWorkout(requireArguments().getInt("workoutId"))
+        viewModelDetail.initialize(requireArguments().getInt("workoutId"))
     }
 
     private fun updateState(state: DetailviewWorkoutState) {
