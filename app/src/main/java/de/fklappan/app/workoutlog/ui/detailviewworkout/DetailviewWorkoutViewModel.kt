@@ -17,13 +17,22 @@ class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
                                  private val modelMapper: GuiModelMapper
 ) : RxViewModel() {
 
-    private lateinit var currentWorkoutDetails: WorkoutDetailsGuiModel
+    private var currentWorkoutDetails : WorkoutDetailsGuiModel? = null
 
     private val _state = MutableLiveData<DetailviewWorkoutState>()
     val state: LiveData<DetailviewWorkoutState>
         get() = _state
 
-    fun loadWorkout(workoutId: Int) {
+    fun forceLoad(workoutId: Int) {
+        currentWorkoutDetails = null
+        initialize(workoutId)
+    }
+
+    fun initialize(workoutId: Int) {
+        if (currentWorkoutDetails != null) {
+            _state.value = DetailviewWorkoutState.WorkoutDetails(currentWorkoutDetails!!)
+            return
+        }
         _state.value = DetailviewWorkoutState.Loading
         addDisposable(
             useCaseFactory.createGetWorkoutDetailsUseCase().execute(workoutId)
@@ -38,7 +47,7 @@ class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
 
     fun onFavoriteClicked() {
         addDisposable(
-            useCaseFactory.createToggleFavoriteWorkoutUseCase().execute(currentWorkoutDetails.workout.workoutId)
+            useCaseFactory.createToggleFavoriteWorkoutUseCase().execute(currentWorkoutDetails!!.workout.workoutId)
                 .subscribeOn(schedulerIo)
                 .observeOn(schedulerMainThread)
                 .subscribe(
@@ -51,7 +60,7 @@ class DetailviewWorkoutViewModel(private val useCaseFactory: UseCasesFactory,
     private fun workoutDetailsLoaded(workoutDetails: WorkoutDetailsDomainModel) {
         // map domain model to gui model
         currentWorkoutDetails = modelMapper.mapDomainToGui(workoutDetails)
-        _state.value = DetailviewWorkoutState.WorkoutDetails(currentWorkoutDetails)
+        _state.value = DetailviewWorkoutState.WorkoutDetails(currentWorkoutDetails!!)
     }
 
     private fun workoutUpdated(workout: WorkoutDomainModel) {

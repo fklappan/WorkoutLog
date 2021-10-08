@@ -60,7 +60,7 @@ class DetailviewWorkoutViewModelTest {
         every { toggleFavoriteWorkoutUseCase.execute(1) } returns Single.just(domainModelFavorite)
 
         // when
-        uut.loadWorkout(1)
+        uut.initialize(1)
         uut.onFavoriteClicked()
 
         //then
