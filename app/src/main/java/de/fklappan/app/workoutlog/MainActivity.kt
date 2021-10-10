@@ -2,17 +2,15 @@ package de.fklappan.app.workoutlog
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
+import androidx.navigation.*
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import de.fklappan.app.workoutlog.common.AppBarHeader
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -42,7 +40,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
-        navController = Navigation.findNavController(navHostFragment.requireView())
+
+        val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navController = navHost.findNavController()
         // make sure that the correct item is selected after returning from another fragment
         navController.addOnDestinationChangedListener { _, destination, _ -> updateNavItem(destination) }
     }
