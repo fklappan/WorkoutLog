@@ -107,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin_small"
                 android:layout_gravity="center_vertical"
-                tools:text="My hard workout" />
+                tools:text="My hard workout"
+                android:textIsSelectable="true" />
 
         </LinearLayout>
 
@@ -136,7 +137,8 @@
                 android:layout_margin="@dimen/default_margin_small"
                 android:layout_gravity="center_vertical"
                 style="@style/StandardText"
-                tools:text="My hard workout" />
+                tools:text="My hard workout"
+                android:textIsSelectable="true" />
 
         </LinearLayout>
 
@@ -165,7 +167,8 @@
                 android:layout_margin="@dimen/default_margin_small"
                 android:layout_gravity="center_vertical"
                 style="@style/StandardText"
-                tools:text="My hard workout" />
+                tools:text="My hard workout"
+                android:textIsSelectable="true" />
 
         </LinearLayout>
     </LinearLayout>

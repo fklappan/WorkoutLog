@@ -30,7 +30,7 @@
             app:layout_constraintHorizontal_bias="0"
             tool:text="My hard workout"
             style="@style/StandardText"
-    />
+            android:textIsSelectable="true" />
 
     <ImageButton
         android:id="@+id/imageButtonExpand"
