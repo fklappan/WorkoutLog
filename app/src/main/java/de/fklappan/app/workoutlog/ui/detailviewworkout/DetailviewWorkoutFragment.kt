@@ -23,8 +23,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.card_workout_detail.*
 import kotlinx.android.synthetic.main.detailview_workout.*
-import kotlinx.android.synthetic.main.overview.*
-import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
