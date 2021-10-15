@@ -12,11 +12,9 @@ import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.*
+import de.fklappan.app.workoutlog.databinding.AddresultBinding
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutDetailsGuiModel
-import kotlinx.android.synthetic.main.addresult.*
-import kotlinx.android.synthetic.main.bottom_sheet_addresult.*
-import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.*
 import javax.inject.Inject
 
@@ -24,10 +22,12 @@ class AddResultFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : AddresultBinding
     private lateinit var viewModelAddResult: AddResultViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.addresult, container, false)
+        binding = AddresultBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,15 +42,15 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun initFab() {
-        floatingActionButton.setOnClickListener(this::onClickFab)
+        binding.floatingActionButton.setOnClickListener(this::onClickFab)
     }
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_add_result)
 
         // set listeners
-        linearLayoutDate.setOnClickListener(this::onClickDate)
-        imagebuttonPr.setOnClickListener(this::onClickPr)
+        binding.linearLayoutDate.setOnClickListener(this::onClickDate)
+        binding.imagebuttonPr.setOnClickListener(this::onClickPr)
     }
 
     private fun initViewModels() {
@@ -78,32 +78,33 @@ class AddResultFragment : BaseFragment() {
     private fun showPr(isPr: Boolean) {
         Log.d(LOG_TAG, "updating PR: $isPr")
         if (isPr) {
-            imagebuttonPr.playGrowAnimation()
-            imagebuttonPr.color = R.color.colorAccent
+            binding.imagebuttonPr.playGrowAnimation()
+            binding.imagebuttonPr.color = R.color.colorAccent
         } else {
-            imagebuttonPr.color = R.color.gray
+            binding.imagebuttonPr.color = R.color.gray
         }
     }
 
     private fun showDate(date: Date) {
         Log.d(LOG_TAG, "updating date: " + date.toPrettyString())
-        textViewDate.text = date.toPrettyString()
+        binding.textViewDate.text = date.toPrettyString()
     }
 
     private fun showResult() {
         Log.d(LOG_TAG, "saved workout")
-        textViewError.visibility = View.GONE
+        binding.textViewError.visibility = View.GONE
         Snackbar.make(requireView(), getString(R.string.message_added_workout_result), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(requireView()).navigateUp()
     }
 
     private fun showWorkoutDetails(guiModel: WorkoutDetailsGuiModel, date: Date, isPr: Boolean) {
         if (!guiModel.resultList.isEmpty()) {
-            editTextContent.setText(guiModel.resultList.last().score)
+            binding.editTextContent.setText(guiModel.resultList.last().score)
         } else {
-            editTextContent.setText(guiModel.workout.text)
+            binding.editTextContent.setText(guiModel.workout.text)
         }
-        textViewWorkoutDetails.text = guiModel.workout.text
+
+        binding.bottomSheet.textViewWorkoutDetails.text = guiModel.workout.text
 
         showDate(date)
         showPr(isPr)
@@ -111,8 +112,8 @@ class AddResultFragment : BaseFragment() {
 
     private fun showError(message: String) {
         Log.d(LOG_TAG, "Error occured: $message")
-        textViewError.visibility = View.VISIBLE
-        textViewError.text = message
+        binding.textViewError.visibility = View.VISIBLE
+        binding.textViewError.text = message
     }
 
     private fun onClickDate(view: View) {
@@ -130,6 +131,9 @@ class AddResultFragment : BaseFragment() {
     }
 
     private fun onClickFab(view: View) {
-        viewModelAddResult.onSaveClicked(editTextContent.text.toString(), editTextNote.text.toString(), editTextFeeling.text.toString())
+        viewModelAddResult.onSaveClicked(
+            binding.editTextContent.text.toString(),
+            binding.editTextNote.text.toString(),
+            binding.editTextFeeling.text.toString())
     }
 }

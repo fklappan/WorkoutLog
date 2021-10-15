@@ -15,9 +15,8 @@ import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.common.errorStyle
+import de.fklappan.app.workoutlog.databinding.AddworkoutBinding
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
-import kotlinx.android.synthetic.main.addworkout.*
-import kotlinx.android.synthetic.main.overview.floatingActionButton
 import javax.inject.Inject
 
 class AddWorkoutFragment : BaseFragment() {
@@ -28,10 +27,12 @@ class AddWorkoutFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : AddworkoutBinding
     private lateinit var viewModelAddWorkout: AddWorkoutViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.addworkout, container, false)
+        binding = AddworkoutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,8 +46,8 @@ class AddWorkoutFragment : BaseFragment() {
     }
 
     private fun initFab() {
-        floatingActionButton.setOnClickListener {
-            val guiModel = WorkoutGuiModel(0, editTextContent.text.toString(), favorite = false)
+        binding.floatingActionButton.setOnClickListener {
+            val guiModel = WorkoutGuiModel(0, binding.editTextContent.text.toString(), favorite = false)
             viewModelAddWorkout.saveWorkout(guiModel)
         }
     }

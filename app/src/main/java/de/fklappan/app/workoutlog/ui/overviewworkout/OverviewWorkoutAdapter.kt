@@ -10,7 +10,7 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.color
 import de.fklappan.app.workoutlog.common.playGrowAnimation
-import kotlinx.android.synthetic.main.list_item_workout.view.*
+import de.fklappan.app.workoutlog.databinding.ListItemWorkoutBinding
 
 class OverviewWorkoutAdapter(
     private val clickListener: (WorkoutGuiModel) -> Unit,
@@ -65,6 +65,7 @@ class OverviewWorkoutAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ListItemWorkoutBinding.bind(itemView)
 
         fun bindItem(
             workoutGuiModel: WorkoutGuiModel,
@@ -72,19 +73,19 @@ class OverviewWorkoutAdapter(
             optionsListener: (View, WorkoutGuiModel) -> Unit,
             favoriteListener: (Int) -> Unit
         ) {
-            itemView.textViewContent.text = workoutGuiModel.text
+            binding.textViewContent.text = workoutGuiModel.text
             itemView.setOnClickListener {
                 clickListener(workoutGuiModel)
             }
-            itemView.imageButtonOptions.setOnClickListener{optionsListener(it, workoutGuiModel)}
-            itemView.imageButtonFavorite.setOnClickListener {
+            binding.imageButtonOptions.setOnClickListener{optionsListener(it, workoutGuiModel)}
+            binding.imageButtonFavorite.setOnClickListener {
                 clickedButton(
                     it as ImageButton,
                     workoutGuiModel,
                     favoriteListener
                 )
             }
-            setFavoriteButtonState(itemView.imageButtonFavorite, workoutGuiModel.favorite)
+            setFavoriteButtonState(binding.imageButtonFavorite, workoutGuiModel.favorite)
         }
 
         private fun clickedButton(

@@ -12,21 +12,21 @@ import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
 import de.fklappan.app.workoutlog.common.color
+import de.fklappan.app.workoutlog.databinding.DetailviewResultBinding
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
-import kotlinx.android.synthetic.main.detailview_result.*
-import kotlinx.android.synthetic.main.detailview_result.imagebuttonPr
-import kotlinx.android.synthetic.main.detailview_result.textViewDate
 import javax.inject.Inject
 
 class DetailviewResultFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : DetailviewResultBinding
     private lateinit var viewModelDetail: DetailviewResultViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.detailview_result, container, false)
+        binding = DetailviewResultBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,14 +82,14 @@ class DetailviewResultFragment : BaseFragment() {
     @SuppressLint("SetTextI18n")
     private fun showResultUpdate(resultGuiModel: WorkoutResultGuiModel) {
         Log.d(LOG_TAG, "result updated")
-        textViewResultDetails.text = resultGuiModel.score
-        textViewResultNote.text = resultGuiModel.note
-        textViewResultFeeling.text = resultGuiModel.feeling
-        textViewDate.text = resultGuiModel.date.toPrettyString()
+        binding.textViewResultDetails.text = resultGuiModel.score
+        binding.textViewResultNote.text = resultGuiModel.note
+        binding.textViewResultFeeling.text = resultGuiModel.feeling
+        binding.textViewDate.text = resultGuiModel.date.toPrettyString()
         if (resultGuiModel.pr) {
-            imagebuttonPr.color = R.color.colorAccent
+            binding.imagebuttonPr.color = R.color.colorAccent
         } else {
-            imagebuttonPr.color = R.color.gray
+            binding.imagebuttonPr.color = R.color.gray
         }
     }
 

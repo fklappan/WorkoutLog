@@ -11,17 +11,19 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
-import kotlinx.android.synthetic.main.overviewresult.*
+import de.fklappan.app.workoutlog.databinding.StatisticBinding
 import javax.inject.Inject
 
 class OverviewStatisticFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : StatisticBinding
     private lateinit var viewModelOverviewStatistic: OverviewStatisticViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.overviewresult, container, false)
+        binding = StatisticBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,16 +71,16 @@ class OverviewStatisticFragment : BaseFragment() {
 
     private fun showStatistic(statisticCurrentGuiModel: StatisticCurrentGuiModel) {
         Log.d(LOG_TAG, "Statistics loaded")
-        textViewStreakCount.text = statisticCurrentGuiModel.streak.toString()
+        binding.textViewStreakCount.text = statisticCurrentGuiModel.streak.toString()
         if (statisticCurrentGuiModel.isWorkoutStreak) {
-            textViewStreakText.text = resources.getString(R.string.day_streak)
+            binding.textViewStreakText.text = resources.getString(R.string.day_streak)
         } else {
-            textViewStreakText.text = resources.getQuantityString(R.plurals.quantity_rest_days, statisticCurrentGuiModel.streak)
+            binding.textViewStreakText.text = resources.getQuantityString(R.plurals.quantity_rest_days, statisticCurrentGuiModel.streak)
         }
 
-        textViewStatisticMonthCount.text = statisticCurrentGuiModel.workoutCountMonth.toString()
-        textViewStatisticMonthText.text = resources.getQuantityString(R.plurals.quantity_monthly_workouts, statisticCurrentGuiModel.workoutCountMonth)
-        textViewStatisticYearCount.text = statisticCurrentGuiModel.workoutCountYear.toString()
-        textViewStatisticYearText.text = resources.getQuantityString(R.plurals.quantity_yearly_workouts, statisticCurrentGuiModel.workoutCountYear)
+        binding.textViewStatisticMonthCount.text = statisticCurrentGuiModel.workoutCountMonth.toString()
+        binding.textViewStatisticMonthText.text = resources.getQuantityString(R.plurals.quantity_monthly_workouts, statisticCurrentGuiModel.workoutCountMonth)
+        binding.textViewStatisticYearCount.text = statisticCurrentGuiModel.workoutCountYear.toString()
+        binding.textViewStatisticYearText.text = resources.getQuantityString(R.plurals.quantity_yearly_workouts, statisticCurrentGuiModel.workoutCountYear)
     }
 }

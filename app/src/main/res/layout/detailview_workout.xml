@@ -35,6 +35,7 @@
             android:orientation="vertical">
 
         <include
+                android:id="@+id/card_detail"
                 layout="@layout/card_workout_detail"
         />
 

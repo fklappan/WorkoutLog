@@ -14,19 +14,21 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.databinding.OverviewResultBinding
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
-import kotlinx.android.synthetic.main.overview.*
 import javax.inject.Inject
 
 class OverviewResultFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : OverviewResultBinding
     private lateinit var viewModel: OverviewResultViewModel
     private lateinit var adapter: OverviewResultAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.overview_result, container, false)
+        binding = OverviewResultBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,8 +44,8 @@ class OverviewResultFragment : BaseFragment() {
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_results)
         adapter = OverviewResultAdapter(this::resultClicked)
-        recyclerViewWorkouts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        recyclerViewWorkouts.adapter = adapter
+        binding.recyclerViewWorkouts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.recyclerViewWorkouts.adapter = adapter
     }
 
     private fun resultClicked(resultGuiModel: WorkoutResultGuiModel) {
