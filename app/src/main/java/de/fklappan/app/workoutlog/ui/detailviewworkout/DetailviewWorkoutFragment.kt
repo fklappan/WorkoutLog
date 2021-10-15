@@ -16,13 +16,12 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.databinding.DetailviewWorkoutBinding
 import de.fklappan.app.workoutlog.ui.overviewworkout.DeleteViewModel
 import de.fklappan.app.workoutlog.ui.overviewworkout.WorkoutGuiModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.card_workout_detail.*
-import kotlinx.android.synthetic.main.detailview_workout.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -34,6 +33,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : DetailviewWorkoutBinding
     private lateinit var viewModelDetail: DetailviewWorkoutViewModel
     private lateinit var viewModelDelete: DeleteViewModel
     private lateinit var workoutResultAdapter: WorkoutResultAdapter
@@ -42,7 +42,8 @@ class DetailviewWorkoutFragment : BaseFragment() {
     private var motionProgress: Float = 0f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.detailview_workout, container, false)
+        binding = DetailviewWorkoutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,11 +59,11 @@ class DetailviewWorkoutFragment : BaseFragment() {
         savedInstanceState?.let{
             motionProgress = it.getFloat("motion-progress", 0f)
         }
-        motionLayout.progress = motionProgress
+        binding.motionLayout.progress = motionProgress
     }
 
     override fun onDestroyView() {
-        motionProgress = motionLayout.progress
+        motionProgress = binding.motionLayout.progress
         super.onDestroyView()
     }
 
@@ -89,12 +90,12 @@ class DetailviewWorkoutFragment : BaseFragment() {
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_results)
         workoutResultAdapter = WorkoutResultAdapter(this::clickedResult, this::clickedOptions)
-        recyclerViewResults.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        recyclerViewResults.adapter = workoutResultAdapter
+        binding.recyclerViewResults.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.recyclerViewResults.adapter = workoutResultAdapter
         snackbarDelete = Snackbar.make(requireView(), getString(R.string.success_deleted_result), Snackbar.LENGTH_LONG)
             .setActionTextColor(resources.getColor(android.R.color.holo_red_light, requireActivity().theme))
         setHasOptionsMenu(true)
-        imageButtonExpand.setOnClickListener{onExpandClicked()}
+        binding.cardDetail.imageButtonExpand.setOnClickListener{onExpandClicked()}
     }
 
     fun clickedResult(workoutResultGuiModel: WorkoutResultGuiModel) {
@@ -166,20 +167,20 @@ class DetailviewWorkoutFragment : BaseFragment() {
     }
 
     private fun onExpandClicked() {
-        imageButtonExpand.isSelected = !imageButtonExpand.isSelected
+        binding.cardDetail.imageButtonExpand.isSelected = !binding.cardDetail.imageButtonExpand.isSelected
         // TODO: 15.07.20 animate
-        if (imageButtonExpand.isSelected) {
-            imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_more, null))
-            textViewWorkoutDetails.visibility = View.GONE
+        if (binding.cardDetail.imageButtonExpand.isSelected) {
+            binding.cardDetail.imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_more, null))
+            binding.cardDetail.textViewWorkoutDetails.visibility = View.GONE
         } else {
-            imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_less, null))
-            textViewWorkoutDetails.visibility = View.VISIBLE
+            binding.cardDetail.imageButtonExpand.setImageDrawable(resources.getDrawable(R.drawable.expand_less, null))
+            binding.cardDetail.textViewWorkoutDetails.visibility = View.VISIBLE
         }
 
     }
 
     private fun initFab() {
-        floatingActionButton.setOnClickListener { view ->
+        binding.floatingActionButton.setOnClickListener { view ->
             // TODO 05.07.2019 Flo maybe simply passing arguments is not the correct thing to do. But it should be ok for now
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_detailviewWorkoutFragment_to_addResultFragment, arguments)
@@ -210,7 +211,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
 
     private fun showWorkoutUpdate(workoutGuiModel: WorkoutGuiModel) {
         Log.d(LOG_TAG, "Workout updated")
-        textViewWorkoutDetails.text = workoutGuiModel.text
+        binding.cardDetail.textViewWorkoutDetails.text = workoutGuiModel.text
     }
 
     private fun editWorkout() {
@@ -226,7 +227,7 @@ class DetailviewWorkoutFragment : BaseFragment() {
         val items = ArrayList<WorkoutResultGuiModel>()
         items.addAll(result.resultList)
 
-        recyclerViewResults.visibility = View.VISIBLE
+        binding.recyclerViewResults.visibility = View.VISIBLE
         workoutResultAdapter.items = items
     }
 

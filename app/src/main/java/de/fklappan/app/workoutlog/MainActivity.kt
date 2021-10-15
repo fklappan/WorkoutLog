@@ -13,17 +13,19 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import de.fklappan.app.workoutlog.common.AppBarHeader
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.content_main.*
+import de.fklappan.app.workoutlog.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AppBarHeader {
 
+    private lateinit var binding : ActivityMainBinding
     lateinit var navController: NavController
     lateinit var navView: NavigationView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -118,10 +120,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // AppBarHeader impl
 
     override fun setHeaderText(text: String) {
-        toolbar.title = text
+        binding.appBar.toolbar.title = text
     }
 
     override fun setHeaderText(resource: Int) {
-        toolbar.title = getString(resource)
+        binding.appBar.toolbar.title = getString(resource)
     }
 }

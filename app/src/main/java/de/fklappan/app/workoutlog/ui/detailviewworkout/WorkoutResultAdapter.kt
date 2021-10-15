@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.fklappan.app.workoutlog.R
+import de.fklappan.app.workoutlog.databinding.ListItemWorkoutResultBinding
 import de.fklappan.app.workoutlog.domain.toPrettyString
-import kotlinx.android.synthetic.main.list_item_workout.view.textViewContent
-import kotlinx.android.synthetic.main.list_item_workout_result.view.*
 
 class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) -> Unit,
                            private val optionsListener: (View, WorkoutResultGuiModel) -> Unit) :
@@ -51,25 +50,26 @@ class WorkoutResultAdapter(private val clickListener: (WorkoutResultGuiModel) ->
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ListItemWorkoutResultBinding.bind(itemView)
 
         fun bindItem(workoutGuiModel: WorkoutResultGuiModel,
                      clickListener: (WorkoutResultGuiModel) -> Unit,
                      optionsListener: (View, WorkoutResultGuiModel) -> Unit) {
-            itemView.textViewDate.text = workoutGuiModel.date.toPrettyString()
-            itemView.textViewContent.text = workoutGuiModel.score
+            binding.textViewDate.text = workoutGuiModel.date.toPrettyString()
+            binding.textViewContent.text = workoutGuiModel.score
             itemView.setOnClickListener { clickListener.invoke(workoutGuiModel) }
-            itemView.imageButtonMore.setOnClickListener { optionsListener.invoke(it, workoutGuiModel) }
-            itemView.imageViewPr.visibility =
+            binding.imageButtonMore.setOnClickListener { optionsListener.invoke(it, workoutGuiModel) }
+            binding.imageViewPr.visibility =
                 if (workoutGuiModel.pr)
                     View.VISIBLE
                 else
                     View.GONE
-            itemView.imageViewFeeling.visibility =
+            binding.imageViewFeeling.visibility =
                 if (workoutGuiModel.feeling.isNullOrEmpty())
                     View.GONE
                 else
                     View.VISIBLE
-            itemView.imageViewNote.visibility =
+            binding.imageViewNote.visibility =
                 if (workoutGuiModel.note.isNullOrEmpty())
                     View.GONE
                 else

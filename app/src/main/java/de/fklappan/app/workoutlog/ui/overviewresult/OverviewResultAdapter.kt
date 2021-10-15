@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.fklappan.app.workoutlog.R
+import de.fklappan.app.workoutlog.databinding.ListItemOverviewResultBinding
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
-import kotlinx.android.synthetic.main.list_item_overview_result.view.*
 
 class OverviewResultAdapter(private val clickListener: (WorkoutResultGuiModel) -> Unit)
     : RecyclerView.Adapter<OverviewResultAdapter.ViewHolder>() {
@@ -30,12 +30,16 @@ class OverviewResultAdapter(private val clickListener: (WorkoutResultGuiModel) -
     override fun getItemCount() = items.size
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ListItemOverviewResultBinding.bind(itemView)
 
         fun bindItem(workoutGuiModel: OverviewResultGuiModel, clickListener: (WorkoutResultGuiModel) -> Unit) {
-            itemView.textViewDate.text = workoutGuiModel.result.date.toPrettyString()
-            itemView.textViewWorkoutCaption.text = workoutGuiModel.workout.text
-            itemView.textViewResultCaption.text = workoutGuiModel.result.score
-            itemView.setOnClickListener { clickListener.invoke(workoutGuiModel.result) }
+            with (binding) {
+                textViewDate.text = workoutGuiModel.result.date.toPrettyString()
+                textViewWorkoutCaption.text = workoutGuiModel.workout.text
+                textViewResultCaption.text = workoutGuiModel.result.score
+                itemView.setOnClickListener { clickListener.invoke(workoutGuiModel.result) }
+            }
+
         }
     }
 }

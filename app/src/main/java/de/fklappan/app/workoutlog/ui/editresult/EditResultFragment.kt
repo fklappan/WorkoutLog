@@ -16,11 +16,9 @@ import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.*
+import de.fklappan.app.workoutlog.databinding.EditresultBinding
 import de.fklappan.app.workoutlog.domain.toPrettyString
 import de.fklappan.app.workoutlog.ui.detailviewworkout.WorkoutResultGuiModel
-import kotlinx.android.synthetic.main.card_workout_detail.*
-import kotlinx.android.synthetic.main.editresult.*
-import kotlinx.android.synthetic.main.overview.floatingActionButton
 import java.util.*
 import javax.inject.Inject
 
@@ -28,10 +26,12 @@ class EditResultFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : EditresultBinding
     private lateinit var viewModel: EditResultViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.editresult, container, false)
+        binding = EditresultBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,15 +46,15 @@ class EditResultFragment : BaseFragment() {
     }
 
     private fun initFab() {
-        floatingActionButton.setOnClickListener(this::onClickFab)
+        binding.floatingActionButton.setOnClickListener(this::onClickFab)
     }
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_edit_result)
 
         // set listeners
-        linearLayoutDate.setOnClickListener(this::onClickDate)
-        imagebuttonPr.setOnClickListener(this::onClickPr)
+        binding.linearLayoutDate.setOnClickListener(this::onClickDate)
+        binding.imagebuttonPr.setOnClickListener(this::onClickPr)
     }
 
     private fun initViewModels() {
@@ -81,38 +81,38 @@ class EditResultFragment : BaseFragment() {
 
     private fun showPr(isPr: Boolean) {
         Log.d(LOG_TAG, "updating PR: $isPr")
-        imagebuttonPr.isSelected = isPr
+        binding.imagebuttonPr.isSelected = isPr
         if (isPr) {
-            imagebuttonPr.color = R.color.colorAccent
+            binding.imagebuttonPr.color = R.color.colorAccent
         } else {
-            imagebuttonPr.color = R.color.gray
+            binding.imagebuttonPr.color = R.color.gray
         }
     }
 
     private fun showDate(date: Date) {
         Log.d(LOG_TAG, "updating date: " + date.toPrettyString())
-        textViewDate.text = date.toPrettyString()
+        binding.textViewDate.text = date.toPrettyString()
     }
 
     private fun showSavedMessage() {
         Log.d(LOG_TAG, "saved result")
-        textViewError.visibility = View.GONE
+        binding.textViewError.visibility = View.GONE
         Snackbar.make(requireView(), getString(R.string.message_saved_changes_success), Snackbar.LENGTH_LONG).show()
         Navigation.findNavController(requireView()).navigateUp()
     }
 
     private fun showResult(result: WorkoutResultGuiModel) {
-        editTextContent.setText(result.score)
-        editTextNote.setText(result.note)
-        editTextFeeling.setText(result.feeling)
+        binding.editTextContent.setText(result.score)
+        binding.editTextNote.setText(result.note)
+        binding.editTextFeeling.setText(result.feeling)
         showDate(result.date)
         showPr(result.pr)
     }
 
     private fun showError(message: String) {
         Log.d(LOG_TAG, "Error occured: $message")
-        textViewError.visibility = View.VISIBLE
-        textViewError.text = message
+        binding.textViewError.visibility = View.VISIBLE
+        binding.textViewError.text = message
     }
 
     private fun onClickDate(view: View) {
@@ -127,12 +127,15 @@ class EditResultFragment : BaseFragment() {
 
     private fun onClickPr(view: View) {
         if (!view.isSelected) {
-            imagebuttonPr.playGrowAnimation()
+            binding.imagebuttonPr.playGrowAnimation()
         }
         viewModel.onPrClicked()
     }
 
     private fun onClickFab(view: View) {
-        viewModel.onSaveClicked(editTextContent.text.toString(), editTextNote.text.toString(), editTextFeeling.text.toString())
+        viewModel.onSaveClicked(
+            binding.editTextContent.text.toString(),
+            binding.editTextNote.text.toString(),
+            binding.editTextFeeling.text.toString())
     }
 }

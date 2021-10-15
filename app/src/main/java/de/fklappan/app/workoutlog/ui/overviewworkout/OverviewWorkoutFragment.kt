@@ -18,11 +18,11 @@ import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
 import de.fklappan.app.workoutlog.common.LOG_TAG
 import de.fklappan.app.workoutlog.common.ViewModelFactory
+import de.fklappan.app.workoutlog.databinding.OverviewBinding
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutFragment
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.overview.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -30,6 +30,7 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding : OverviewBinding
     private lateinit var viewModelOverviewWorkout: OverviewWorkoutViewModel
     private lateinit var viewModelDelete: DeleteViewModel
     private lateinit var overviewWorkoutAdapter: OverviewWorkoutAdapter
@@ -39,7 +40,8 @@ class OverviewWorkoutFragment : BaseFragment() {
     private var motionProgress: Float = 0f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.overview, container, false)
+        binding = OverviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,11 +57,11 @@ class OverviewWorkoutFragment : BaseFragment() {
             motionProgress = it.getFloat("motion-progress", 0f)
         }
 
-        motionLayout.progress = motionProgress
+        binding.motionLayout.progress = motionProgress
     }
 
     override fun onDestroyView() {
-        motionProgress = motionLayout.progress
+        motionProgress = binding.motionLayout.progress
         super.onDestroyView()
     }
 
@@ -69,7 +71,7 @@ class OverviewWorkoutFragment : BaseFragment() {
     }
 
     private fun initFab() {
-        floatingActionButton.setOnClickListener { view ->
+        binding.floatingActionButton.setOnClickListener { view ->
             Navigation.findNavController(view).navigate(R.id.action_overviewFragment_to_addWorkoutFragment)
         }
     }
@@ -77,8 +79,8 @@ class OverviewWorkoutFragment : BaseFragment() {
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.caption_workout_overview)
         overviewWorkoutAdapter = OverviewWorkoutAdapter(this::workoutClicked, this::optionsClicked, this::favoriteClicked)
-        recyclerViewWorkouts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        recyclerViewWorkouts.adapter = overviewWorkoutAdapter
+        binding.recyclerViewWorkouts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.recyclerViewWorkouts.adapter = overviewWorkoutAdapter
         snackbarDelete = Snackbar.make(requireView(), getString(R.string.success_deleted_workout), Snackbar.LENGTH_LONG)
             .setActionTextColor(resources.getColor(android.R.color.holo_red_light, requireActivity().theme))
         setHasOptionsMenu(true)

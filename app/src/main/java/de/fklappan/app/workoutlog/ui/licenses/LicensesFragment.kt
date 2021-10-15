@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import de.fklappan.app.workoutlog.R
 import de.fklappan.app.workoutlog.common.BaseFragment
-import kotlinx.android.synthetic.main.licenses.*
+import de.fklappan.app.workoutlog.databinding.LicensesBinding
 
 class LicensesFragment : BaseFragment() {
 
+    private lateinit var binding : LicensesBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.licenses, container, false)
+        binding = LicensesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -22,7 +25,7 @@ class LicensesFragment : BaseFragment() {
 
     private fun initFragment() {
         getAppBarHeader().setHeaderText(R.string.menu_licenses)
-        webview.loadUrl("file:///android_asset/html/licenses.html")
+        binding.webview.loadUrl("file:///android_asset/html/licenses.html")
     }
 
 }
