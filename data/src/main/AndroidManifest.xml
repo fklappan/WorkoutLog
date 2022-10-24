@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="de.fklappan.app.workoutlog.data"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" />
