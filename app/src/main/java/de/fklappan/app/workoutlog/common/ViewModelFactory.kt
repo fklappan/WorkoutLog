@@ -2,6 +2,7 @@ package de.fklappan.app.workoutlog.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import de.fklappan.app.workoutlog.ui.addresult.AddResultViewModel
 import de.fklappan.app.workoutlog.ui.addworkout.AddWorkoutViewModel
 import de.fklappan.app.workoutlog.ui.detailviewresult.DetailviewResultViewModel
@@ -24,7 +25,7 @@ class ViewModelFactory(private val guiModelMapper: GuiModelMapper,
 ) :
     ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
         if (modelClass.isAssignableFrom(OverviewWorkoutViewModel::class.java)) {
             return OverviewWorkoutViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }

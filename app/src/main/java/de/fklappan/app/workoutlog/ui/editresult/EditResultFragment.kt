@@ -76,6 +76,7 @@ class EditResultFragment : BaseFragment() {
             is EditResultState.Data -> showResult(state.result)
             is EditResultState.DateSelected -> showDate(state.date)
             is EditResultState.PrChanged -> showPr(state.isPr)
+            EditResultState.Loading -> TODO()
         }
     }
 

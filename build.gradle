@@ -2,7 +2,7 @@
 
 buildscript {
     ext{
-        kotlin_version = '1.5.21'
+        kotlin_version = '1.7.20'
 
     }
     repositories {
@@ -20,9 +20,9 @@ buildscript {
 
 allprojects {
     ext {
-        androidCompileSdkVersion = 28
+        androidCompileSdkVersion = 33
         androidMinSdkVersion = 25
-        androidTargetSdkVersion = 25
+        androidTargetSdkVersion = 33
 
 
         rxJavaVersion = "2.2.9"
