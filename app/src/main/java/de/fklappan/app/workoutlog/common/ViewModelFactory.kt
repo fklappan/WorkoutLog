@@ -24,7 +24,7 @@ class ViewModelFactory(private val guiModelMapper: GuiModelMapper,
 ) :
     ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(OverviewWorkoutViewModel::class.java)) {
             return OverviewWorkoutViewModel(useCasesFactory, schedulerIo, schedulerMainThread, guiModelMapper) as T
         }

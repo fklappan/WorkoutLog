@@ -55,4 +55,8 @@
     <fragment android:id="@+id/editResultFragment"
         android:name="de.fklappan.app.workoutlog.ui.editresult.EditResultFragment"
         android:label="EditResultFragment"/>
+
+    <fragment android:id="@+id/searchWorkoutFragment"
+        android:name="de.fklappan.app.workoutlog.ui.searchworkout.SearchWorkoutFragment"
+        android:label="SearchWorkoutFragment"/>
 </navigation>

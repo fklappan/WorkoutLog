@@ -111,7 +111,8 @@ class OverviewWorkoutFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_random_workout) {
-            viewModelOverviewWorkout.onRandomWorkoutClicked()
+            Navigation.findNavController(requireView()).navigate(R.id.searchWorkoutFragment)
+//            viewModelOverviewWorkout.onRandomWorkoutClicked()
             return true
         }
         if (item.itemId == R.id.action_random_workout_favorite) {

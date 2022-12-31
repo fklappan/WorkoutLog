@@ -72,6 +72,7 @@ class AddResultFragment : BaseFragment() {
             is AddResultState.Data -> showWorkoutDetails(state.workoutDetails, state.date, state.isPr)
             is AddResultState.DateSelected -> showDate(state.date)
             is AddResultState.PrChanged -> showPr(state.isPr)
+            is AddResultState.Loading -> Unit
         }
     }
 
